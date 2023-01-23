@@ -92,7 +92,6 @@ junit4 = { module = "junit:junit", version.ref = "junit" }
 compose = [
     "compose-ui-core",
     "compose-ui-preview",
-    "compose-material",
     "compose-material3",
     "activity-compose",
     "navigation-compose",
