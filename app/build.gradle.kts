@@ -5,14 +5,14 @@ plugins {
 
 android {
     namespace = "com.nexters.pimo"
-    compileSdk = 33
+    compileSdk = Versions.COMPILE_SDK
 
     defaultConfig {
         applicationId = "com.nexters.pimo"
-        minSdk = 21
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = Versions.MIN_SDK
+        targetSdk = Versions.TARGET_SDK
+        versionCode = Versions.VERSION_CODE
+        versionName = Versions.VERSION_NAME
 
         vectorDrawables {
             useSupportLibrary = true

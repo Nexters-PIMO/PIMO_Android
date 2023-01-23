@@ -5,11 +5,11 @@ plugins {
 
 android {
     namespace = "com.nexters.pimo.local"
-    compileSdk = 33
+    compileSdk = Versions.COMPILE_SDK
 
     defaultConfig {
-        minSdk = 21
-        targetSdk = 33
+        minSdk = Versions.MIN_SDK
+        targetSdk = Versions.TARGET_SDK
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
