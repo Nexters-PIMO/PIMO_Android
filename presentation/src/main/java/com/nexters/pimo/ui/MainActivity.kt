@@ -1,4 +1,4 @@
-package com.nexters.pimo
+package com.nexters.pimo.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
