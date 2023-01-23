@@ -13,9 +13,11 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "PIMO"
-include(":app")
-include(":presentation")
-include(":domain")
-include(":data")
-include(":remote")
-include(":local")
+include(
+    ":app",
+    ":domain",
+    ":presentation",
+    ":data",
+    ":local",
+    ":remote"
+)
