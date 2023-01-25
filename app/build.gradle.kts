@@ -43,7 +43,6 @@ android {
 }
 
 dependencies {
-
     implementation(project(Modules.DOMAIN))
     implementation(project(Modules.PRESENTATION))
     implementation(project(Modules.DATA))

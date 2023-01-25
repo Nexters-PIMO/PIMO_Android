@@ -31,14 +31,10 @@ dependencies {
 
     implementation(project(Modules.DOMAIN))
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-    implementation("androidx.activity:activity-compose:1.3.1")
-    implementation("androidx.compose.ui:ui:1.1.1")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
-    implementation("androidx.compose.material:material:1.1.1")
+    implementation(libs.androidx.core)
+    implementation(libs.lifecycle.runtime)
 
-    testImplementation("junit:junit:4.13.2")
+    implementation(libs.bundles.compose)
 
-    debugImplementation("androidx.compose.ui:ui-tooling:1.1.1")
+    debugImplementation(libs.compose.ui.tooling)
 }
