@@ -35,11 +35,11 @@ dependencies {
 
     implementation(libs.androidx.core)
     implementation(libs.lifecycle.runtime)
-
+    implementation(libs.coroutines.android)
     implementation(libs.bundles.compose)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    
+
     debugImplementation(libs.compose.ui.tooling)
 }

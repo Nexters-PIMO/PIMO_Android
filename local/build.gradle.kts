@@ -25,6 +25,8 @@ android {
 dependencies {
     implementation(project(Modules.DATA))
 
+    implementation(libs.coroutines.android)
+
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 }
