@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -23,4 +24,7 @@ android {
 
 dependencies {
     implementation(project(Modules.DATA))
+
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 }
