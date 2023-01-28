@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("dagger.hilt.android.plugin")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     kotlin("android")
     kotlin("kapt")
 }
@@ -49,6 +50,7 @@ dependencies {
     implementation(project(Modules.PRESENTATION))
     implementation(project(Modules.DATA))
 
+    implementation(libs.kakao.user)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 }
