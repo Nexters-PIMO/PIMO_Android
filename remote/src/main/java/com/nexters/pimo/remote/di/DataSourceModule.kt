@@ -10,9 +10,9 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal abstract class DataSourceModule {
+internal interface DataSourceModule {
 
     @Binds
     @Singleton
-    abstract fun bindDummyDataSource(source: DummyDataSourceImpl): DummyDataSource
+    fun bindDummyDataSource(source: DummyDataSourceImpl): DummyDataSource
 }
