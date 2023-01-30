@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm")
     kotlin("kapt")
+    kotlin("plugin.serialization").version("1.7.20")
 }
 
 dependencies {
