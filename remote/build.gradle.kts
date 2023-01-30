@@ -11,5 +11,5 @@ dependencies {
     implementation(libs.bundles.ktor)
 
     implementation(libs.hilt.core)
-    implementation(libs.hilt.compiler)
+    kapt(libs.hilt.compiler)
 }
