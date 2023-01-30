@@ -11,7 +11,6 @@ android {
 
     defaultConfig {
         minSdk = Versions.MIN_SDK
-        targetSdk = Versions.TARGET_SDK
     }
 
     compileOptions {
