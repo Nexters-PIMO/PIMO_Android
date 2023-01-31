@@ -41,6 +41,7 @@ android {
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/INDEX.LIST"
         }
     }
 }
@@ -49,8 +50,12 @@ dependencies {
     implementation(project(Modules.DOMAIN))
     implementation(project(Modules.PRESENTATION))
     implementation(project(Modules.DATA))
+    implementation(project(Modules.REMOTE))
+    implementation(project(Modules.LOCAL))
 
     implementation(libs.kakao.user)
+    implementation(libs.coroutines.android)
+
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 }

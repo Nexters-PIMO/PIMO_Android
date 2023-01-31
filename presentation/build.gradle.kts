@@ -11,7 +11,6 @@ android {
 
     defaultConfig {
         minSdk = Versions.MIN_SDK
-        targetSdk = Versions.TARGET_SDK
     }
 
     compileOptions {
@@ -25,7 +24,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
 }
 
@@ -35,11 +34,11 @@ dependencies {
 
     implementation(libs.androidx.core)
     implementation(libs.lifecycle.runtime)
-
+    implementation(libs.coroutines.android)
     implementation(libs.bundles.compose)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    
+
     debugImplementation(libs.compose.ui.tooling)
 }

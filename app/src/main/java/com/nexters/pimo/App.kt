@@ -15,5 +15,4 @@ class App : Application() {
         KakaoSdk.init(this, BuildConfig.KAKAO_API_KEY)
 
     }
-
 }
