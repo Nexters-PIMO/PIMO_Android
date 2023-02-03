@@ -1,17 +1,17 @@
 package com.nexters.pimo.ui.login
 
 import android.os.Bundle
-import androidx.activity.compose.setContent
 import android.util.Log
-import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.lifecycle.lifecycleScope
+import com.nexters.pimo.feature.kakao.KakaoLogin
+import com.nexters.pimo.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import com.nexters.pimo.feature.kakao.KakaoLogin
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginActivity : ComponentActivity() {
+class LoginActivity : BaseActivity() {
 
     @Inject
     lateinit var kakaoLogin: KakaoLogin
@@ -32,7 +32,8 @@ class LoginActivity : ComponentActivity() {
                 Log.d("accessToken: ", it.kakaoAccessToken)
                 Log.d("refreshToken: ", it.kakaoRefreshToken)
             }
-            .onFailure { /* no-op */ }
+            .onFailure {
+                handleException(it)
+            }
     }
-
 }
