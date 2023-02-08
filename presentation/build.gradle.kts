@@ -35,7 +35,9 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.lifecycle.runtime)
     implementation(libs.coroutines.android)
+    
     implementation(libs.bundles.compose)
+    implementation(libs.bundles.orbit.mvi)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
