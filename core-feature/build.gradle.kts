@@ -26,6 +26,7 @@ dependencies {
     implementation(project(Modules.PRESENTATION))
 
     implementation(libs.coroutines.android)
+    implementation(libs.tesseract.android)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
