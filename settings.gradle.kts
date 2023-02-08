@@ -23,5 +23,6 @@ include(
     ":presentation",
     ":data",
     ":local",
-    ":remote"
+    ":remote",
+    ":core-feature"
 )
