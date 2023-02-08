@@ -54,8 +54,13 @@
                     android:scheme="kakao${KAKAO_API_KEY}" />
             </intent-filter>
         </activity>
-
-
+        
     </application>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
 
 </manifest>
