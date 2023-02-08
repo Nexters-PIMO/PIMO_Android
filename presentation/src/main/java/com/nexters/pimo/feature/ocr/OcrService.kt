@@ -8,4 +8,6 @@ interface OcrService {
     fun getTextOfImage(image: Bitmap): String
 
     fun getTextOfImage(imagePath: File): String
+
+    fun close(): Unit
 }

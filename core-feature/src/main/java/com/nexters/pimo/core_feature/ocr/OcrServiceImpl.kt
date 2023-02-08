@@ -19,4 +19,8 @@ internal class OcrServiceImpl @Inject constructor(
         setImage(image)
         utF8Text
     }
+
+    override fun close() {
+        tess.recycle()
+    }
 }
