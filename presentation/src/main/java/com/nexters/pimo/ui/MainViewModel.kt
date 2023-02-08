@@ -1,6 +1,5 @@
 package com.nexters.pimo.ui
 
-import android.util.Log
 import com.nexters.pimo.domain.usecase.GetDummyJsonUseCase
 import com.nexters.pimo.ui.base.BaseViewModel
 import com.nexters.pimo.ui.state.UiState
@@ -29,7 +28,7 @@ class MainViewModel @Inject constructor(
                 }
                 .onFailure {
                     reduce { state.copy(uiState = UiState.Failure(it)) }
-                    Log.e("tag", it.stackTraceToString())
+                    handleException(it)
                 }
         }
     }
