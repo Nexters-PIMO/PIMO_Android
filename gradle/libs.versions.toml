@@ -27,6 +27,8 @@ logback = "1.3.5"
 
 kakao = "2.12.1"
 
+tesseract = "4.3.0"
+
 desugar = "1.2.2"
 junit = "4.13.2"
 
@@ -96,6 +98,10 @@ javax-inject = "javax.inject:javax.inject:1"
 
 # Kakao
 kakao-user = { module = "com.kakao.sdk:v2-user", version.ref = "kakao" }
+
+# Tesseract4Android
+tesseract-android = { module = "cz.adaptech.tesseract4android:tesseract4android", version.ref = "tesseract" }
+tesseract-android-openmp = { module = "cz.adaptech.tesseract4android:tesseract4android-openmp", version.ref = "tesseract" }
 
 # Test
 junit4 = { module = "junit:junit", version.ref = "junit" }

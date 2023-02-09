@@ -52,6 +52,7 @@ dependencies {
     implementation(project(Modules.DATA))
     implementation(project(Modules.REMOTE))
     implementation(project(Modules.LOCAL))
+    implementation(project(Modules.CORE_FEATURE))
 
     implementation(libs.kakao.user)
     implementation(libs.coroutines.android)
