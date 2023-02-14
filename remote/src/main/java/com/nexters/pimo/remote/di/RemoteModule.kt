@@ -43,6 +43,7 @@ internal object RemoteModule {
             json(Json {
                 prettyPrint = true
                 isLenient = true
+                ignoreUnknownKeys = true
             })
         }
 
