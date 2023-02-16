@@ -1,5 +1,6 @@
 package com.nexters.pimo.ui.theme
 
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +18,17 @@ val GreyD9 = Color(0xFFD9D9D9)
 val Grey7F = Color(0xFF7F7F7F)
 val Black = Color(0xFF000000)
 val White = Color(0xFFFFFFFF)
+
+val MaterialColors = lightColorScheme(
+    primary = FimoPrimary,
+    onPrimary = FimoSecondary,
+    secondary = FimoSecondary,
+    onSecondary = FimoPrimary,
+    background = White,
+    onBackground = Black,
+    surface = White,
+    onSurface = Black
+)
 
 @Stable
 class FimoColors(
