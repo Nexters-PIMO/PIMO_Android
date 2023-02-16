@@ -20,6 +20,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -35,12 +37,17 @@ fun FimoHomeAppBar(
     newPostCount: Int
 ) {
     val appBarHeight = 160.dp
+    val shadowColor = Color(0xFF383838).copy(alpha = 0.5f)
 
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(appBarHeight),
-        shadowElevation = 4.dp
+            .height(appBarHeight)
+            .shadow(
+                ambientColor = shadowColor,
+                spotColor = shadowColor,
+                elevation = 12.dp
+            ),
     ) {
         Column(
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 28.dp),
@@ -62,7 +69,7 @@ fun FimoHomeAppBar(
                         modifier = Modifier.size(24.dp)
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_setting),
+                            painter = painterResource(id = actionIconRes),
                             contentDescription = null,
                             modifier = Modifier.size(24.dp)
                         )
