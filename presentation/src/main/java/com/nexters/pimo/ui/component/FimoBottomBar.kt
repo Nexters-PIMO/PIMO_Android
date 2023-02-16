@@ -31,6 +31,7 @@ import com.nexters.pimo.ui.theme.FimoTheme
 
 @Composable
 fun FimoBottomBar(
+    modifier: Modifier = Modifier,
     currentDestination: NavDestination?,
     onNavigate: (Destination) -> Unit,
     @DrawableRes actionIconRes: Int = R.drawable.ic_action,
@@ -105,7 +106,7 @@ fun FimoBottomBar(
     )
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .height(102.dp)
             .fillMaxWidth()
     ) {

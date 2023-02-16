@@ -1,5 +1,6 @@
 package com.nexters.pimo.ui.main
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -11,9 +12,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.nexters.pimo.ui.component.FimoBottomBar
+import com.nexters.pimo.ui.component.bottomPanelHeight
 import com.nexters.pimo.ui.feed.FeedScreen
 import com.nexters.pimo.ui.home.HomeScreen
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
@@ -30,12 +33,12 @@ fun MainScreen() {
                 onActionClick = { /*TODO*/ },
                 profileImageUrl = "https://avatars.githubusercontent.com/u/72238126?v=4"
             )
-        }
-    ) { innerPadding ->
+        },
+    ) {
         NavHost(
             navController = navController,
             startDestination = Destination.Home.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(bottom = bottomPanelHeight)
         ) {
             composable(Destination.Home.route) { HomeScreen() }
             composable(Destination.Feed.route) { FeedScreen() }
