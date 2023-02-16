@@ -86,15 +86,8 @@ class FimoColors(
 
 fun fimoLightColors(
     primary: Color = FimoPrimary,
-    onPrimary: Color = FimoSecondary,
     primaryDark: Color = FimoPrimaryDark,
-    onPrimaryDark: Color = Black,
     secondary: Color = FimoSecondary,
-    onSecondary: Color = FimoPrimary,
-    background: Color = White,
-    onBackground: Color = Black,
-    surface: Color = White,
-    onSurface: Color = Black,
     greyEF: Color = GreyEF,
     greyE9: Color = GreyE9,
     greyD9: Color = GreyD9,
