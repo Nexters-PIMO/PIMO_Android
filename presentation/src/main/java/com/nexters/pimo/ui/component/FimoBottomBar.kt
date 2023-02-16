@@ -39,11 +39,8 @@ fun FimoBottomBar(
 ) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
-
-    val actionButtonSize = 72.dp
-    val bottomPanelHeight = 72.dp
-    val itemIconSize = 28.dp
-    val itemsHorizontalPadding = ((screenWidth - actionButtonSize) / 2 - itemIconSize) / 2 - 4.dp
+    val itemsHorizontalPadding =
+        ((screenWidth - bottomActionButtonSize) / 2 - bottomBarItemIconSize) / 2 - 4.dp
 
     @Composable
     fun Home() = FimoBottomBarItem(
@@ -53,7 +50,7 @@ fun FimoBottomBar(
             Icon(
                 painter = painterResource(id = R.drawable.ic_home),
                 contentDescription = null,
-                modifier = Modifier.size(itemIconSize),
+                modifier = Modifier.size(bottomBarItemIconSize),
                 tint = FimoTheme.colors.black
             )
         },
@@ -61,7 +58,7 @@ fun FimoBottomBar(
             Icon(
                 painter = painterResource(id = R.drawable.ic_home_outlined),
                 contentDescription = null,
-                modifier = Modifier.size(itemIconSize),
+                modifier = Modifier.size(bottomBarItemIconSize),
                 tint = FimoTheme.colors.black
             )
         },
@@ -79,19 +76,19 @@ fun FimoBottomBar(
                 Surface(
                     shape = CircleShape,
                     color = FimoTheme.colors.black,
-                    modifier = Modifier.size(itemIconSize + 5.dp)
+                    modifier = Modifier.size(bottomBarItemIconSize + 5.dp)
                 ) {}
                 Surface(
                     shape = CircleShape,
                     color = FimoTheme.colors.white,
-                    modifier = Modifier.size(itemIconSize + 2.dp)
+                    modifier = Modifier.size(bottomBarItemIconSize + 2.dp)
                 ) {}
                 AsyncImage(
                     model = profileImageUrl,
                     contentDescription = null,
                     modifier = Modifier
                         .clip(CircleShape)
-                        .size(itemIconSize)
+                        .size(bottomBarItemIconSize)
                 )
             }
         },
@@ -100,7 +97,7 @@ fun FimoBottomBar(
                 model = profileImageUrl,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(itemIconSize)
+                    .size(bottomBarItemIconSize)
                     .clip(CircleShape)
             )
         },
@@ -136,7 +133,7 @@ fun FimoBottomBar(
             shape = CircleShape,
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .size(actionButtonSize),
+                .size(bottomActionButtonSize),
             colors = IconButtonDefaults.filledIconButtonColors(
                 containerColor = FimoTheme.colors.secondary,
                 contentColor = FimoTheme.colors.primary
@@ -166,3 +163,7 @@ fun FimoBottomBarItem(
         if (selected) onSelected() else onNotSelected()
     }
 }
+
+val bottomPanelHeight = 72.dp
+val bottomActionButtonSize = 72.dp
+val bottomBarItemIconSize = 28.dp
