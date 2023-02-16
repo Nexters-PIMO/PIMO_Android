@@ -84,6 +84,11 @@ fun FimoBottomBar(
                     color = FimoTheme.colors.white,
                     modifier = Modifier.size(bottomBarItemIconSize + 2.dp)
                 ) {}
+                Surface(
+                    shape = CircleShape,
+                    color = FimoTheme.colors.grey7F,
+                    modifier = Modifier.size(bottomBarItemIconSize)
+                ) {}
                 AsyncImage(
                     model = profileImageUrl,
                     contentDescription = null,
@@ -94,13 +99,22 @@ fun FimoBottomBar(
             }
         },
         onNotSelected = {
-            AsyncImage(
-                model = profileImageUrl,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(bottomBarItemIconSize)
-                    .clip(CircleShape)
-            )
+            Box(
+                contentAlignment = Alignment.Center
+            ) {
+                Surface(
+                    shape = CircleShape,
+                    color = FimoTheme.colors.grey7F,
+                    modifier = Modifier.size(bottomBarItemIconSize)
+                ) {}
+                AsyncImage(
+                    model = profileImageUrl,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(bottomBarItemIconSize)
+                        .clip(CircleShape)
+                )
+            }
         },
         onClick = { onNavigate(Destination.Feed) }
     )
