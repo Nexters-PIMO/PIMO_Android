@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -36,16 +35,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.HorizontalPagerIndicator
+import com.google.accompanist.pager.rememberPagerState
 import com.nexters.pimo.domain.model.Post
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.theme.FimoTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
 @Composable
 fun FimoPost(
     modifier: Modifier = Modifier,
@@ -63,6 +67,8 @@ fun FimoPost(
     var clapCount: Int by remember { mutableStateOf(post.clapCount) }
     var isClapped: Boolean by remember { mutableStateOf(post.isClapped) }
     var isAudioPlaying: Boolean by remember { mutableStateOf(false) }
+
+    val pagerState = rememberPagerState()
 
     Column(
         modifier = modifier.fillMaxWidth()
@@ -104,7 +110,7 @@ fun FimoPost(
                         color = FimoTheme.colors.grey7F
                     )
                 )
-                Spacer(modifier = Modifier.width(18.dp))
+                Spacer(modifier = Modifier.width(16.dp))
                 CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
                     IconButton(
                         onClick = onMoreClick,
@@ -124,16 +130,49 @@ fun FimoPost(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f)
+                .clip(RoundedCornerShape(4.dp))
         ) {
-            Surface(
-                shape = RoundedCornerShape(8.dp),
-                color = FimoTheme.colors.greyEF,
+            HorizontalPager(
+                count = post.textImages.size,
+                state = pagerState,
                 modifier = Modifier
-                    .fillMaxSize()
                     .align(Alignment.Center)
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
             ) {
-
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                ) {
+                    Surface(
+                        shape = RoundedCornerShape(4.dp),
+                        color = FimoTheme.colors.greyEF,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                    ) {}
+                    AsyncImage(
+                        model = post.textImages[it].imageUrl,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                    )
+                }
             }
+            HorizontalPagerIndicator(
+                pagerState = pagerState,
+                activeColor = FimoTheme.colors.primary,
+                inactiveColor = FimoTheme.colors.greyD9,
+                indicatorWidth = 4.dp,
+                indicatorHeight = 4.dp,
+                spacing = 4.dp,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(12.dp)
+            )
             Row(
                 modifier = Modifier
                     .align(Alignment.TopStart)
