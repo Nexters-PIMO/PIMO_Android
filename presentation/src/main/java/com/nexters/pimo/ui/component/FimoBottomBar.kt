@@ -155,7 +155,7 @@ fun FimoBottomBar(
             )
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_action),
+                painter = painterResource(id = actionIconRes),
                 contentDescription = null,
                 modifier = Modifier.size(42.dp),
                 tint = FimoTheme.colors.primary
