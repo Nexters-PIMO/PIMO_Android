@@ -1,9 +1,10 @@
 package com.nexters.pimo.ui.home
 
+import com.nexters.pimo.domain.model.Post
 import com.nexters.pimo.ui.state.UiState
 
 data class HomeState(
-    val posts: List<Int> = listOf(), // TODO: Int -> Post
+    val posts: List<Post> = listOf(), // TODO: Int -> Post
     val newPostCount: Int = 0,
     val showOcrHelp: Boolean = false,
     val uiState: UiState = UiState.Loading

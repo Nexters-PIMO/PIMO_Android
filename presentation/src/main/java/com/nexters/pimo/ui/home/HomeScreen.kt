@@ -38,7 +38,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
         when (state.uiState) {
             UiState.Done -> {
                 if (state.posts.isNotEmpty()) {
-
+                    HomeContent(posts = state.posts)
                 } else {
                     Welcome()
                 }
