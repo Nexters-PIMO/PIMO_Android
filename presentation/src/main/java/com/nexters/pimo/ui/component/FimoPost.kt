@@ -77,8 +77,11 @@ fun FimoPost(
         modifier = modifier.fillMaxWidth()
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(28.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -102,7 +105,8 @@ fun FimoPost(
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = post.writer.nickname,
-                    style = FimoTheme.typography.medium.copy(fontSize = 14.sp)
+                    style = FimoTheme.typography.medium.copy(fontSize = 14.sp),
+                    modifier = Modifier.padding(bottom = 4.dp)
                 )
             }
             Row {
@@ -253,7 +257,7 @@ fun FimoPost(
                 Button(
                     onClick = {
                         onClap()
-                        clapCount += 300
+                        clapCount++
                         isClapped = true
                     },
                     shape = RoundedCornerShape(20.dp),
