@@ -38,6 +38,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -48,6 +49,7 @@ import com.google.accompanist.pager.rememberPagerState
 import com.nexters.pimo.domain.model.Post
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.theme.FimoTheme
+import com.nexters.pimo.ui.util.DateUtil.toRelatively
 import com.nexters.pimo.ui.util.NumberUtil.toSymbolFormat
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
@@ -105,7 +107,7 @@ fun FimoPost(
             }
             Row {
                 Text(
-                    text = post.postedTime.toString().substring(0, 10),
+                    text = post.postedTime.toRelatively(),
                     style = FimoTheme.typography.regular.copy(
                         fontSize = 14.sp,
                         color = FimoTheme.colors.grey7F
@@ -251,7 +253,7 @@ fun FimoPost(
                 Button(
                     onClick = {
                         onClap()
-                        clapCount++
+                        clapCount += 300
                         isClapped = true
                     },
                     shape = RoundedCornerShape(20.dp),
@@ -277,7 +279,9 @@ fun FimoPost(
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text = clapCount.toSymbolFormat(),
-                            style = FimoTheme.typography.regular.copy(fontSize = 16.sp)
+                            style = FimoTheme.typography.regular.copy(fontSize = 16.sp),
+                            maxLines = 1,
+                            overflow = TextOverflow.Visible
                         )
                     }
                 }
