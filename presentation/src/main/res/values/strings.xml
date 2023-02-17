@@ -7,4 +7,6 @@
 
     <string name="welcome">에 오신 것을 환영해요</string>
     <string name="welcome_info">본인 프로필 혹은 게시물 공유로\n친구를 맺고 더 많은 글사진을 살펴볼 수 있어요</string>
+
+    <string name="copy_text">텍스트 복사하기</string>
 </resources>
