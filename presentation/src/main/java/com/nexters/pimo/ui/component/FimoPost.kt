@@ -138,6 +138,7 @@ fun FimoPost(
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .padding(16.dp)
+                    .width(184.dp)
             ) {
                 CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
                     FilledIconButton(
@@ -157,7 +158,7 @@ fun FimoPost(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.width(0.dp))
+                Spacer(modifier = Modifier.width(4.dp))
                 if (showOcrHelp) {
                     Box(
                         contentAlignment = Alignment.Center
@@ -172,7 +173,7 @@ fun FimoPost(
                         Row(
                             modifier = Modifier
                                 .align(Alignment.Center)
-                                .padding(start = 32.dp, end = 9.dp),
+                                .padding(start = 21.dp, end = 2.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
@@ -198,7 +199,7 @@ fun FimoPost(
                 }
             }
         }
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(9.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -262,7 +263,7 @@ fun FimoPost(
                         isAudioPlaying = true
                     }
                 },
-                contentPadding = PaddingValues(horizontal = 4.dp, vertical = 2.dp),
+                contentPadding = PaddingValues(horizontal = 5.dp, vertical = 3.dp),
             ) {
                 Image(
                     painter = painterResource(

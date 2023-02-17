@@ -29,7 +29,7 @@ fun HomeContent(posts: List<Post>) {
                     onShare = { /*TODO*/ }
                 )
             }
-            Divider(modifier = Modifier.padding(top = 12.dp, bottom = 22.dp))
+            Divider(modifier = Modifier.padding(top = 9.dp, bottom = 21.dp))
         }
     }
 }
