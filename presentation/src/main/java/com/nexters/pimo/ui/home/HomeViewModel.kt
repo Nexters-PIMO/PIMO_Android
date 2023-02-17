@@ -1,6 +1,7 @@
 package com.nexters.pimo.ui.home
 
 import com.nexters.pimo.domain.model.Post
+import com.nexters.pimo.domain.model.TextImage
 import com.nexters.pimo.domain.model.User
 import com.nexters.pimo.ui.base.BaseViewModel
 import com.nexters.pimo.ui.state.UiState
@@ -27,7 +28,13 @@ class HomeViewModel @Inject constructor() : ContainerHost<HomeState, HomeSideEff
             nickname = "yjyoon"
         ),
         postedTime = LocalDateTime.now(),
-        textImages = listOf(),
+        textImages = List(5) {
+            TextImage(
+                id = 0,
+                text = "",
+                imageUrl = "https://images.unsplash.com/photo-1676590809985-2335879fcd05?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1286&q=80"
+            )
+        },
         clapCount = 320,
         isClapped = false
     )
