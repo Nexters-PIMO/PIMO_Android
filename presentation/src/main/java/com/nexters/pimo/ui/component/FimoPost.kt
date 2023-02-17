@@ -261,18 +261,24 @@ fun FimoPost(
                     contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp),
                     modifier = Modifier.width(78.dp)
                 ) {
-                    Image(
-                        painter = painterResource(
-                            id = if (isClapped) R.drawable.ic_clapped else R.drawable.ic_clap
-                        ),
-                        contentDescription = null,
-                        modifier = Modifier.size(width = 24.dp, height = 26.dp)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = clapCount.toString(),
-                        style = FimoTheme.typography.regular.copy(fontSize = 16.sp)
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start,
+                        modifier = Modifier.width(68.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(
+                                id = if (isClapped) R.drawable.ic_clapped else R.drawable.ic_clap
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier.size(width = 24.dp, height = 26.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = clapCount.toString(),
+                            style = FimoTheme.typography.regular.copy(fontSize = 16.sp)
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier.width(4.dp))
                 Button(
