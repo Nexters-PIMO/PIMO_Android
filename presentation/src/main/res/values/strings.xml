@@ -3,7 +3,7 @@
     <string name="login_kakao">카카오 로그인</string>
 
     <string name="friends_post">친구 글사진</string>
-    <string name="new_post_count">오늘 새로운 게시물 %d개</string>
+    <string name="new_post_count">오늘 새로운 게시물 %s개</string>
 
     <string name="welcome">에 오신 것을 환영해요</string>
     <string name="welcome_info">본인 프로필 혹은 게시물 공유로\n친구를 맺고 더 많은 글사진을 살펴볼 수 있어요</string>

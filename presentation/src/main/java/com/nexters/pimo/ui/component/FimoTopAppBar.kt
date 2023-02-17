@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.theme.FimoTheme
+import com.nexters.pimo.ui.util.NumberUtil.toSymbolFormat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -86,7 +87,10 @@ fun FimoHomeAppBar(
                     style = FimoTheme.typography.semibold.copy(fontSize = 20.sp)
                 )
                 Text(
-                    text = stringResource(id = R.string.new_post_count, newPostCount),
+                    text = stringResource(
+                        id = R.string.new_post_count,
+                        newPostCount.toSymbolFormat()
+                    ),
                     style = FimoTheme.typography.medium.copy(
                         fontSize = 14.sp,
                         color = FimoTheme.colors.grey7F

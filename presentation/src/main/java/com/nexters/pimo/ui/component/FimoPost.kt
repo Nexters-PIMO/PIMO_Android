@@ -48,6 +48,7 @@ import com.google.accompanist.pager.rememberPagerState
 import com.nexters.pimo.domain.model.Post
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.theme.FimoTheme
+import com.nexters.pimo.ui.util.NumberUtil.toSymbolFormat
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
 @Composable
@@ -275,7 +276,7 @@ fun FimoPost(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = clapCount.toString(),
+                            text = clapCount.toSymbolFormat(),
                             style = FimoTheme.typography.regular.copy(fontSize = 16.sp)
                         )
                     }
