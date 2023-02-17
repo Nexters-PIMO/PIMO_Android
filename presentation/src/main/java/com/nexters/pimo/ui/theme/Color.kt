@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 val FimoPrimary = Color(0xFFFD542E)
 val FimoPrimaryDark = Color(0xFFEC5629)
 val FimoSecondary = Color(0xFF000000)
+val GreyF7 = Color(0xFFF7F7F7)
 val GreyEF = Color(0xFFEFEFEF)
 val GreyE9 = Color(0xFFE9E9E9)
 val GreyD9 = Color(0xFFD9D9D9)
@@ -35,6 +36,7 @@ class FimoColors(
     primary: Color,
     primaryDark: Color,
     secondary: Color,
+    greyF7: Color,
     greyEF: Color,
     greyE9: Color,
     greyD9: Color,
@@ -47,6 +49,8 @@ class FimoColors(
     var primaryDark: Color by mutableStateOf(primaryDark, structuralEqualityPolicy())
         private set
     var secondary: Color by mutableStateOf(secondary, structuralEqualityPolicy())
+        private set
+    var greyF7: Color by mutableStateOf(greyF7, structuralEqualityPolicy())
         private set
     var greyEF: Color by mutableStateOf(greyEF, structuralEqualityPolicy())
         private set
@@ -65,6 +69,7 @@ class FimoColors(
         primary: Color = this.primary,
         primaryDark: Color = this.primaryDark,
         secondary: Color = this.secondary,
+        greyF7: Color = this.greyF7,
         greyEF: Color = this.greyEF,
         greyE9: Color = this.greyE9,
         greyD9: Color = this.greyD9,
@@ -75,6 +80,7 @@ class FimoColors(
         primary = primary,
         primaryDark = primaryDark,
         secondary = secondary,
+        greyF7 = greyF7,
         greyEF = greyEF,
         greyE9 = greyE9,
         greyD9 = greyD9,
@@ -88,6 +94,7 @@ fun fimoLightColors(
     primary: Color = FimoPrimary,
     primaryDark: Color = FimoPrimaryDark,
     secondary: Color = FimoSecondary,
+    greyF7: Color = GreyF7,
     greyEF: Color = GreyEF,
     greyE9: Color = GreyE9,
     greyD9: Color = GreyD9,
@@ -98,6 +105,7 @@ fun fimoLightColors(
     primary = primary,
     primaryDark = primaryDark,
     secondary = secondary,
+    greyF7 = greyF7,
     greyEF = greyEF,
     greyE9 = greyE9,
     greyD9 = greyD9,
