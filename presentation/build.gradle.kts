@@ -41,6 +41,9 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.orbit.mvi)
     implementation(libs.coil.compose)
+    
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

@@ -20,7 +20,7 @@ datastore = "1.0.0"
 
 gms = "4.3.15"
 firebase = "31.2.0"
-accompanist = "0.29.0-alpha"
+accompanist = "0.29.1-alpha"
 secrets-gradle-plugin = "2.0.1"
 
 orbit-mvi = "4.5.0"
@@ -81,6 +81,7 @@ accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-
 accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
 accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "accompanist" }
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
+accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist" }
 
 # Room
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
