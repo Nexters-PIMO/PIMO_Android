@@ -14,6 +14,8 @@ android {
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -35,12 +37,18 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.lifecycle.runtime)
     implementation(libs.coroutines.android)
-    
+
     implementation(libs.bundles.compose)
     implementation(libs.bundles.orbit.mvi)
+    implementation(libs.coil.compose)
+    
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
     debugImplementation(libs.compose.ui.tooling)
+
+    coreLibraryDesugaring(libs.android.desugar)
 }
