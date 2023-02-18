@@ -67,8 +67,8 @@ import kotlinx.coroutines.delay
 fun FimoPost(
     modifier: Modifier = Modifier,
     post: Post,
-    showOcrHelp: Boolean,
-    onCloseOcrHelp: () -> Unit,
+    showTooltip: Boolean,
+    onCloseTooltip: () -> Unit,
     onMoreClick: () -> Unit,
     onCopyText: () -> Unit,
     onPlayAudio: (onStopCallback: () -> Unit) -> Unit,
@@ -219,7 +219,7 @@ fun FimoPost(
                         }
                     }
                     Spacer(modifier = Modifier.width(4.dp))
-                    if (showOcrHelp) {
+                    if (showTooltip) {
                         Box(
                             contentAlignment = Alignment.Center
                         ) {
@@ -245,7 +245,7 @@ fun FimoPost(
                                     )
                                 )
                                 CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
-                                    IconButton(onClick = onCloseOcrHelp) {
+                                    IconButton(onClick = onCloseTooltip) {
                                         Icon(
                                             painter = painterResource(id = R.drawable.ic_close),
                                             contentDescription = null,

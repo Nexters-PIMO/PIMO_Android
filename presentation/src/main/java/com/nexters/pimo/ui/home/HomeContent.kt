@@ -13,14 +13,18 @@ import com.nexters.pimo.ui.component.FimoDivider
 import com.nexters.pimo.ui.component.FimoPost
 
 @Composable
-fun HomeContent(posts: List<Post>) {
+fun HomeContent(
+    posts: List<Post>,
+    showTooltip: Boolean,
+    onCloseTooltip: () -> Unit
+) {
     LazyColumn(contentPadding = PaddingValues(vertical = 21.dp, horizontal = 20.dp)) {
         items(posts) {
             Column {
                 FimoPost(
                     post = it,
-                    showOcrHelp = true,
-                    onCloseOcrHelp = { /*TODO*/ },
+                    showTooltip = showTooltip,
+                    onCloseTooltip = onCloseTooltip,
                     onMoreClick = { /*TODO*/ },
                     onCopyText = { /*TODO*/ },
                     onPlayAudio = { /*TODO*/ },

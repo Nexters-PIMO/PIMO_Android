@@ -3,6 +3,8 @@ package com.nexters.pimo.ui.home
 import com.nexters.pimo.domain.model.Post
 import com.nexters.pimo.domain.model.TextImage
 import com.nexters.pimo.domain.model.User
+import com.nexters.pimo.domain.usecase.CloseTooltipUseCase
+import com.nexters.pimo.domain.usecase.GetTooltipVisibilityUseCase
 import com.nexters.pimo.ui.base.BaseViewModel
 import com.nexters.pimo.ui.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +17,10 @@ import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : ContainerHost<HomeState, HomeSideEffect>,
+class HomeViewModel @Inject constructor(
+    private val getTooltipVisibilityUseCase: GetTooltipVisibilityUseCase,
+    private val closeTooltipUseCase: CloseTooltipUseCase
+) : ContainerHost<HomeState, HomeSideEffect>,
     BaseViewModel() {
 
     override val container = container<HomeState, HomeSideEffect>(HomeState())
@@ -43,10 +48,21 @@ class HomeViewModel @Inject constructor() : ContainerHost<HomeState, HomeSideEff
         intent {
             reduce { state.copy(uiState = UiState.Loading) }
 
+            val showTooltip = getTooltipVisibilityUseCase().getOrThrow()
             delay(1000)
-            reduce { state.copy(posts = List(5) { tempPost }) }
+            reduce {
+                state.copy(
+                    posts = List(5) { tempPost },
+                    showTooltip = showTooltip
+                )
+            }
 
             reduce { state.copy(uiState = UiState.Done) }
         }
+    }
+
+    fun onCloseTooltip() = intent {
+        reduce { state.copy(showTooltip = false) }
+        closeTooltipUseCase()
     }
 }

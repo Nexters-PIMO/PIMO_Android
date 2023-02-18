@@ -38,7 +38,11 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
         when (state.uiState) {
             UiState.Done -> {
                 if (state.posts.isNotEmpty()) {
-                    HomeContent(posts = state.posts)
+                    HomeContent(
+                        posts = state.posts,
+                        showTooltip = state.showTooltip,
+                        onCloseTooltip = viewModel::onCloseTooltip
+                    )
                 } else {
                     Welcome()
                 }
