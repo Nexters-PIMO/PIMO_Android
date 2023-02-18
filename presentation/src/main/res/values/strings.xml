@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="login_title">글사진 아카이브 플랫폼</string>
     <string name="login_kakao">카카오 로그인</string>
+    <string name="signup_sns">SNS 계정으로 간편 가입하기</string>
 
     <string name="friends_post">친구 글사진</string>
     <string name="new_post_count">오늘 새로운 게시물 %s개</string>
