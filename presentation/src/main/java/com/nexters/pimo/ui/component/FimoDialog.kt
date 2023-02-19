@@ -13,12 +13,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -83,13 +85,16 @@ fun FimoDialog(
                     Row(
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        TextButton(
+                        Button(
                             onClick = onLeftClick,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight(),
                             contentPadding = PaddingValues(0.dp),
-                            interactionSource = NoRippleInteractionSource
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = FimoTheme.colors.white
+                            ),
+                            shape = RectangleShape
                         ) {
                             Text(
                                 text = stringResource(id = leftStringRes),
@@ -100,13 +105,16 @@ fun FimoDialog(
                             )
                         }
                         FimoVertDivider(modifier = Modifier.fillMaxHeight())
-                        TextButton(
+                        Button(
                             onClick = onRightClick,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight(),
                             contentPadding = PaddingValues(0.dp),
-                            interactionSource = NoRippleInteractionSource
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = FimoTheme.colors.white
+                            ),
+                            shape = RectangleShape
                         ) {
                             Text(
                                 text = stringResource(id = rightStringRes),
