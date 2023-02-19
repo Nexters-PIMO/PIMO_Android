@@ -313,6 +313,7 @@ fun FimoPost(
                             contentColor = FimoTheme.colors.black
                         ),
                         contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp),
+                        interactionSource = NoRippleInteractionSource,
                         modifier = Modifier.width(44.dp)
                     ) {
                         Image(
@@ -333,6 +334,7 @@ fun FimoPost(
                         }
                     },
                     contentPadding = PaddingValues(horizontal = 5.dp, vertical = 3.dp),
+                    interactionSource = NoRippleInteractionSource,
                 ) {
                     Image(
                         painter = painterResource(
