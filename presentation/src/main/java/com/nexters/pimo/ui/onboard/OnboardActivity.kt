@@ -1,7 +1,5 @@
 package com.nexters.pimo.ui.onboard
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import com.nexters.pimo.ui.base.BaseActivity
