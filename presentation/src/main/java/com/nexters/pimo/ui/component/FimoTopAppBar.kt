@@ -80,23 +80,25 @@ fun FimoHomeAppBar(
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = stringResource(id = R.string.friends_post),
                     style = FimoTheme.typography.semibold.copy(fontSize = 20.sp)
                 )
-                Text(
-                    text = stringResource(
-                        id = R.string.new_post_count,
-                        newPostCount.toSymbolFormat()
-                    ),
-                    style = FimoTheme.typography.medium.copy(
-                        fontSize = 14.sp,
-                        color = FimoTheme.colors.grey7F
+                Spacer(modifier = Modifier.weight(1f))
+                if (newPostCount > 0) {
+                    Text(
+                        text = stringResource(
+                            id = R.string.new_post_count,
+                            newPostCount.toSymbolFormat()
+                        ),
+                        style = FimoTheme.typography.medium.copy(
+                            fontSize = 14.sp,
+                            color = FimoTheme.colors.grey7F
+                        )
                     )
-                )
+                }
             }
         }
     }
