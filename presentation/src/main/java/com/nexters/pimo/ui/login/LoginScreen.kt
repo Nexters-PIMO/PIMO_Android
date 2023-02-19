@@ -60,7 +60,7 @@ fun LoginScreen(onLogin: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = stringResource(id = R.string.signup_sns),
+                text = stringResource(id = R.string.login_sns),
                 style = FimoTheme.typography.medium.copy(
                     fontSize = 14.sp,
                     color = FimoTheme.colors.white
