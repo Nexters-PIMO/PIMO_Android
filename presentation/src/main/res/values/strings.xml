@@ -9,4 +9,18 @@
     <string name="welcome_info">본인 프로필 혹은 게시물 공유로\n친구를 맺고 더 많은 글사진을 살펴볼 수 있어요</string>
 
     <string name="copy_text">텍스트 복사하기</string>
+
+    <string name="new_post">새 글사진</string>
+    <string name="edit_post">수정하기</string>
+    <string name="post">게시하기</string>
+    <string name="thumbnail">미리보기</string>
+    <string name="thumbnail_help">미리보고 싶은 썸네일을 선택해주세요</string>
+    <string name="edit_post_dialog">작성 중인 게시글이 삭제됩니다</string>
+    <string name="edit_post_dialog_sub">정말 나가시겠습니까?</string>
+    <string name="non_text_image_toast">글이 존재하지 않는 사진이에요!</string>
+    <string name="non_text_image_toast_sub">글이 포함되어 있는 사진으로 업로드해주세요</string>
+
+    <string name="cancel">취소하기</string>
+    <string name="exit">나가기</string>
+    <string name="done">완료</string>
 </resources>
