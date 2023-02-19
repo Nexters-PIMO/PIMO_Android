@@ -94,7 +94,8 @@ fun UploadScreen(
         toolbarTintColor = Color.BLACK,
         allowFlipping = false,
         allowRotation = false,
-        cropMenuCropButtonTitle = context.getString(R.string.done)
+        cropMenuCropButtonTitle = context.getString(R.string.done),
+        imageSourceIncludeCamera = false
     )
 
     val imagePickerLauncher =
