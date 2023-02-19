@@ -1,5 +1,7 @@
 package com.nexters.pimo.ui.login
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
@@ -9,7 +11,7 @@ import com.nexters.pimo.domain.model.LoginResult
 import com.nexters.pimo.feature.kakao.KakaoLogin
 import com.nexters.pimo.ui.base.BaseActivity
 import com.nexters.pimo.ui.main.MainActivity
-import com.nexters.pimo.ui.onboard.OnboardActivity
+import com.nexters.pimo.ui.theme.FimoTheme
 
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -29,24 +31,26 @@ class LoginActivity : BaseActivity() {
 
         loginViewModel.observe(lifecycleOwner = this, state = ::handleState, sideEffect = ::handleSideEffect)
 
-        setContent{
-            LoginScreen(
-                onLogin = { requestKakaoLogin() }
-            )
+        setContent {
+            FimoTheme {
+                LoginScreen (
+                    onLogin = { requestKakaoLogin() }
+                )
+            }
         }
     }
 
     private fun handleState(state: LoginState) {
         when (state.result) {
             LoginResult.Signed -> startMainActivity()
-            LoginResult.Onboard -> startOnboardActivity()
+            LoginResult.SignedFirst -> startProfileActivity()
             else -> Unit
         }
     }
 
-    private fun startOnboardActivity() {
-        OnboardActivity.startActivity(this)
-        finish()
+    private fun startProfileActivity() {
+//        ProfileActivity.startActivity(this)
+//        finish()
     }
 
     private fun startMainActivity() {
@@ -70,5 +74,12 @@ class LoginActivity : BaseActivity() {
             .onFailure {
                 handleException(it)
             }
+    }
+
+    companion object {
+        fun startActivity(context: Context) {
+            val intent = Intent(context, LoginActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 }
