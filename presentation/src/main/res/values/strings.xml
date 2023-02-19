@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="login_title">글사진 아카이브 플랫폼</string>
+    <string name="login_sns">SNS 계정으로 간편 가입하기</string>
     <string name="login_kakao">카카오 로그인</string>
-    <string name="signup_sns">SNS 계정으로 간편 가입하기</string>
+
+    <string name="onboard_skip">SKIP</string>
+    <string name="onboard_title_1">글사진 아카이브, fimo</string>
+    <string name="onboard_content_1">글사진 아카이브는 내가 소중하게 여기던 글사진을\n저장해두고, 사진 속 텍스트를 쉽게 공유할 수 있어요.\n공유할수록 내 기억속에서도 오래 머물꺼에요.</string>
+    <string name="onboard_title_2_1">내가 소중히 여겼던 글사진을\n</string>
+    <string name="onboard_title_2_2">아카이빙</string>
+    <string name="onboard_title_2_3">할 수 있어요</string>
+    <string name="onboard_content_2">나의 아카이브에 원하는 글 사진을 저장 할 수 있고\n아카이브 된 글 사진 속 텍스트 내용을 음성기능을\n통해 직접 들어볼 수 있어요.</string>
+    <string name="onboard_title_3_1">아카이빙한 글사진을\n</string>
+    <string name="onboard_title_3_2">텍스트 변환</string>
+    <string name="onboard_title_3_3">해&#160;</string>
+    <string name="onboard_title_3_4">공유</string>
+    <string name="onboard_title_3_5">해요</string>
+    <string name="onboard_content_3">글 사진 속 글을 텍스트 변환으로 손쉽게 클립보드\n복사를 하고 지인들에게 간편하게 원하는 문장을\n메신저로 공유 할 수 있어요.</string>
+    <string name="onboard_create_archive">내 아카이브 만들기</string>
 
     <string name="friends_post">친구 글사진</string>
     <string name="new_post_count">오늘 새로운 게시물 %s개</string>
