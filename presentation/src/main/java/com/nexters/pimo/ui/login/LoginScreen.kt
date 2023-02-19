@@ -2,6 +2,7 @@ package com.nexters.pimo.ui.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -34,16 +35,15 @@ fun LoginScreen(onLogin: () -> Unit) {
             modifier = Modifier.align(Alignment.TopCenter),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(190.dp))
+            Spacer(modifier = Modifier.height(199.dp))
             Text(
                 text = stringResource(id = R.string.login_title),
-                style = FimoTheme.typography.light.copy(
-                    fontSize = 16.sp,
+                style = FimoTheme.typography.regular.copy(
+                    fontSize = 15.sp,
                     color = FimoTheme.colors.white
-                ),
-                textAlign = TextAlign.Center,
+                )
             )
-            Spacer(modifier = Modifier.height(25.dp))
+            Spacer(modifier = Modifier.height(20.dp))
             Image(
                 modifier = Modifier
                     .width(200.dp)
@@ -55,8 +55,8 @@ fun LoginScreen(onLogin: () -> Unit) {
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(horizontal = 16.dp)
-                .padding(bottom = 50.dp),
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 68.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -67,7 +67,7 @@ fun LoginScreen(onLogin: () -> Unit) {
                 ),
                 textAlign = TextAlign.Center,
             )
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(24.dp))
             KakaoLoginButton(onClick = onLogin)
         }
     }
@@ -76,27 +76,34 @@ fun LoginScreen(onLogin: () -> Unit) {
 
 @Composable
 fun KakaoLoginButton(onClick: () -> Unit) {
+    val interactionSource = MutableInteractionSource()
+
     Surface(
         shape = RoundedCornerShape(12.dp),
         color = Color(0xFFFEE500),
         modifier = Modifier
             .clip(RoundedCornerShape(12.dp))
-            .clickable { onClick() }
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+            ) {
+                onClick()
+            }
             .height(54.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
+            modifier = Modifier.padding(horizontal = 15.dp, vertical = 16.dp)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_kakao),
                 contentDescription = null,
                 tint = Color.Black,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(26.dp)
             )
             Text(
                 text = stringResource(id = R.string.login_kakao),
-                style = FimoTheme.typography.medium.copy(
+                style = FimoTheme.typography.regular.copy(
                     fontSize = 18.sp,
                     color = FimoTheme.colors.black
                 ),
