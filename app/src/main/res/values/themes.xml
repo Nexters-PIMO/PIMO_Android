@@ -4,4 +4,9 @@
     <style name="Theme.PIMO" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/purple_700</item>
     </style>
+
+    <style name="Theme.ImageCropper" parent="Theme.AppCompat">
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:actionMenuTextColor">@color/black</item>
+    </style>
 </resources>
