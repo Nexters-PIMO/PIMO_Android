@@ -39,6 +39,10 @@
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".ui.upload.UploadActivity"
+            android:screenOrientation="portrait" />
+
         <!-- Kakao login redirection -->
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
