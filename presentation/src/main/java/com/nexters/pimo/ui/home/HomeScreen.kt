@@ -34,7 +34,10 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val state = viewModel.collectAsState().value
 
     Column(modifier = Modifier.fillMaxSize()) {
-        FimoHomeAppBar(onActionClick = { /*TODO*/ }, newPostCount = state.newPostCount)
+        FimoHomeAppBar(
+            onActionClick = { /*TODO*/ },
+            newPostCount = state.newPostCount
+        )
         when (state.uiState) {
             UiState.Done -> {
                 if (state.posts.isNotEmpty()) {
