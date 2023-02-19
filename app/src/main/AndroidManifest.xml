@@ -29,7 +29,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -37,7 +36,11 @@
 
         <activity
             android:name=".ui.login.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.onboard.OnboardActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- Kakao login redirection -->
         <activity
