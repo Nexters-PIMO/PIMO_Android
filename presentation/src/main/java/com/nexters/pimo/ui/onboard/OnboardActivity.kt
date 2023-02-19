@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import com.nexters.pimo.ui.base.BaseActivity
+import com.nexters.pimo.ui.login.LoginActivity
+import com.nexters.pimo.ui.theme.FimoTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -14,21 +16,17 @@ class OnboardActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            OnboardScreen (
-                onSkip = { startProfileActivity() }
-            )
+            FimoTheme {
+                OnboardScreen (
+                    onSkip = { startLoginActivity() }
+                )
+            }
         }
     }
 
-    private fun startProfileActivity() {
-//        ProfileActivity.startActivity(this)
-//        finish()
+    private fun startLoginActivity() {
+        LoginActivity.startActivity(this)
+        finish()
     }
 
-    companion object {
-        fun startActivity(context: Context) {
-            val intent = Intent(context, OnboardActivity::class.java)
-            context.startActivity(intent)
-        }
-    }
 }

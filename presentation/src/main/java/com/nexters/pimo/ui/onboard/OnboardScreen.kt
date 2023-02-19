@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,7 +46,7 @@ fun OnboardScreen(
         exit = fadeOut(),
         content = {
             HorizontalPager(
-                count = 3,
+                count = 4,
                 state = pagerState,
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -54,13 +55,14 @@ fun OnboardScreen(
                     0 -> Onboard1(onClick = onSkip)
                     1 -> Onboard2(onClick = onSkip)
                     2 -> Onboard3(onClick = onSkip)
+                    3 -> Onboard4(onClick = onSkip)
                 }
             }
         }
     )
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }
-            .map { it == 2 }
+            .map { it == 3 }
             .collect { lastPage = it }
     }
 }
@@ -70,80 +72,102 @@ fun Onboard1(onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .paint(
-                painterResource(id = R.drawable.bg_login),
-                contentScale = ContentScale.FillHeight
-            )
+            .background(FimoTheme.colors.white)
     ) {
         Column(
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(horizontal = 24.dp)
-                .padding(top = 60.dp),
+                .padding(horizontal = 20.dp)
+                .padding(top = 64.dp),
         ) {
             Text(
                 modifier = Modifier.clickable { onClick() },
                 text = stringResource(id = R.string.onboard_skip),
                 style = FimoTheme.typography.medium.copy(
                     fontSize = 18.sp,
-                    color = FimoTheme.colors.primaryDark
+                    color = FimoTheme.colors.primary
                 )
             )
         }
         Column(
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .padding(horizontal = 40.dp)
+                .padding(horizontal = 20.dp)
                 .padding(bottom = 60.dp),
         ) {
             Image(
                 modifier = Modifier
-                    .width(40.dp)
-                    .height(40.dp),
-                painter = painterResource(id = R.drawable.img_logo_icon),
+                    .width(48.dp)
+                    .height(48.dp),
+                painter = painterResource(id = R.drawable.ic_logo),
                 contentDescription = null,
             )
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = stringResource(id = R.string.onboard_title_1),
-                style = FimoTheme.typography.bold.copy(
-                    fontSize = 26.sp,
-                    color = FimoTheme.colors.white
+            Spacer(modifier = Modifier.height(19.dp))
+            Row(
+                verticalAlignment = Alignment.Bottom
+            ) {
+                Text(
+                    text = stringResource(id = R.string.onboard_title_1),
+                    style = FimoTheme.typography.bold.copy(
+                        fontSize = 25.sp,
+                        color = FimoTheme.colors.black
+                    ),
+                    lineHeight = 34.sp
                 )
-            )
+                Spacer(modifier = Modifier.width(6.dp))
+                Box(
+                    modifier = Modifier.padding(bottom = 5.dp)
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .width(72.dp)
+                            .height(20.dp),
+                        painter = painterResource(id = R.drawable.img_fimo),
+                        contentDescription = null,
+                    )
+                }
+            }
             Spacer(modifier = Modifier.height(25.dp))
             Text(
                 text = stringResource(id = R.string.onboard_content_1),
-                style = FimoTheme.typography.regular.copy(
-                    fontSize = 16.sp,
-                    color = FimoTheme.colors.white
+                style = FimoTheme.typography.light.copy(
+                    fontSize = 15.sp,
+                    color = FimoTheme.colors.black
                 ),
-                lineHeight = 25.sp
+                lineHeight = 23.sp
             )
-            Spacer(modifier = Modifier.height(80.dp))
+            Spacer(modifier = Modifier.height(69.dp))
             Row() {
                 Box(
                     modifier = Modifier
-                        .width(32.dp)
-                        .height(8.dp)
-                        .clip(RoundedCornerShape(50.dp))
-                        .background(FimoTheme.colors.black)
+                        .width(18.dp)
+                        .height(6.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(FimoTheme.colors.primary)
                 )
-                Spacer(modifier = Modifier.width(7.dp))
+                Spacer(modifier = Modifier.width(4.dp))
                 Box(
                     modifier = Modifier
-                        .width(16.dp)
-                        .height(8.dp)
-                        .clip(RoundedCornerShape(100.dp))
-                        .background(FimoTheme.colors.white)
+                        .width(8.dp)
+                        .height(6.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(FimoTheme.colors.greyD9)
                 )
-                Spacer(modifier = Modifier.width(7.dp))
+                Spacer(modifier = Modifier.width(4.dp))
                 Box(
                     modifier = Modifier
-                        .width(16.dp)
-                        .height(8.dp)
-                        .clip(RoundedCornerShape(100.dp))
-                        .background(FimoTheme.colors.white)
+                        .width(8.dp)
+                        .height(6.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(FimoTheme.colors.greyD9)
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Box(
+                    modifier = Modifier
+                        .width(8.dp)
+                        .height(6.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(FimoTheme.colors.greyD9)
                 )
             }
         }
@@ -155,99 +179,207 @@ fun Onboard2(onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(FimoTheme.colors.white)
+            .background(FimoTheme.colors.white),
     ) {
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 24.dp)
-                .padding(top = 60.dp),
-        ) {
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.TopEnd
-            ) {
-                Text(
-                    modifier = Modifier.clickable { onClick() },
-                    text = stringResource(id = R.string.onboard_skip),
-                    style = FimoTheme.typography.medium.copy(
-                        fontSize = 18.sp,
-                        color = FimoTheme.colors.primaryDark
-                    ),
-                )
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    modifier = Modifier
-                        .width(187.dp)
-                        .height(381.dp),
-                    painter = painterResource(id = R.drawable.img_onboard_2),
-                    contentDescription = null,
-
-                )
-            }
-            Spacer(modifier = Modifier.height(60.dp))
+        Column() {
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 24.dp)
+                    .fillMaxWidth()
+                    .height(422.dp)
+                    .background(FimoTheme.colors.greyEF),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 64.dp),
+                    contentAlignment = Alignment.TopEnd
+                ) {
+                    Text(
+                        modifier = Modifier.clickable { onClick() },
+                        text = stringResource(id = R.string.onboard_skip),
+                        style = FimoTheme.typography.medium.copy(
+                            fontSize = 18.sp,
+                            color = FimoTheme.colors.primary
+                        )
+                    )
+                }
+            }
+            Column(
+                modifier = Modifier
+                    .padding(top = 39.dp)
+                    .padding(horizontal = 20.dp)
             ) {
                 Text(
-                    text = buildAnnotatedString {
-                        append(stringResource(id = R.string.onboard_title_2_1))
-                        withStyle(style = SpanStyle(color = FimoTheme.colors.primary)) {
-                            append(stringResource(id = R.string.onboard_title_2_2))
-                        }
-                        append(stringResource(id = R.string.onboard_title_2_3))
-                    },
+                    text = stringResource(id = R.string.onboard_title_2_1),
                     style = FimoTheme.typography.bold.copy(
-                        fontSize = 26.sp,
+                        fontSize = 16.sp,
+                        color = FimoTheme.colors.primary
+                    ),
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringResource(id = R.string.onboard_title_2_2),
+                    style = FimoTheme.typography.semibold.copy(
+                        fontSize = 22.sp,
                         color = FimoTheme.colors.black
                     ),
-                    lineHeight = 36.sp,
+                    lineHeight = 32.sp
                 )
-                Spacer(modifier = Modifier.height(25.dp))
+                Spacer(modifier = Modifier.height(18.dp))
                 Text(
                     text = stringResource(id = R.string.onboard_content_2),
-                    style = FimoTheme.typography.regular.copy(
-                        fontSize = 16.sp,
+                    style = FimoTheme.typography.light.copy(
+                        fontSize = 15.sp,
                         color = FimoTheme.colors.black
                     ),
-                    lineHeight = 25.sp
+                    lineHeight = 23.sp
                 )
             }
         }
         Column(
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .padding(horizontal = 40.dp)
-                .padding(bottom = 60.dp)
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 60.dp),
         ) {
             Row() {
                 Box(
                     modifier = Modifier
-                        .width(32.dp)
-                        .height(8.dp)
-                        .clip(RoundedCornerShape(50.dp))
-                        .background(FimoTheme.colors.greyD0)
+                        .width(8.dp)
+                        .height(6.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(FimoTheme.colors.greyD9)
                 )
-                Spacer(modifier = Modifier.width(7.dp))
+                Spacer(modifier = Modifier.width(4.dp))
                 Box(
                     modifier = Modifier
-                        .width(16.dp)
-                        .height(8.dp)
-                        .clip(RoundedCornerShape(100.dp))
-                        .background(FimoTheme.colors.black)
+                        .width(18.dp)
+                        .height(6.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(FimoTheme.colors.primary)
                 )
-                Spacer(modifier = Modifier.width(7.dp))
+                Spacer(modifier = Modifier.width(4.dp))
                 Box(
                     modifier = Modifier
-                        .width(16.dp)
-                        .height(8.dp)
-                        .clip(RoundedCornerShape(100.dp))
-                        .background(FimoTheme.colors.greyD0)
+                        .width(8.dp)
+                        .height(6.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(FimoTheme.colors.greyD9)
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Box(
+                    modifier = Modifier
+                        .width(8.dp)
+                        .height(6.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(FimoTheme.colors.greyD9)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun Onboard3(onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(FimoTheme.colors.white),
+    ) {
+        Column() {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(422.dp)
+                    .background(FimoTheme.colors.greyEF),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 64.dp),
+                    contentAlignment = Alignment.TopEnd
+                ) {
+                    Text(
+                        modifier = Modifier.clickable { onClick() },
+                        text = stringResource(id = R.string.onboard_skip),
+                        style = FimoTheme.typography.medium.copy(
+                            fontSize = 18.sp,
+                            color = FimoTheme.colors.primary
+                        )
+                    )
+                }
+            }
+            Column(
+                modifier = Modifier
+                    .padding(top = 39.dp)
+                    .padding(horizontal = 20.dp)
+            ) {
+                Text(
+                    text = stringResource(id = R.string.onboard_title_3_1),
+                    style = FimoTheme.typography.bold.copy(
+                        fontSize = 16.sp,
+                        color = FimoTheme.colors.primary
+                    ),
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringResource(id = R.string.onboard_title_3_2),
+                    style = FimoTheme.typography.semibold.copy(
+                        fontSize = 22.sp,
+                        color = FimoTheme.colors.black
+                    ),
+                    lineHeight = 32.sp
+                )
+                Spacer(modifier = Modifier.height(18.dp))
+                Text(
+                    text = stringResource(id = R.string.onboard_content_3),
+                    style = FimoTheme.typography.light.copy(
+                        fontSize = 15.sp,
+                        color = FimoTheme.colors.black
+                    ),
+                    lineHeight = 23.sp
+                )
+            }
+        }
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 60.dp),
+        ) {
+            Row() {
+                Box(
+                    modifier = Modifier
+                        .width(8.dp)
+                        .height(6.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(FimoTheme.colors.greyD9)
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Box(
+                    modifier = Modifier
+                        .width(8.dp)
+                        .height(6.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(FimoTheme.colors.greyD9)
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Box(
+                    modifier = Modifier
+                        .width(18.dp)
+                        .height(6.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(FimoTheme.colors.primary)
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Box(
+                    modifier = Modifier
+                        .width(8.dp)
+                        .height(6.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(FimoTheme.colors.greyD9)
                 )
             }
         }
@@ -256,7 +388,7 @@ fun Onboard2(onClick: () -> Unit) {
 }
 
 @Composable
-fun Onboard3(onClick: () -> Unit) {
+fun Onboard4(onClick: () -> Unit) {
     val interactionSource = MutableInteractionSource()
 
     Box(
@@ -264,97 +396,85 @@ fun Onboard3(onClick: () -> Unit) {
             .fillMaxSize()
             .background(FimoTheme.colors.white)
     ) {
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 24.dp)
-                .padding(top = 100.dp),
-        ) {
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    modifier = Modifier
-                        .width(187.dp)
-                        .height(381.dp),
-                    painter = painterResource(id = R.drawable.img_onboard_2),
-                    contentDescription = null,
-                )
-            }
-            Spacer(modifier = Modifier.height(60.dp))
+        Column() {
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 24.dp)
+                    .fillMaxWidth()
+                    .height(422.dp)
+                    .background(FimoTheme.colors.greyEF),
+            ) {
+            }
+            Column(
+                modifier = Modifier
+                    .padding(top = 39.dp)
+                    .padding(horizontal = 20.dp)
             ) {
                 Text(
-                    text = buildAnnotatedString {
-                        append(stringResource(id = R.string.onboard_title_3_1))
-                        withStyle(style = SpanStyle(color = FimoTheme.colors.primary)) {
-                            append(stringResource(id = R.string.onboard_title_3_2))
-                        }
-                        append(stringResource(id = R.string.onboard_title_3_3))
-                        withStyle(style = SpanStyle(color = FimoTheme.colors.primary)) {
-                            append(stringResource(id = R.string.onboard_title_3_4))
-                        }
-                        append(stringResource(id = R.string.onboard_title_3_5))
-                    },
+                    text = stringResource(id = R.string.onboard_title_4_1),
                     style = FimoTheme.typography.bold.copy(
-                        fontSize = 26.sp,
-                        color = FimoTheme.colors.black
-                    ),
-                    lineHeight = 36.sp,
-                )
-                Spacer(modifier = Modifier.height(25.dp))
-                Text(
-                    text = stringResource(id = R.string.onboard_content_3),
-                    style = FimoTheme.typography.regular.copy(
                         fontSize = 16.sp,
+                        color = FimoTheme.colors.primary
+                    ),
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringResource(id = R.string.onboard_title_4_2),
+                    style = FimoTheme.typography.semibold.copy(
+                        fontSize = 22.sp,
                         color = FimoTheme.colors.black
                     ),
-                    lineHeight = 25.sp
+                    lineHeight = 32.sp
+                )
+                Spacer(modifier = Modifier.height(18.dp))
+                Text(
+                    text = stringResource(id = R.string.onboard_content_4),
+                    style = FimoTheme.typography.light.copy(
+                        fontSize = 15.sp,
+                        color = FimoTheme.colors.black
+                    ),
+                    lineHeight = 23.sp
                 )
             }
         }
         Column(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(horizontal = 40.dp)
-                .padding(bottom = 60.dp)
+                .align(Alignment.BottomStart)
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 60.dp),
         ) {
             Surface(
-                shape = RoundedCornerShape(5.dp),
-                color = Color(0xFFFFFFFF),
+                shape = RoundedCornerShape(4.dp),
+                color = FimoTheme.colors.black,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(5.dp))
+                    .clip(RoundedCornerShape(4.dp))
                     .clickable(
                         interactionSource = interactionSource,
                         indication = null,
                     ) {
                         onClick()
                     }
-                    .height(54.dp),
-                border = BorderStroke(1.dp, FimoTheme.colors.greyD9),
+                    .height(56.dp),
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_logo),
-                            contentDescription = null,
-                            tint = FimoTheme.colors.primary,
-                            modifier = Modifier.size(30.dp)
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Text(
-                            text = stringResource(id = R.string.onboard_create_archive),
-                            style = FimoTheme.typography.semibold.copy(
-                                fontSize = 16.sp,
-                                color = FimoTheme.colors.black
-                            ),
-                        )
-                    }
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_logo_white),
+                        contentDescription = null,
+                        modifier = Modifier.size(30.dp),
+                        tint = FimoTheme.colors.white
+                    )
+                    Spacer(modifier = Modifier.width(14.dp))
+                    Text(
+                        text = stringResource(id = R.string.onboard_start_fimo),
+                        style = FimoTheme.typography.semibold.copy(
+                            fontSize = 16.sp,
+                            color = FimoTheme.colors.white
+                        ),
+                    )
+                }
             }
         }
     }
