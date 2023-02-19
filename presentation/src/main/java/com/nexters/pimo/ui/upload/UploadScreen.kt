@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Scaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -36,6 +35,10 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -54,6 +57,7 @@ import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.canhub.cropper.CropImageView
 import com.nexters.pimo.ui.R
+import com.nexters.pimo.ui.component.FimoDialog
 import com.nexters.pimo.ui.component.FimoSimpleAppBar
 import com.nexters.pimo.ui.component.NoRippleInteractionSource
 import com.nexters.pimo.ui.model.TextBitmap
@@ -68,6 +72,8 @@ fun UploadScreen(
 ) {
     val context = LocalContext.current
     val state = viewModel.collectAsState().value
+
+    var showDialog by remember { mutableStateOf(false) }
 
     val imageCropLauncher = rememberLauncherForActivityResult(CropImageContract()) { result ->
         if (result.isSuccessful) {
@@ -104,24 +110,21 @@ fun UploadScreen(
             imageCropLauncher.launch(cropOptions)
         }
 
-    Scaffold(
-        topBar = {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
             FimoSimpleAppBar(
                 backIconRes = R.drawable.ic_close,
-                onBack = onBack,
+                onBack = { showDialog = true },
                 titleStringRes = when (state.mode) {
                     UploadState.Mode.New -> R.string.new_post
                     UploadState.Mode.Edit -> R.string.edit_post
                 }
             )
-        }
-    ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -153,7 +156,7 @@ fun UploadScreen(
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = onBack,
                     modifier = Modifier
                         .height(56.dp)
                         .fillMaxWidth(),
@@ -170,13 +173,27 @@ fun UploadScreen(
                 }
             }
         }
-        AnimatedVisibility(
-            visible = state.uiState == UiState.Loading,
-            enter = fadeIn(),
-            exit = fadeOut()
-        ) {
-            Loading(modifier = Modifier.fillMaxSize())
-        }
+    }
+    AnimatedVisibility(
+        visible = state.uiState == UiState.Loading,
+        enter = fadeIn(),
+        exit = fadeOut()
+    ) {
+        Loading(modifier = Modifier.fillMaxSize())
+    }
+    AnimatedVisibility(
+        visible = showDialog,
+        enter = fadeIn(),
+        exit = fadeOut()
+    ) {
+        FimoDialog(
+            titleRes = R.string.edit_post_dialog,
+            subtitleRes = R.string.edit_post_dialog_sub,
+            leftStringRes = R.string.cancel,
+            rightStringRes = R.string.exit,
+            onLeftClick = { showDialog = false },
+            onRightClick = { onBack() }
+        )
     }
 }
 
