@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.ImageDecoder
 import android.os.Build
 import android.provider.MediaStore
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -109,6 +110,10 @@ fun UploadScreen(
             val cropOptions = CropImageContractOptions(uri, imageCropperOptions)
             imageCropLauncher.launch(cropOptions)
         }
+
+    BackHandler {
+        showDialog = true
+    }
 
     Box(
         modifier = Modifier.fillMaxSize(),
