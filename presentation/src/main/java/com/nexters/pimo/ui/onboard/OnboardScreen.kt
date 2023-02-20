@@ -53,11 +53,6 @@ fun OnboardScreen(
             }
         }
     )
-    LaunchedEffect(pagerState) {
-        snapshotFlow { pagerState.currentPage }
-            .map { it == 3 }
-            .collect { lastPage = it }
-    }
 }
 
 @Composable
