@@ -40,7 +40,7 @@ fun LoginScreen(onLogin: () -> Unit) {
                 text = stringResource(id = R.string.login_title),
                 style = FimoTheme.typography.regular.copy(
                     fontSize = 15.sp,
-                    color = FimoTheme.colors.white
+                    color = FimoTheme.colors.greyD9
                 )
             )
             Spacer(modifier = Modifier.height(20.dp))
