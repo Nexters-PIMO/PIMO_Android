@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.nexters.pimo.domain.model.LoginResult
+import com.nexters.pimo.domain.model.User
 import com.nexters.pimo.feature.kakao.KakaoLogin
 import com.nexters.pimo.ui.base.BaseActivity
 import com.nexters.pimo.ui.main.MainActivity
@@ -42,8 +43,8 @@ class LoginActivity : BaseActivity() {
 
     private fun handleState(state: LoginState) {
         when (state.result) {
-            LoginResult.Signed -> startMainActivity()
-            LoginResult.SignedFirst -> startProfileActivity()
+            is LoginResult.SignedIn -> startMainActivity(user = state.result.user)
+            LoginResult.NotSignedUpYet -> startProfileActivity()
             else -> Unit
         }
     }
@@ -53,7 +54,7 @@ class LoginActivity : BaseActivity() {
 //        finish()
     }
 
-    private fun startMainActivity() {
+    private fun startMainActivity(user: User) {
 //        MainActivity.startActivity(this)
 //        finish()
     }

@@ -11,6 +11,6 @@ class LoginUseCase @Inject constructor(
         providerToken: ProviderToken
     ): Result<LoginResult> = runCatching {
        //TODO: 서버로 토큰 보내 jwt 토큰 받아서, preference에 저장
-        LoginResult.SignedFirst
+        LoginResult.NotSignedUpYet
     }
 }
