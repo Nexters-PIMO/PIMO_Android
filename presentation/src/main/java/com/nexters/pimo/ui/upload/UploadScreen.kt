@@ -7,9 +7,6 @@ import android.provider.MediaStore
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +26,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
@@ -59,6 +55,7 @@ import com.canhub.cropper.CropImageOptions
 import com.canhub.cropper.CropImageView
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.component.FimoDialog
+import com.nexters.pimo.ui.component.FimoLoading
 import com.nexters.pimo.ui.component.FimoSimpleAppBar
 import com.nexters.pimo.ui.component.FimoToast
 import com.nexters.pimo.ui.component.NoRippleInteractionSource
@@ -186,13 +183,9 @@ fun UploadScreen(
             }
         }
     }
-    AnimatedVisibility(
-        visible = state.uiState == UiState.Loading,
-        enter = fadeIn(),
-        exit = fadeOut()
-    ) {
-        Loading(modifier = Modifier.fillMaxSize())
-    }
+    FimoLoading(
+        visible = state.uiState == UiState.Loading
+    )
     FimoDialog(
         visible = showDialog,
         titleRes = R.string.edit_post_dialog,
@@ -210,18 +203,6 @@ fun UploadScreen(
         subtitleRes = R.string.non_text_image_toast_sub,
         onDismiss = { showToast = false }
     )
-}
-
-@Composable
-fun Loading(modifier: Modifier = Modifier) {
-    Surface(
-        modifier = modifier,
-        color = FimoTheme.colors.black.copy(alpha = 0.5f)
-    ) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
-        }
-    }
 }
 
 @Composable
