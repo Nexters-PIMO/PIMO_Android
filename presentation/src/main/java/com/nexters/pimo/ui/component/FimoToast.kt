@@ -17,10 +17,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -32,13 +28,12 @@ import kotlinx.coroutines.delay
 @Composable
 fun FimoToast(
     modifier: Modifier = Modifier,
+    visible: Boolean,
     @StringRes titleRes: Int,
     @StringRes subtitleRes: Int,
     duration: FimoToastDuration = FimoToastDuration.Normal,
     onDismiss: () -> Unit,
 ) {
-    var visible by remember { mutableStateOf(false) }
-
     AnimatedVisibility(
         visible = visible,
         enter = fadeIn(),
@@ -81,12 +76,11 @@ fun FimoToast(
             }
         }
     }
-    LaunchedEffect(Unit) {
-        visible = true
-        delay(duration.timeMillis)
-        visible = false
-        delay(ANIMATION_TIMEMILLIS)
-        onDismiss()
+    LaunchedEffect(visible) {
+        if (visible) {
+            delay(duration.timeMillis)
+            onDismiss()
+        }
     }
 }
 
@@ -95,5 +89,3 @@ enum class FimoToastDuration(val timeMillis: kotlin.Long) {
     Normal(2000L),
     Long(2500L)
 }
-
-private const val ANIMATION_TIMEMILLIS = 500L

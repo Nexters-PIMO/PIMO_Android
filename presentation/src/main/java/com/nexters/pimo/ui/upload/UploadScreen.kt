@@ -203,14 +203,13 @@ fun UploadScreen(
         onRightClick = { onBack() },
         onDismiss = { showDialog = false }
     )
-    if (showToast) {
-        FimoToast(
-            modifier = Modifier.padding(bottom = 24.dp),
-            titleRes = R.string.non_text_image_toast,
-            subtitleRes = R.string.non_text_image_toast_sub,
-            onDismiss = { showToast = false }
-        )
-    }
+    FimoToast(
+        visible = showToast,
+        modifier = Modifier.padding(bottom = 24.dp),
+        titleRes = R.string.non_text_image_toast,
+        subtitleRes = R.string.non_text_image_toast_sub,
+        onDismiss = { showToast = false }
+    )
 }
 
 @Composable
