@@ -22,7 +22,7 @@ class LoginViewModel @Inject constructor(
         val providerToken = ProviderToken.kakao(accessToken, refreshToken)
         val result = loginUseCase(providerToken)
             .onFailure { handleException(it) }
-            .getOrNull()
+            .getOrThrow()
         reduce {
             state.copy(result = result)
         }
