@@ -13,6 +13,7 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import java.io.File
+import java.lang.Integer.max
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,7 +38,7 @@ class UploadViewModel @Inject constructor(
         val textBitmaps = state.textBitmaps.toMutableList()
         textBitmaps.removeAt(index)
         val selectedIndex = with(state.selectedIndex) {
-            if (this >= index) this - 1
+            if (this >= index) max(0, this - 1)
             else this
         }
         reduce {
