@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import okhttp3.internal.toImmutableList
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import java.io.File
@@ -49,7 +50,14 @@ class UploadViewModel @Inject constructor(
 
     fun onPickImage(imagePath: String, bitmap: Bitmap) = intent {
         reduce { state.copy(uiState = UiState.Loading) }
+
         val text = ocrService.getTextOfImage(File(imagePath))
+        if (text.trim().isEmpty()) {
+            reduce { state.copy(uiState = UiState.Done) }
+            postSideEffect(UploadSideEffect.ShowNonTextImageToast)
+            return@intent
+        }
+
         val textBitmap = TextBitmap(text, bitmap)
         reduce {
             state.copy(

@@ -60,11 +60,13 @@ import com.canhub.cropper.CropImageView
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.component.FimoDialog
 import com.nexters.pimo.ui.component.FimoSimpleAppBar
+import com.nexters.pimo.ui.component.FimoToast
 import com.nexters.pimo.ui.component.NoRippleInteractionSource
 import com.nexters.pimo.ui.model.TextBitmap
 import com.nexters.pimo.ui.state.UiState
 import com.nexters.pimo.ui.theme.FimoTheme
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun UploadScreen(
@@ -72,9 +74,19 @@ fun UploadScreen(
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
+
     val state = viewModel.collectAsState().value
 
+    var showToast by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
+
+    viewModel.collectSideEffect {
+        when (it) {
+            UploadSideEffect.ShowNonTextImageToast -> {
+                showToast = true
+            }
+        }
+    }
 
     val imageCropLauncher = rememberLauncherForActivityResult(CropImageContract()) { result ->
         if (result.isSuccessful) {
@@ -115,67 +127,62 @@ fun UploadScreen(
         showDialog = true
     }
 
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+    Column(
+        modifier = Modifier.fillMaxSize()
     ) {
+        FimoSimpleAppBar(
+            backIconRes = R.drawable.ic_close,
+            onBack = { showDialog = true },
+            titleStringRes = when (state.mode) {
+                UploadState.Mode.New -> R.string.new_post
+                UploadState.Mode.Edit -> R.string.edit_post
+            }
+        )
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 20.dp)
+                .padding(top = 32.dp, bottom = 60.dp)
         ) {
-            FimoSimpleAppBar(
-                backIconRes = R.drawable.ic_close,
-                onBack = { showDialog = true },
-                titleStringRes = when (state.mode) {
-                    UploadState.Mode.New -> R.string.new_post
-                    UploadState.Mode.Edit -> R.string.edit_post
-                }
+            ImageBar(
+                images = state.textBitmaps,
+                pickImage = { imagePickerLauncher.launch("image/*") },
+                selectedIndex = state.selectedIndex,
+                selectImage = viewModel::selectImage,
+                removeImage = viewModel::removeImage
             )
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 20.dp)
-                    .padding(top = 32.dp, bottom = 60.dp)
-            ) {
-                ImageBar(
-                    images = state.textBitmaps,
-                    pickImage = { imagePickerLauncher.launch("image/*") },
-                    selectedIndex = state.selectedIndex,
-                    selectImage = viewModel::selectImage,
-                    removeImage = viewModel::removeImage
-                )
-                Spacer(modifier = Modifier.height(40.dp))
-                with(state.textBitmaps) {
-                    if (isNotEmpty()) {
-                        Image(
-                            bitmap = get(state.selectedIndex).bitmap.asImageBitmap(),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(1f)
-                                .clip(RoundedCornerShape(4.dp)),
-                            contentScale = ContentScale.Crop
-                        )
-                    } else {
-                        ImagePlaceholder(modifier = Modifier.fillMaxWidth())
-                    }
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                Button(
-                    onClick = onBack,
-                    modifier = Modifier
-                        .height(56.dp)
-                        .fillMaxWidth(),
-                    shape = RoundedCornerShape(2.dp),
-                    enabled = state.textBitmaps.isNotEmpty(),
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.post),
-                        style = FimoTheme.typography.medium.copy(
-                            fontSize = 16.sp,
-                            color = FimoTheme.colors.white
-                        )
+            Spacer(modifier = Modifier.height(40.dp))
+            with(state.textBitmaps) {
+                if (isNotEmpty()) {
+                    Image(
+                        bitmap = get(state.selectedIndex).bitmap.asImageBitmap(),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                            .clip(RoundedCornerShape(4.dp)),
+                        contentScale = ContentScale.Crop
                     )
+                } else {
+                    ImagePlaceholder(modifier = Modifier.fillMaxWidth())
                 }
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            Button(
+                onClick = onBack,
+                modifier = Modifier
+                    .height(56.dp)
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(2.dp),
+                enabled = state.textBitmaps.isNotEmpty(),
+            ) {
+                Text(
+                    text = stringResource(id = R.string.post),
+                    style = FimoTheme.typography.medium.copy(
+                        fontSize = 16.sp,
+                        color = FimoTheme.colors.white
+                    )
+                )
             }
         }
     }
@@ -198,6 +205,14 @@ fun UploadScreen(
             rightStringRes = R.string.exit,
             onLeftClick = { showDialog = false },
             onRightClick = { onBack() }
+        )
+    }
+    if (showToast) {
+        FimoToast(
+            modifier = Modifier.padding(bottom = 24.dp),
+            titleRes = R.string.non_text_image_toast,
+            subtitleRes = R.string.non_text_image_toast_sub,
+            onDismiss = { showToast = false }
         )
     }
 }
@@ -374,6 +389,14 @@ fun ImagePlaceholder(modifier: Modifier = Modifier) {
                     )
                 )
             }
+        }
+    }
+}
+
+private fun handleSideEffect(sideEffect: UploadSideEffect) {
+    when (sideEffect) {
+        UploadSideEffect.ShowNonTextImageToast -> {
+
         }
     }
 }

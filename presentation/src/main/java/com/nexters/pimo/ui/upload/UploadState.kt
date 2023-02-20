@@ -13,5 +13,5 @@ data class UploadState(
 }
 
 sealed class UploadSideEffect {
-    data class Toast(val text: String) : UploadSideEffect()
+    object ShowNonTextImageToast : UploadSideEffect()
 }
