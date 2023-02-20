@@ -29,7 +29,7 @@ fun LoginScreen(onLogin: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .paint(painterResource(id = R.drawable.bg_login), contentScale = ContentScale.FillHeight)
+            .paint(painterResource(id = R.drawable.bg_login), contentScale = ContentScale.FillBounds)
     ) {
         Column(
             modifier = Modifier.align(Alignment.TopCenter),
