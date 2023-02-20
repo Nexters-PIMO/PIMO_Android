@@ -1,6 +1,11 @@
 package com.nexters.pimo.ui.component
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +35,7 @@ import com.nexters.pimo.ui.theme.FimoTheme
 @Composable
 fun FimoDialog(
     modifier: Modifier = Modifier,
+    visible: Boolean,
     contentPadding: PaddingValues = PaddingValues(top = 42.dp, bottom = 34.dp),
     contentSpacing: Dp = 8.dp,
     header: (@Composable ColumnScope.() -> Unit)? = null,
@@ -38,91 +44,106 @@ fun FimoDialog(
     @StringRes leftStringRes: Int,
     @StringRes rightStringRes: Int,
     onLeftClick: () -> Unit,
-    onRightClick: () -> Unit
+    onRightClick: () -> Unit,
+    onDismiss: () -> Unit
 ) {
-    Surface(
-        modifier = modifier.then(Modifier.fillMaxSize()),
-        color = FimoTheme.colors.black.copy(alpha = 0.5f)
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn(),
+        exit = fadeOut()
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(30.dp),
-            contentAlignment = Alignment.Center
+        Surface(
+            modifier = modifier.then(
+                Modifier
+                    .fillMaxSize()
+                    .clickable(
+                        interactionSource = MutableInteractionSource(),
+                        indication = null,
+                        onClick = onDismiss
+                    )
+            ),
+            color = FimoTheme.colors.black.copy(alpha = 0.5f)
         ) {
-            Surface(
-                shape = RoundedCornerShape(2.dp),
-                color = FimoTheme.colors.white,
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1.67f)
+                    .fillMaxSize()
+                    .padding(30.dp),
+                contentAlignment = Alignment.Center
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                Surface(
+                    shape = RoundedCornerShape(2.dp),
+                    color = FimoTheme.colors.white,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1.67f)
                 ) {
                     Column(
-                        modifier = Modifier.padding(contentPadding),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(contentSpacing)
                     ) {
-                        if (header != null) header()
-                        Text(
-                            text = stringResource(id = titleRes),
-                            style = FimoTheme.typography.semibold.copy(
-                                fontSize = 18.sp,
-                                color = FimoTheme.colors.black
-                            )
-                        )
-                        Text(
-                            text = stringResource(id = subtitleRes),
-                            style = FimoTheme.typography.regular.copy(
-                                fontSize = 16.sp,
-                                color = FimoTheme.colors.black
-                            )
-                        )
-                    }
-                    FimoDivider()
-                    Row(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Button(
-                            onClick = onLeftClick,
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight(),
-                            contentPadding = PaddingValues(0.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = FimoTheme.colors.white
-                            ),
-                            shape = RectangleShape
+                        Column(
+                            modifier = Modifier.padding(contentPadding),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(contentSpacing)
                         ) {
+                            if (header != null) header()
                             Text(
-                                text = stringResource(id = leftStringRes),
-                                style = FimoTheme.typography.medium.copy(
+                                text = stringResource(id = titleRes),
+                                style = FimoTheme.typography.semibold.copy(
+                                    fontSize = 18.sp,
+                                    color = FimoTheme.colors.black
+                                )
+                            )
+                            Text(
+                                text = stringResource(id = subtitleRes),
+                                style = FimoTheme.typography.regular.copy(
                                     fontSize = 16.sp,
-                                    color = FimoTheme.colors.grey7F
+                                    color = FimoTheme.colors.black
                                 )
                             )
                         }
-                        FimoVertDivider(modifier = Modifier.fillMaxHeight())
-                        Button(
-                            onClick = onRightClick,
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight(),
-                            contentPadding = PaddingValues(0.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = FimoTheme.colors.white
-                            ),
-                            shape = RectangleShape
+                        FimoDivider()
+                        Row(
+                            modifier = Modifier.fillMaxSize()
                         ) {
-                            Text(
-                                text = stringResource(id = rightStringRes),
-                                style = FimoTheme.typography.medium.copy(
-                                    fontSize = 16.sp,
-                                    color = FimoTheme.colors.primary
+                            Button(
+                                onClick = onLeftClick,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxHeight(),
+                                contentPadding = PaddingValues(0.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = FimoTheme.colors.white
+                                ),
+                                shape = RectangleShape
+                            ) {
+                                Text(
+                                    text = stringResource(id = leftStringRes),
+                                    style = FimoTheme.typography.medium.copy(
+                                        fontSize = 16.sp,
+                                        color = FimoTheme.colors.grey7F
+                                    )
                                 )
-                            )
+                            }
+                            FimoVertDivider(modifier = Modifier.fillMaxHeight())
+                            Button(
+                                onClick = onRightClick,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxHeight(),
+                                contentPadding = PaddingValues(0.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = FimoTheme.colors.white
+                                ),
+                                shape = RectangleShape
+                            ) {
+                                Text(
+                                    text = stringResource(id = rightStringRes),
+                                    style = FimoTheme.typography.medium.copy(
+                                        fontSize = 16.sp,
+                                        color = FimoTheme.colors.primary
+                                    )
+                                )
+                            }
                         }
                     }
                 }

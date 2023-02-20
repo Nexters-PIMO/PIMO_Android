@@ -193,20 +193,16 @@ fun UploadScreen(
     ) {
         Loading(modifier = Modifier.fillMaxSize())
     }
-    AnimatedVisibility(
+    FimoDialog(
         visible = showDialog,
-        enter = fadeIn(),
-        exit = fadeOut()
-    ) {
-        FimoDialog(
-            titleRes = R.string.edit_post_dialog,
-            subtitleRes = R.string.edit_post_dialog_sub,
-            leftStringRes = R.string.cancel,
-            rightStringRes = R.string.exit,
-            onLeftClick = { showDialog = false },
-            onRightClick = { onBack() }
-        )
-    }
+        titleRes = R.string.edit_post_dialog,
+        subtitleRes = R.string.edit_post_dialog_sub,
+        leftStringRes = R.string.cancel,
+        rightStringRes = R.string.exit,
+        onLeftClick = { showDialog = false },
+        onRightClick = { onBack() },
+        onDismiss = { showDialog = false }
+    )
     if (showToast) {
         FimoToast(
             modifier = Modifier.padding(bottom = 24.dp),
