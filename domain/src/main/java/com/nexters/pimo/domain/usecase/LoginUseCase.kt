@@ -2,8 +2,6 @@ package com.nexters.pimo.domain.usecase
 
 import com.nexters.pimo.domain.model.LoginResult
 import com.nexters.pimo.domain.model.ProviderToken
-import com.nexters.pimo.domain.repository.AuthRepository
-import com.nexters.pimo.domain.repository.UserRepository
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(
