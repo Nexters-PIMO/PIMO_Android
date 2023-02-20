@@ -33,6 +33,8 @@ internal object OcrModule {
         checkTrainedData(context, subdir, ENG, KOR, KOR_VERT)
 
         tess.init(dataPath.absolutePath, "kor+eng")
+        //TODO: tess.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, "");
+        tess.setVariable(TessBaseAPI.VAR_CHAR_BLACKLIST, "!@#$%^&*()_+=-[]}{;:'\"\\|~`,./<>?");
         return tess
     }
 

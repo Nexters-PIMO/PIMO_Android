@@ -19,7 +19,9 @@ import com.nexters.pimo.ui.home.HomeScreen
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    startUploadActivity: () -> Unit
+) {
     val navController = rememberNavController()
     val navigator = rememberNavigator(navController = navController)
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -30,7 +32,7 @@ fun MainScreen() {
             FimoBottomBar(
                 currentDestination = currentDestination,
                 onNavigate = { navigator.navigateTo(it) },
-                onActionClick = { /*TODO*/ },
+                onActionClick = startUploadActivity,
                 profileImageUrl = "https://avatars.githubusercontent.com/u/72238126?v=4"
             )
         },

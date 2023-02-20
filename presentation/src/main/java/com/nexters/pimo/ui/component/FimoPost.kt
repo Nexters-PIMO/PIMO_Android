@@ -247,7 +247,7 @@ fun FimoPost(
                                 CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
                                     IconButton(onClick = onCloseTooltip) {
                                         Icon(
-                                            painter = painterResource(id = R.drawable.ic_close),
+                                            painter = painterResource(id = R.drawable.ic_close_tooltip),
                                             contentDescription = null,
                                             tint = FimoTheme.colors.white,
                                             modifier = Modifier.size(16.dp)

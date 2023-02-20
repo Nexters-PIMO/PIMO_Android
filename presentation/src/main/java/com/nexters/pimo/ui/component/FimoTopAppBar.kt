@@ -1,10 +1,12 @@
 package com.nexters.pimo.ui.component
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -38,7 +40,6 @@ fun FimoHomeAppBar(
     newPostCount: Int
 ) {
     val appBarHeight = 160.dp
-    val shadowColor = Color(0xFF383838).copy(alpha = 0.5f)
 
     Surface(
         modifier = Modifier
@@ -79,24 +80,73 @@ fun FimoHomeAppBar(
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = stringResource(id = R.string.friends_post),
                     style = FimoTheme.typography.semibold.copy(fontSize = 20.sp)
                 )
-                Text(
-                    text = stringResource(
-                        id = R.string.new_post_count,
-                        newPostCount.toSymbolFormat()
-                    ),
-                    style = FimoTheme.typography.medium.copy(
-                        fontSize = 14.sp,
-                        color = FimoTheme.colors.grey7F
+                Spacer(modifier = Modifier.weight(1f))
+                if (newPostCount > 0) {
+                    Text(
+                        text = stringResource(
+                            id = R.string.new_post_count,
+                            newPostCount.toSymbolFormat()
+                        ),
+                        style = FimoTheme.typography.medium.copy(
+                            fontSize = 14.sp,
+                            color = FimoTheme.colors.grey7F
+                        )
                     )
-                )
+                }
             }
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FimoSimpleAppBar(
+    @DrawableRes backIconRes: Int,
+    @StringRes titleStringRes: Int,
+    onBack: () -> Unit
+) {
+    val appBarHeight = 72.dp
+
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(appBarHeight)
+            .shadow(
+                ambientColor = shadowColor,
+                spotColor = shadowColor,
+                elevation = 12.dp
+            ),
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
+                IconButton(
+                    onClick = onBack,
+                    modifier = Modifier.size(24.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = backIconRes),
+                        contentDescription = null,
+                        modifier = Modifier.size(12.dp)
+                    )
+                }
+            }
+            Text(
+                text = stringResource(id = titleStringRes),
+                style = FimoTheme.typography.medium.copy(fontSize = 18.sp)
+            )
+            Spacer(modifier = Modifier.width(24.dp))
+        }
+    }
+}
+
+private val shadowColor = Color(0xFF383838).copy(alpha = 0.5f)
