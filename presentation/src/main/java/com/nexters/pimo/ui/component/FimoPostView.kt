@@ -16,11 +16,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalMinimumTouchTargetEnforcement
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -41,49 +43,64 @@ fun FimoPostView(
     val scrollableState = rememberScrollState()
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 22.dp)
-            .padding(horizontal = 20.dp)
-            .verticalScroll(scrollableState),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.fillMaxSize()
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(12.dp)
+                .shadow(
+                    ambientColor = shadowColor,
+                    spotColor = shadowColor,
+                    elevation = 12.dp
+                ),
+        ) { }
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(top = 22.dp)
+                .padding(horizontal = 20.dp)
+                .verticalScroll(scrollableState),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
-                IconButton(
-                    onClick = onBack,
-                    modifier = Modifier.size(24.dp),
-                    interactionSource = NoRippleInteractionSource
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_back),
-                        contentDescription = null,
-                        modifier = Modifier.height(14.dp)
-                    )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
+                    IconButton(
+                        onClick = onBack,
+                        modifier = Modifier.size(24.dp),
+                        interactionSource = NoRippleInteractionSource
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_back),
+                            contentDescription = null,
+                            modifier = Modifier.height(14.dp)
+                        )
+                    }
                 }
+                Text(
+                    text = stringResource(id = R.string.text_image),
+                    style = FimoTheme.typography.medium.copy(fontSize = 18.sp)
+                )
+                Spacer(modifier = Modifier.width(24.dp))
             }
-            Text(
-                text = stringResource(id = R.string.text_image),
-                style = FimoTheme.typography.medium.copy(fontSize = 18.sp)
+            FimoDivider(modifier = Modifier.padding(top = 16.dp, bottom = 20.dp))
+            FimoPost(
+                post = post,
+                showTooltip = showTooltip,
+                onCloseTooltip = onCloseTooltip,
+                onMoreClick = { /*TODO*/ },
+                onCopyText = { /*TODO*/ },
+                onPlayAudio = { },
+                onStopAudio = { /*TODO*/ },
+                onClap = { /*TODO*/ },
+                onShare = { }
             )
-            Spacer(modifier = Modifier.width(24.dp))
+            Spacer(modifier = Modifier.height(bottomPanelHeight / 2))
         }
-        FimoDivider(modifier = Modifier.padding(top = 16.dp, bottom = 20.dp))
-        FimoPost(
-            post = post,
-            showTooltip = showTooltip,
-            onCloseTooltip = onCloseTooltip,
-            onMoreClick = { /*TODO*/ },
-            onCopyText = { /*TODO*/ },
-            onPlayAudio = { },
-            onStopAudio = { /*TODO*/ },
-            onClap = { /*TODO*/ },
-            onShare = { }
-        )
-        Spacer(modifier = Modifier.height(bottomPanelHeight / 2))
     }
 }
