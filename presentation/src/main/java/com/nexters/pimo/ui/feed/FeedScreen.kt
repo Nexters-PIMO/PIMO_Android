@@ -52,7 +52,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun FeedScreen(viewModel: FeedViewModel = hiltViewModel()) {
     val state = viewModel.collectAsState().value
 
-    var viewMode: FeedViewMode by remember { mutableStateOf(FeedViewMode.Grid) }
+    var viewMode: FeedViewMode by remember { mutableStateOf(FeedViewMode.List) }
     var selectedPost: Post? by remember { mutableStateOf(null) }
 
     Column(modifier = Modifier.fillMaxSize()) {
