@@ -167,7 +167,13 @@ fun FimoFeedTopAppBar(
     onActionClick: () -> Unit,
 ) {
     Surface(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow(
+                ambientColor = shadowColor,
+                spotColor = shadowColor,
+                elevation = 12.dp
+            )
     ) {
         Column(
             modifier = Modifier

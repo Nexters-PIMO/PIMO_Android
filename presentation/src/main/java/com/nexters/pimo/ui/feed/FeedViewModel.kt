@@ -8,7 +8,6 @@ import com.nexters.pimo.domain.usecase.GetTooltipVisibilityUseCase
 import com.nexters.pimo.ui.base.BaseViewModel
 import com.nexters.pimo.ui.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -49,7 +48,6 @@ class FeedViewModel @Inject constructor(
             reduce { state.copy(uiState = UiState.Loading) }
 
             val showTooltip = getTooltipVisibilityUseCase().getOrThrow()
-            delay(1000)
 
             reduce {
                 state.copy(

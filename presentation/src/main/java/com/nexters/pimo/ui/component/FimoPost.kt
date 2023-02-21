@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,9 +21,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -413,5 +419,88 @@ fun FimoPostList(
             }
             FimoDivider(modifier = Modifier.padding(top = 9.dp, bottom = 21.dp))
         }
+    }
+}
+
+@Composable
+fun FimoPostGrid(
+    modifier: Modifier = Modifier,
+    posts: List<Post>,
+    onPostClick: (Post) -> Unit
+) {
+    LazyVerticalGrid(
+        modifier = modifier,
+        columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        items(posts) {
+            AsyncImage(
+                model = it.textImages[0].imageUrl,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .aspectRatio(1f)
+                    .clickable { onPostClick(it) }
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FimoPostView(
+    modifier: Modifier = Modifier,
+    post: Post,
+    showTooltip: Boolean,
+    onCloseTooltip: () -> Unit,
+    onBack: () -> Unit
+) {
+    val scrollableState = rememberScrollState()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 22.dp)
+            .padding(horizontal = 20.dp)
+            .verticalScroll(scrollableState),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
+                IconButton(
+                    onClick = onBack,
+                    modifier = Modifier.size(24.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_back),
+                        contentDescription = null,
+                        modifier = Modifier.height(16.dp)
+                    )
+                }
+            }
+            Text(
+                text = stringResource(id = R.string.text_image),
+                style = FimoTheme.typography.medium.copy(fontSize = 18.sp)
+            )
+            Spacer(modifier = Modifier.width(24.dp))
+        }
+        FimoDivider(modifier = Modifier.padding(top = 16.dp, bottom = 20.dp))
+        FimoPost(
+            post = post,
+            showTooltip = showTooltip,
+            onCloseTooltip = onCloseTooltip,
+            onMoreClick = { /*TODO*/ },
+            onCopyText = { /*TODO*/ },
+            onPlayAudio = { },
+            onStopAudio = { /*TODO*/ },
+            onClap = { /*TODO*/ },
+            onShare = { }
+        )
+        Spacer(modifier = Modifier.height(bottomPanelHeight / 2))
     }
 }

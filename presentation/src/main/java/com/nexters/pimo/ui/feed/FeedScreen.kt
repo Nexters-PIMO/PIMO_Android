@@ -36,9 +36,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.nexters.pimo.domain.model.Post
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.component.FimoFeedTopAppBar
+import com.nexters.pimo.ui.component.FimoPostGrid
 import com.nexters.pimo.ui.component.FimoPostList
+import com.nexters.pimo.ui.component.FimoPostView
 import com.nexters.pimo.ui.component.bottomPanelHeight
 import com.nexters.pimo.ui.component.shadowColor
 import com.nexters.pimo.ui.state.UiState
@@ -49,25 +52,46 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun FeedScreen(viewModel: FeedViewModel = hiltViewModel()) {
     val state = viewModel.collectAsState().value
 
-    var viewMode: FeedViewMode by remember { mutableStateOf(FeedViewMode.List) }
+    var viewMode: FeedViewMode by remember { mutableStateOf(FeedViewMode.Grid) }
+    var selectedPost: Post? by remember { mutableStateOf(null) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         FimoFeedTopAppBar(
             user = state.user,
             onActionClick = {}
         )
-        FeedBar(
-            postCount = state.user.posts.size,
-            currentViewMode = viewMode,
-            onChangeViewMode = { viewMode = it })
+        if (selectedPost == null) {
+            FeedBar(
+                postCount = state.user.posts.size,
+                currentViewMode = viewMode,
+                onChangeViewMode = { viewMode = it }
+            )
+        }
         when (state.uiState) {
             UiState.Done -> {
                 if (state.user.posts.isNotEmpty()) {
-                    FimoPostList(
-                        posts = state.user.posts,
-                        showTooltip = state.showTooltip,
-                        onCloseTooltip = viewModel::onCloseTooltip
-                    )
+                    when (viewMode) {
+                        FeedViewMode.List -> {
+                            FimoPostList(
+                                posts = state.user.posts,
+                                showTooltip = state.showTooltip,
+                                onCloseTooltip = viewModel::onCloseTooltip
+                            )
+                        }
+                        FeedViewMode.Grid -> {
+                            selectedPost?.let {
+                                FimoPostView(
+                                    post = it,
+                                    showTooltip = state.showTooltip,
+                                    onCloseTooltip = viewModel::onCloseTooltip,
+                                    onBack = { selectedPost = null }
+                                )
+                            } ?: FimoPostGrid(
+                                posts = state.user.posts,
+                                onPostClick = { selectedPost = it }
+                            )
+                        }
+                    }
                 } else {
                     Empty()
                 }
