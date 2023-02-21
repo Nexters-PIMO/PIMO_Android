@@ -20,6 +20,11 @@
     <string name="non_text_image_toast">글이 존재하지 않는 사진이에요!</string>
     <string name="non_text_image_toast_sub">글이 포함되어 있는 사진으로 업로드해주세요</string>
 
+    <string name="archiving_count">%s개의 글사진 아카이빙 중</string>
+    <string name="text_image">글사진</string>
+    <string name="empty_text_image">글사진이 존재하지 않아요</string>
+    <string name="empty_text_image_help">일상에서 마주친 글사진들을 피모에서 저장해서\n언제든 꺼내보고 특별한 지인과 공유해보세요</string>
+
     <string name="cancel">취소하기</string>
     <string name="exit">나가기</string>
     <string name="done">완료</string>
