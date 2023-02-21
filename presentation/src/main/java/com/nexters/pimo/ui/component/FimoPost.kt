@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -381,5 +383,35 @@ fun FimoPost(
     LaunchedEffect(clapPopupCount) {
         delay(1500L)
         clapPopupCount = 0
+    }
+}
+
+@Composable
+fun FimoPostList(
+    modifier: Modifier = Modifier,
+    posts: List<Post>,
+    showTooltip: Boolean,
+    onCloseTooltip: () -> Unit
+) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(vertical = 21.dp, horizontal = 20.dp)
+    ) {
+        items(posts) {
+            Column {
+                FimoPost(
+                    post = it,
+                    showTooltip = showTooltip,
+                    onCloseTooltip = onCloseTooltip,
+                    onMoreClick = { /*TODO*/ },
+                    onCopyText = { /*TODO*/ },
+                    onPlayAudio = { /*TODO*/ },
+                    onStopAudio = { /*TODO*/ },
+                    onClap = { /*TODO*/ },
+                    onShare = { /*TODO*/ }
+                )
+            }
+            FimoDivider(modifier = Modifier.padding(top = 9.dp, bottom = 21.dp))
+        }
     }
 }

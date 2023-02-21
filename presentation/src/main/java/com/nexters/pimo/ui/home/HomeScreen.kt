@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.component.FimoHomeAppBar
+import com.nexters.pimo.ui.component.FimoPostList
 import com.nexters.pimo.ui.state.UiState
 import com.nexters.pimo.ui.theme.FimoTheme
 import org.orbitmvi.orbit.compose.collectAsState
@@ -41,7 +42,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
         when (state.uiState) {
             UiState.Done -> {
                 if (state.posts.isNotEmpty()) {
-                    HomeContent(
+                    FimoPostList(
                         posts = state.posts,
                         showTooltip = state.showTooltip,
                         onCloseTooltip = viewModel::onCloseTooltip
