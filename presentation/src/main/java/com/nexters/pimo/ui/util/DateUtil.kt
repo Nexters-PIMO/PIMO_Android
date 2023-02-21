@@ -1,9 +1,12 @@
 package com.nexters.pimo.ui.util
 
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 
 object DateUtil {
+
+    fun LocalDateTime.isToday() = this.toLocalDate().isEqual(LocalDate.now())
 
     fun LocalDateTime.toRelatively(): String {
         val now = LocalDateTime.now()

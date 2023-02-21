@@ -52,12 +52,11 @@ class HomeViewModel @Inject constructor(
             delay(1000)
             reduce {
                 state.copy(
+                    uiState = UiState.Done,
                     posts = List(5) { tempPost },
                     showTooltip = showTooltip
                 )
             }
-
-            reduce { state.copy(uiState = UiState.Done) }
         }
     }
 

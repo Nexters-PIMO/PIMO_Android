@@ -26,8 +26,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.component.FimoHomeAppBar
 import com.nexters.pimo.ui.component.FimoPostList
+import com.nexters.pimo.ui.component.bottomPanelHeight
 import com.nexters.pimo.ui.state.UiState
 import com.nexters.pimo.ui.theme.FimoTheme
+import com.nexters.pimo.ui.util.DateUtil.isToday
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
@@ -37,7 +39,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     Column(modifier = Modifier.fillMaxSize()) {
         FimoHomeAppBar(
             onActionClick = { /*TODO*/ },
-            newPostCount = state.newPostCount
+            newPostCount = state.posts.filter { it.postedTime.isToday() }.size
         )
         when (state.uiState) {
             UiState.Done -> {
@@ -64,7 +66,9 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 @Composable
 fun Loading() {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = bottomPanelHeight),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
