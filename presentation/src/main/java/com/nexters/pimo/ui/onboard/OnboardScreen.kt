@@ -264,7 +264,7 @@ fun OnboardFirst(onClick: () -> Unit) {
                         modifier = Modifier
                             .width(72.dp)
                             .height(20.dp),
-                        painter = painterResource(id = R.drawable.img_fimo),
+                        painter = painterResource(id = R.drawable.img_logo_text_black),
                         contentDescription = null,
                     )
                 }
