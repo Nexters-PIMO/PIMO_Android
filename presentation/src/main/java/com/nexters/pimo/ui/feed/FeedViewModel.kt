@@ -1,4 +1,4 @@
-package com.nexters.pimo.ui.home
+package com.nexters.pimo.ui.feed
 
 import com.nexters.pimo.domain.model.Post
 import com.nexters.pimo.domain.model.TextImage
@@ -8,7 +8,6 @@ import com.nexters.pimo.domain.usecase.GetTooltipVisibilityUseCase
 import com.nexters.pimo.ui.base.BaseViewModel
 import com.nexters.pimo.ui.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -17,13 +16,13 @@ import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class FeedViewModel @Inject constructor(
     private val getTooltipVisibilityUseCase: GetTooltipVisibilityUseCase,
     private val closeTooltipUseCase: CloseTooltipUseCase
-) : ContainerHost<HomeState, HomeSideEffect>,
+) : ContainerHost<FeedState, FeedSideEffect>,
     BaseViewModel() {
 
-    override val container = container<HomeState, HomeSideEffect>(HomeState())
+    override val container = container<FeedState, FeedSideEffect>(FeedState())
 
     val tempPost = Post(
         id = 0,
@@ -49,11 +48,16 @@ class HomeViewModel @Inject constructor(
             reduce { state.copy(uiState = UiState.Loading) }
 
             val showTooltip = getTooltipVisibilityUseCase().getOrThrow()
-            delay(1000)
+
             reduce {
                 state.copy(
                     uiState = UiState.Done,
-                    posts = List(5) { tempPost },
+                    user = User(
+                        id = 0,
+                        profileImageUrl = "https://avatars.githubusercontent.com/u/72238126?v=4",
+                        nickname = "yjyoon",
+                        posts = List(5) { tempPost }
+                    ),
                     showTooltip = showTooltip
                 )
             }

@@ -5,7 +5,6 @@ import com.nexters.pimo.ui.state.UiState
 
 data class HomeState(
     val posts: List<Post> = listOf(), // TODO: Int -> Post
-    val newPostCount: Int = 0,
     val showTooltip: Boolean = false,
     val uiState: UiState = UiState.Loading
 )

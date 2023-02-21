@@ -28,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nexters.pimo.domain.model.User
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.theme.FimoTheme
 import com.nexters.pimo.ui.util.NumberUtil.toSymbolFormat
@@ -39,12 +40,9 @@ fun FimoHomeAppBar(
     onActionClick: () -> Unit,
     newPostCount: Int
 ) {
-    val appBarHeight = 160.dp
-
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(appBarHeight)
             .shadow(
                 ambientColor = shadowColor,
                 spotColor = shadowColor,
@@ -52,11 +50,14 @@ fun FimoHomeAppBar(
             ),
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 28.dp),
-            verticalArrangement = Arrangement.SpaceBetween
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .padding(top = 48.dp, bottom = 20.dp)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(32.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -78,6 +79,7 @@ fun FimoHomeAppBar(
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(32.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -149,4 +151,65 @@ fun FimoSimpleAppBar(
     }
 }
 
-private val shadowColor = Color(0xFF383838).copy(alpha = 0.5f)
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FimoFeedTopAppBar(
+    user: User,
+    @DrawableRes actionIconRes: Int = R.drawable.ic_setting,
+    onActionClick: () -> Unit,
+) {
+    Surface(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .padding(top = 48.dp, bottom = 12.dp),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(32.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = user.archiveName,
+                        style = FimoTheme.typography.semibold.copy(fontSize = 24.sp)
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
+                        IconButton(
+                            onClick = { },
+                            modifier = Modifier.size(24.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_share),
+                                contentDescription = null,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }
+                }
+                CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
+                    IconButton(
+                        onClick = onActionClick,
+                        modifier = Modifier.size(24.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = actionIconRes),
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+val shadowColor = Color(0xFF383838).copy(alpha = 0.5f)

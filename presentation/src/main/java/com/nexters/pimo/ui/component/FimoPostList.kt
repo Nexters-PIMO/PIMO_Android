@@ -1,4 +1,4 @@
-package com.nexters.pimo.ui.home
+package com.nexters.pimo.ui.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,16 +9,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.nexters.pimo.domain.model.Post
-import com.nexters.pimo.ui.component.FimoDivider
-import com.nexters.pimo.ui.component.FimoPost
 
 @Composable
-fun HomeContent(
+fun FimoPostList(
+    modifier: Modifier = Modifier,
     posts: List<Post>,
     showTooltip: Boolean,
     onCloseTooltip: () -> Unit
 ) {
-    LazyColumn(contentPadding = PaddingValues(vertical = 21.dp, horizontal = 20.dp)) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(vertical = 21.dp, horizontal = 20.dp)
+    ) {
         items(posts) {
             Column {
                 FimoPost(
