@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="login_title">글사진 아카이브 플랫폼</string>
+    <string name="login_sns">SNS 계정으로 간편 가입하기</string>
     <string name="login_kakao">카카오 로그인</string>
+
+    <string name="onboard_skip">SKIP</string>
+    <string name="onboard_title_1">프라이빗\n글사진 아카이브,</string>
+    <string name="onboard_content_1">빠르게 소비하고 지나쳤던 일상에서 마주친 글사진들, 프라이빗 아카이브 피모에 저장해 언제든지 꺼내보고, 특별한 지인과 공유해보세요.</string>
+    <string name="onboard_title_2_1">OCR</string>
+    <string name="onboard_title_2_2">사진 속 글귀를 자동 인식해\n텍스트로 복사해보세요</string>
+    <string name="onboard_content_2">피모에는 글이 있는 글사진만 업로드할 수 있어요. 우리가 똑똑하게 인식한 글사진 속 텍스트를 버튼 하나로 자유롭게 복사, 공유해보세요.</string>
+    <string name="onboard_title_3_1">TTS</string>
+    <string name="onboard_title_3_2">자동 인식한 사진 속 글귀를\n음성으로 재생해보세요</string>
+    <string name="onboard_content_3">피모가 인식한 텍스트는 음성으로 변환되어 소리로 들을 수 있어요. 오디오 버튼을 이용해 사진 속 문구를 오롯이 감상해보세요.</string>
+    <string name="onboard_title_4_1">ARCHIVE</string>
+    <string name="onboard_title_4_2">초대로 공유하는\n프라이빗 아카이브</string>
+    <string name="onboard_content_4">소중한 글사진을 나만의 아카이브에 저장해보세요. 링크 공유로 원하는 친구만 초대할 수 있어요. 친구와 피모를 공유해 서로의 아카이브를 감상해보세요.</string>
+    <string name="onboard_start_fimo">피모 시작하기</string>
 
     <string name="friends_post">친구 글사진</string>
     <string name="new_post_count">오늘 새로운 게시물 %s개</string>
