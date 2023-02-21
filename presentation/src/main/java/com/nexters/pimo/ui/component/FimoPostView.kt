@@ -56,12 +56,13 @@ fun FimoPostView(
             CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
                 IconButton(
                     onClick = onBack,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(24.dp),
+                    interactionSource = NoRippleInteractionSource
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_back),
                         contentDescription = null,
-                        modifier = Modifier.height(16.dp)
+                        modifier = Modifier.height(14.dp)
                     )
                 }
             }
