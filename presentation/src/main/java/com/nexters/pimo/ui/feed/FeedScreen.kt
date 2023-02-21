@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nexters.pimo.domain.model.Post
 import com.nexters.pimo.ui.R
+import com.nexters.pimo.ui.component.CustomModifier.bottomElevation
 import com.nexters.pimo.ui.component.FimoFeedTopAppBar
 import com.nexters.pimo.ui.component.FimoPostGrid
 import com.nexters.pimo.ui.component.FimoPostList
@@ -213,17 +214,3 @@ fun FeedBar(
         }
     }
 }
-
-private fun Modifier.bottomElevation(): Modifier = this.then(
-    Modifier.drawWithContent {
-        val paddingPx = 32.dp.toPx()
-        clipRect(
-            left = 0f,
-            top = 0f,
-            right = size.width,
-            bottom = size.height + paddingPx
-        ) {
-            this@drawWithContent.drawContent()
-        }
-    }
-)
