@@ -18,6 +18,25 @@
     <string name="onboard_content_4">소중한 글사진을 나만의 아카이브에 저장해보세요. 링크 공유로 원하는 친구만 초대할 수 있어요. 친구와 피모를 공유해 서로의 아카이브를 감상해보세요.</string>
     <string name="onboard_start_fimo">피모 시작하기</string>
 
+    <string name="profile_top_title">프로필 생성</string>
+    <string name="profile_input_msg">공백없이 한글 8자 영어 16자 이하로 정해주세요</string>
+    <string name="profile_input_hint">텍스트를 입력해주세요.</string>
+    <string name="profile_input_duplicate_check">중복 확인</string>
+    <string name="profile_input_available">사용할 수 있는 닉네임이에요</string>
+    <string name="profile_input_form_error">한글과 영어, 숫자만 사용할 수 있어요</string>
+    <string name="profile_input_duplicate_error">이미 사용 중인 닉네임이에요</string>
+    <string name="profile_input_length_error">글자 수를 초과했어요</string>
+    <string name="profile_add_nickname_title">닉네임을 입력해주세요</string>
+    <string name="profile_add_archive_title">나의 아카이브 이름을 입력해주세요</string>
+    <string name="profile_add_image_title">프로필 사진을 등록해주세요</string>
+    <string name="profile_add_complete_title">아카이브 생성 완료!</string>
+    <string name="profile_add_complete_msg_1_1">프라이빗 아카이브 기능</string>
+    <string name="profile_add_complete_msg_1_2">링크 없이 접근 불가\n개인별 아카이빙 유형 선택</string>
+    <string name="profile_add_complete_msg_2_1">텍스트 자동인식 및 추출 기능</string>
+    <string name="profile_add_complete_msg_2_2">사진 속 텍스트 자동인식 및 업로드 여부 판정\n사진 속 텍스트를 추출 및 클립보드에 복사</string>
+    <string name="profile_add_complete_msg_3_1">텍스트 오디오 재생 기능</string>
+    <string name="profile_add_complete_msg_3_2">사진 속 텍스트 보이스 리딩</string>
+
     <string name="friends_post">친구 글사진</string>
     <string name="new_post_count">오늘 새로운 게시물 %s개</string>
 
@@ -55,6 +74,8 @@
     <string name="follow">친구신청</string>
     <string name="unfollow">친구끊기</string>
 
+    <string name="start">시작하기</string>
+    <string name="next">다음</string>
     <string name="cancel">취소하기</string>
     <string name="exit">나가기</string>
     <string name="done">완료</string>
