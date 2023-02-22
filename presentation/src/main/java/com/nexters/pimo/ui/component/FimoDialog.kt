@@ -12,11 +12,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -28,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nexters.pimo.ui.theme.FimoTheme
@@ -40,7 +42,9 @@ fun FimoDialog(
     contentSpacing: Dp = 8.dp,
     header: (@Composable ColumnScope.() -> Unit)? = null,
     title: String,
+    titleSize: TextUnit = 18.sp,
     subtitle: String,
+    subtitleSize: TextUnit = 16.sp,
     @StringRes leftStringRes: Int,
     @StringRes rightStringRes: Int,
     onLeftClick: () -> Unit,
@@ -73,12 +77,11 @@ fun FimoDialog(
                 Surface(
                     shape = RoundedCornerShape(2.dp),
                     color = FimoTheme.colors.white,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1.67f)
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.wrapContentHeight()
                     ) {
                         Column(
                             modifier = Modifier.padding(contentPadding),
@@ -89,21 +92,23 @@ fun FimoDialog(
                             Text(
                                 text = title,
                                 style = FimoTheme.typography.semibold.copy(
-                                    fontSize = 18.sp,
+                                    fontSize = titleSize,
                                     color = FimoTheme.colors.black
                                 )
                             )
                             Text(
                                 text = subtitle,
                                 style = FimoTheme.typography.regular.copy(
-                                    fontSize = 16.sp,
+                                    fontSize = subtitleSize,
                                     color = FimoTheme.colors.black
                                 )
                             )
                         }
                         FimoDivider()
                         Row(
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(56.dp)
                         ) {
                             Button(
                                 onClick = onLeftClick,
