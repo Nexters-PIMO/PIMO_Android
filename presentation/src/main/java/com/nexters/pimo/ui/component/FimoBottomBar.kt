@@ -84,17 +84,9 @@ fun FimoBottomBar(
                     color = FimoTheme.colors.white,
                     modifier = Modifier.size(bottomBarItemIconSize + 2.dp)
                 ) {}
-                Surface(
-                    shape = CircleShape,
-                    color = FimoTheme.colors.grey7F,
-                    modifier = Modifier.size(bottomBarItemIconSize)
-                ) {}
-                AsyncImage(
-                    model = profileImageUrl,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .size(bottomBarItemIconSize)
+                CircleImage(
+                    imageSource = profileImageUrl,
+                    size = bottomBarItemIconSize
                 )
             }
         },

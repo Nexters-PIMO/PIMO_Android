@@ -130,9 +130,9 @@ fun UploadScreen(
         FimoSimpleAppBar(
             backIconRes = R.drawable.ic_close,
             onBack = { showDialog = true },
-            titleStringRes = when (state.mode) {
-                UploadState.Mode.New -> R.string.new_post
-                UploadState.Mode.Edit -> R.string.edit_post
+            titleText = when (state.mode) {
+                UploadState.Mode.New -> stringResource(id = R.string.new_post)
+                UploadState.Mode.Edit -> stringResource(R.string.edit_post)
             }
         )
         Column(
@@ -188,8 +188,8 @@ fun UploadScreen(
     )
     FimoDialog(
         visible = showDialog,
-        titleRes = R.string.edit_post_dialog,
-        subtitleRes = R.string.edit_post_dialog_sub,
+        title = stringResource(id = R.string.edit_post_dialog),
+        subtitle = stringResource(id = R.string.edit_post_dialog_sub),
         leftStringRes = R.string.cancel,
         rightStringRes = R.string.exit,
         onLeftClick = { showDialog = false },

@@ -103,17 +103,9 @@ fun FimoPost(
                     Box(
                         contentAlignment = Alignment.Center
                     ) {
-                        Surface(
-                            shape = CircleShape,
-                            color = FimoTheme.colors.grey7F,
-                            modifier = Modifier.size(28.dp)
-                        ) {}
-                        AsyncImage(
-                            model = post.writer.profileImageUrl,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .size(28.dp)
+                        CircleImage(
+                            imageSource = post.writer.profileImageUrl,
+                            size = 28.dp
                         )
                     }
                     Spacer(modifier = Modifier.width(12.dp))
