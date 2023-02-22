@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -111,6 +112,7 @@ fun FimoHomeAppBar(
 @Composable
 fun FimoSimpleAppBar(
     @DrawableRes backIconRes: Int,
+    backIconSize: Dp = 12.dp,
     titleText: String,
     titleFontSize: TextUnit = 18.sp,
     onBack: () -> Unit,
@@ -141,7 +143,7 @@ fun FimoSimpleAppBar(
                     Icon(
                         painter = painterResource(id = backIconRes),
                         contentDescription = null,
-                        modifier = Modifier.size(12.dp)
+                        modifier = Modifier.size(backIconSize)
                     )
                 }
             }
