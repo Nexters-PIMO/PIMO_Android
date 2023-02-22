@@ -188,8 +188,8 @@ fun UploadScreen(
     )
     FimoDialog(
         visible = showDialog,
-        titleRes = R.string.edit_post_dialog,
-        subtitleRes = R.string.edit_post_dialog_sub,
+        title = stringResource(id = R.string.edit_post_dialog),
+        subtitle = stringResource(id = R.string.edit_post_dialog_sub),
         leftStringRes = R.string.cancel,
         rightStringRes = R.string.exit,
         onLeftClick = { showDialog = false },

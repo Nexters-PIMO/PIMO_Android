@@ -39,8 +39,8 @@ fun FimoDialog(
     contentPadding: PaddingValues = PaddingValues(top = 42.dp, bottom = 34.dp),
     contentSpacing: Dp = 8.dp,
     header: (@Composable ColumnScope.() -> Unit)? = null,
-    @StringRes titleRes: Int,
-    @StringRes subtitleRes: Int,
+    title: String,
+    subtitle: String,
     @StringRes leftStringRes: Int,
     @StringRes rightStringRes: Int,
     onLeftClick: () -> Unit,
@@ -87,14 +87,14 @@ fun FimoDialog(
                         ) {
                             if (header != null) header()
                             Text(
-                                text = stringResource(id = titleRes),
+                                text = title,
                                 style = FimoTheme.typography.semibold.copy(
                                     fontSize = 18.sp,
                                     color = FimoTheme.colors.black
                                 )
                             )
                             Text(
-                                text = stringResource(id = subtitleRes),
+                                text = subtitle,
                                 style = FimoTheme.typography.regular.copy(
                                     fontSize = 16.sp,
                                     color = FimoTheme.colors.black
