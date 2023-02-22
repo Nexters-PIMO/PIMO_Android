@@ -63,7 +63,10 @@ import org.orbitmvi.orbit.compose.collectAsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FeedScreen(viewModel: FeedViewModel = hiltViewModel()) {
+fun FeedScreen(
+    viewModel: FeedViewModel = hiltViewModel(),
+    startFriendActivity: () -> Unit
+) {
     val state = viewModel.collectAsState().value
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
@@ -80,9 +83,8 @@ fun FeedScreen(viewModel: FeedViewModel = hiltViewModel()) {
             topBar = {
                 ProfileBar(
                     user = state.user,
-                    onFriendClick = { },
-                    scrollBehavior = scrollBehavior,
-                    enableElevation = selectedPost != null
+                    onFriendClick = startFriendActivity,
+                    scrollBehavior = scrollBehavior
                 )
             },
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
@@ -183,7 +185,6 @@ fun Loading() {
 @Composable
 fun ProfileBar(
     user: User,
-    enableElevation: Boolean,
     onFriendClick: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
 ) {

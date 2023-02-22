@@ -20,7 +20,8 @@ import com.nexters.pimo.ui.home.HomeScreen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    startUploadActivity: () -> Unit
+    startUploadActivity: () -> Unit,
+    startFriendActivity: () -> Unit
 ) {
     val navController = rememberNavController()
     val navigator = rememberNavigator(navController = navController)
@@ -43,7 +44,9 @@ fun MainScreen(
             modifier = Modifier.padding(bottom = bottomPanelHeight)
         ) {
             composable(Destination.Home.route) { HomeScreen() }
-            composable(Destination.Feed.route) { FeedScreen() }
+            composable(Destination.Feed.route) {
+                FeedScreen(startFriendActivity = startFriendActivity)
+            }
         }
     }
 }
