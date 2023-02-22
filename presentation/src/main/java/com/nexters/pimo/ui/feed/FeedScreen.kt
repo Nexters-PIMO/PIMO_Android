@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -37,7 +36,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
@@ -46,10 +44,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
 import com.nexters.pimo.domain.model.Post
 import com.nexters.pimo.domain.model.User
 import com.nexters.pimo.ui.R
+import com.nexters.pimo.ui.component.CircleImage
 import com.nexters.pimo.ui.component.CustomModifier.bottomElevation
 import com.nexters.pimo.ui.component.FimoFeedTopAppBar
 import com.nexters.pimo.ui.component.FimoPostGrid
@@ -205,17 +203,9 @@ fun ProfileBar(
                     Box(
                         contentAlignment = Alignment.Center
                     ) {
-                        Surface(
-                            shape = CircleShape,
-                            color = FimoTheme.colors.grey7F,
-                            modifier = Modifier.size(52.dp)
-                        ) {}
-                        AsyncImage(
-                            model = user.profileImageUrl,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .size(52.dp)
+                        CircleImage(
+                            imageSource = user.profileImageUrl,
+                            size = 52.dp
                         )
                     }
                     Spacer(modifier = Modifier.width(16.dp))
