@@ -33,9 +33,7 @@ fun AddProfileTopBar(
             .fillMaxWidth()
             .height(appBarHeight),
     ) {
-        Column(
-
-        ) {
+        Column {
             Row(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
@@ -51,7 +49,7 @@ fun AddProfileTopBar(
                             interactionSource = NoRippleInteractionSource,
                             indication = null,
                         ),
-                    painter = painterResource(id = R.drawable.ic_back),
+                    painter = painterResource(id = R.drawable.ic_back_small),
                     contentDescription = null,
                     )
                 Text(
