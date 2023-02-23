@@ -9,8 +9,5 @@ class NicknameState(initialText: String = "") : TextFieldState(
         it.isNotBlank() && it.length <= MAX_LENGTH_EN
     }
 ) {
-    companion object {
-        const val MAX_LENGTH_KO = 8
-        const val MAX_LENGTH_EN = 16
-    }
+
 }

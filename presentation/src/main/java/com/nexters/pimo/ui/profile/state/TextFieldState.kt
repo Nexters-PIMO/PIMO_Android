@@ -20,7 +20,7 @@ abstract class TextFieldState(
     val isError: Boolean
         get() = isFocusedDirty && !isValid
 
-    var isInputValid: Boolean = false
+    var isValidInput: Boolean = false
 
     @StringRes
     var inputCheckMsg: Int = R.string.profile_input_available
@@ -32,6 +32,11 @@ abstract class TextFieldState(
         if (focused) {
             isFocusedDirty = true
         }
+    }
+
+    companion object {
+        const val MAX_LENGTH_KO = 8
+        const val MAX_LENGTH_EN = 16
     }
 }
 

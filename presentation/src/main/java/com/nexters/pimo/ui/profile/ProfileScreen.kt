@@ -39,9 +39,9 @@ import com.canhub.cropper.CropImageView
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.component.NoRippleInteractionSource
 import com.nexters.pimo.ui.component.ProfileTextField
-import com.nexters.pimo.ui.profile.state.NicknameState
 import com.nexters.pimo.ui.profile.state.ProfileState
 import com.nexters.pimo.ui.profile.state.TextFieldState
+import com.nexters.pimo.ui.profile.state.TextFieldState.Companion.MAX_LENGTH_EN
 import com.nexters.pimo.ui.theme.FimoTheme
 import org.orbitmvi.orbit.compose.collectAsState
 
@@ -117,7 +117,7 @@ fun ProfileAddText(viewModel: ProfileViewModel, profileState: ProfileState) {
                     text = stringResource(textFieldState.inputCheckMsg),
                     style = FimoTheme.typography.medium.copy(
                         fontSize = 12.sp,
-                        color = if (textFieldState.isInputValid) {
+                        color = if (textFieldState.isValidInput) {
                             FimoTheme.colors.black
                         } else {
                             FimoTheme.colors.primary
@@ -151,7 +151,7 @@ fun ProfileAddImage(viewModel: ProfileViewModel, profileState: ProfileState) {
                 ),
             )
             Spacer(modifier = Modifier.height(44.dp))
-            ProfileImagePlaceholder(modifier = Modifier.fillMaxWidth(), profileState = profileState)
+            ProfileImagePlaceholder(viewModel, modifier = Modifier.fillMaxWidth(), profileState = profileState)
             Spacer(modifier = Modifier.height(82.dp))
             ProfileCompleteButton(imageState = profileState.imageState, goForward = viewModel::goForward)
         }
@@ -159,7 +159,7 @@ fun ProfileAddImage(viewModel: ProfileViewModel, profileState: ProfileState) {
 }
 
 @Composable
-fun ProfileImagePlaceholder(viewModel: ProfileViewModel = hiltViewModel(), modifier: Modifier = Modifier, profileState: ProfileState) {
+fun ProfileImagePlaceholder(viewModel: ProfileViewModel, modifier: Modifier = Modifier, profileState: ProfileState) {
     val context = LocalContext.current
 
     val imageCropLauncher = rememberLauncherForActivityResult(CropImageContract()) { result ->
@@ -423,7 +423,7 @@ fun ProfileTrailingIcon(textFieldState: TextFieldState, onClick: () -> Unit) {
 fun ProfileNextButton(textFieldState: TextFieldState, goForward: () -> Unit) {
     Surface(
         shape = RoundedCornerShape(2.dp),
-        color = if (textFieldState.isInputValid) {
+        color = if (textFieldState.isValidInput) {
             FimoTheme.colors.primaryDark
         } else {
             FimoTheme.colors.greyD9
@@ -431,7 +431,7 @@ fun ProfileNextButton(textFieldState: TextFieldState, goForward: () -> Unit) {
         modifier = Modifier
             .clip(RoundedCornerShape(2.dp))
             .clickable(
-                onClick = if (textFieldState.isInputValid) {
+                onClick = if (textFieldState.isValidInput) {
                     goForward
                 } else {
                     ({})
@@ -532,8 +532,8 @@ private fun ProfileTextField(
             modifier = Modifier
                 .onFocusChanged { textFieldState.onFocusChange(it.isFocused) },
             placeholder = stringResource(id = R.string.profile_input_hint),
-            isError = textFieldState.isDuplicateChecked && !textFieldState.isInputValid,
-            counterMaxLength = NicknameState.MAX_LENGTH_EN,
+            isError = textFieldState.isDuplicateChecked && !textFieldState.isValidInput,
+            counterMaxLength = MAX_LENGTH_EN,
             trailingIcon = trailingIcon
         )
     }
