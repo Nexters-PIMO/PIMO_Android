@@ -14,8 +14,11 @@ import com.nexters.pimo.domain.model.Post
 fun FimoPostList(
     modifier: Modifier = Modifier,
     posts: List<Post>,
+    isAudioPlaying: Boolean,
     showTooltip: Boolean,
-    onCloseTooltip: () -> Unit
+    onCloseTooltip: () -> Unit,
+    onPlayAudio: (String) -> Unit,
+    onStopAudio: () -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
@@ -25,12 +28,13 @@ fun FimoPostList(
             Column {
                 FimoPost(
                     post = it,
+                    isAudioPlaying = isAudioPlaying,
                     showTooltip = showTooltip,
                     onCloseTooltip = onCloseTooltip,
                     onMoreClick = { /*TODO*/ },
                     onCopyText = { /*TODO*/ },
-                    onPlayAudio = { /*TODO*/ },
-                    onStopAudio = { /*TODO*/ },
+                    onPlayAudio = onPlayAudio,
+                    onStopAudio = onStopAudio,
                     onClap = { /*TODO*/ },
                     onShare = { /*TODO*/ }
                 )

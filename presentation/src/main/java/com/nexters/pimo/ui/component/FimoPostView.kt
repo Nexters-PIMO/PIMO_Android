@@ -36,8 +36,11 @@ import com.nexters.pimo.ui.theme.FimoTheme
 fun FimoPostView(
     modifier: Modifier = Modifier,
     post: Post,
+    isAudioPlaying: Boolean,
     showTooltip: Boolean,
     onCloseTooltip: () -> Unit,
+    onPlayAudio: (String) -> Unit,
+    onStopAudio: () -> Unit,
     onBack: () -> Unit
 ) {
     val scrollableState = rememberScrollState()
@@ -91,12 +94,13 @@ fun FimoPostView(
             FimoDivider(modifier = Modifier.padding(top = 16.dp, bottom = 20.dp))
             FimoPost(
                 post = post,
+                isAudioPlaying = isAudioPlaying,
                 showTooltip = showTooltip,
                 onCloseTooltip = onCloseTooltip,
                 onMoreClick = { /*TODO*/ },
                 onCopyText = { /*TODO*/ },
-                onPlayAudio = { },
-                onStopAudio = { /*TODO*/ },
+                onPlayAudio = onPlayAudio,
+                onStopAudio = onStopAudio,
                 onClap = { /*TODO*/ },
                 onShare = { }
             )

@@ -5,6 +5,7 @@ import com.nexters.pimo.domain.model.TextImage
 import com.nexters.pimo.domain.model.User
 import com.nexters.pimo.domain.usecase.CloseTooltipUseCase
 import com.nexters.pimo.domain.usecase.GetTooltipVisibilityUseCase
+import com.nexters.pimo.feature.tts.TtsService
 import com.nexters.pimo.ui.base.BaseViewModel
 import com.nexters.pimo.ui.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class FeedViewModel @Inject constructor(
     private val getTooltipVisibilityUseCase: GetTooltipVisibilityUseCase,
-    private val closeTooltipUseCase: CloseTooltipUseCase
+    private val closeTooltipUseCase: CloseTooltipUseCase,
+    private val ttsService: TtsService
 ) : ContainerHost<FeedState, FeedSideEffect>,
     BaseViewModel() {
 
@@ -35,7 +37,7 @@ class FeedViewModel @Inject constructor(
         textImages = List(5) {
             TextImage(
                 id = 0,
-                text = "",
+                text = "피모 화이팅 ${it + 1}",
                 imageUrl = "https://images.unsplash.com/photo-1676590809985-2335879fcd05?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1286&q=80"
             )
         },
@@ -44,6 +46,7 @@ class FeedViewModel @Inject constructor(
     )
 
     init {
+        ttsService.setCallback { onAudioFinished() }
         intent {
             reduce { state.copy(uiState = UiState.Loading) }
 
@@ -67,5 +70,19 @@ class FeedViewModel @Inject constructor(
     fun onCloseTooltip() = intent {
         reduce { state.copy(showTooltip = false) }
         closeTooltipUseCase()
+    }
+
+    fun onPlayAudio(text: String) = intent {
+        ttsService.speakText(text)
+        reduce { state.copy(isAudioPlaying = true) }
+    }
+
+    fun onStopAudio() = intent {
+        ttsService.stop()
+        reduce { state.copy(isAudioPlaying = false) }
+    }
+
+    private fun onAudioFinished() = intent {
+        reduce { state.copy(isAudioPlaying = false) }
     }
 }
