@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.orbit.mvi)
     implementation(libs.coil.compose)
+    implementation(libs.coil.gif)
     implementation(libs.image.cropper)
 
     implementation(libs.accompanist.pager)
