@@ -270,7 +270,9 @@ fun ProfileAddComplete(viewModel: ProfileViewModel) {
             .padding(horizontal = 20.dp)
             .padding(top = 56.dp, bottom = 60.dp)
     ) {
-        Column() {
+        Column(
+            modifier = Modifier.padding(horizontal = 15.dp)
+        ) {
             Image(
                 modifier = Modifier
                     .width(44.dp),
