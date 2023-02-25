@@ -49,7 +49,7 @@ fun OnboardFollowing(
             .fillMaxSize()
             .background(FimoTheme.colors.white),
     ) {
-        Column() {
+        Column {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -61,7 +61,7 @@ fun OnboardFollowing(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 20.dp)
-                            .padding(top = 64.dp),
+                            .padding(top = 30.dp),
                         contentAlignment = Alignment.TopEnd
                     ) {
                         Text(
@@ -106,14 +106,55 @@ fun OnboardFollowing(
                     lineHeight = 23.sp
                 )
             }
+            if (onboardStep.step == 3) {
+                Box(
+                    modifier = Modifier.fillMaxHeight().padding(horizontal = 20.dp)
+                ) {
+                    Surface(
+                        shape = RoundedCornerShape(4.dp),
+                        color = FimoTheme.colors.black,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(4.dp))
+                            .clickable(
+                                interactionSource = NoRippleInteractionSource,
+                                indication = null,
+                            ) {
+                                onSkip()
+                            }
+                            .height(56.dp),
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_logo_white),
+                                contentDescription = null,
+                                modifier = Modifier.size(30.dp),
+                                tint = FimoTheme.colors.white
+                            )
+                            Spacer(modifier = Modifier.width(14.dp))
+                            Text(
+                                text = stringResource(id = R.string.onboard_start_fimo),
+                                style = FimoTheme.typography.semibold.copy(
+                                    fontSize = 16.sp,
+                                    color = FimoTheme.colors.white
+                                ),
+                            )
+                        }
+                    }
+                }
+            }
         }
-        Column(
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(horizontal = 20.dp)
-                .padding(bottom = 60.dp),
-        ) {
-            if (onboardStep.step != 3) {
+        if (onboardStep.step != 3) {
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(horizontal = 20.dp)
+                    .padding(bottom = 60.dp),
+            ) {
                 Row(
                 ) {
                     Box(
@@ -168,42 +209,6 @@ fun OnboardFollowing(
                     )
                 }
             }
-            if (onboardStep.step == 3) {
-                Surface(
-                    shape = RoundedCornerShape(4.dp),
-                    color = FimoTheme.colors.black,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(4.dp))
-                        .clickable(
-                            interactionSource = NoRippleInteractionSource,
-                            indication = null,
-                        ) {
-                            onSkip()
-                        }
-                        .height(56.dp),
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_logo_white),
-                            contentDescription = null,
-                            modifier = Modifier.size(30.dp),
-                            tint = FimoTheme.colors.white
-                        )
-                        Spacer(modifier = Modifier.width(14.dp))
-                        Text(
-                            text = stringResource(id = R.string.onboard_start_fimo),
-                            style = FimoTheme.typography.semibold.copy(
-                                fontSize = 16.sp,
-                                color = FimoTheme.colors.white
-                            ),
-                        )
-                    }
-                }
-            }
         }
     }
 }
@@ -220,7 +225,7 @@ fun OnboardFirst(onClick: () -> Unit) {
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(horizontal = 20.dp)
-                .padding(top = 64.dp),
+                .padding(top = 30.dp),
         ) {
             Text(
                 modifier = Modifier.clickable { onClick() },

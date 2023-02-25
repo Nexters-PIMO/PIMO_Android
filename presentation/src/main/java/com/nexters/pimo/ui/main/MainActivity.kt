@@ -1,5 +1,7 @@
 package com.nexters.pimo.ui.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import com.nexters.pimo.ui.base.BaseActivity
@@ -29,5 +31,12 @@ class MainActivity : BaseActivity() {
 
     private fun startFriendActivity() {
         FriendActivity.startActivity(this)
+    }
+
+    companion object {
+        fun startActivity(context: Context) {
+            val intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 }

@@ -36,11 +36,14 @@
 
         <activity
             android:name=".ui.onboard.OnboardActivity"
-            android:exported="true"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.profile.ProfileActivity"
             android:screenOrientation="portrait" />
 
         <activity

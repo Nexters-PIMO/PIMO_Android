@@ -12,6 +12,7 @@ import com.nexters.pimo.domain.model.User
 import com.nexters.pimo.feature.kakao.KakaoLogin
 import com.nexters.pimo.ui.base.BaseActivity
 import com.nexters.pimo.ui.main.MainActivity
+import com.nexters.pimo.ui.profile.ProfileActivity
 import com.nexters.pimo.ui.theme.FimoTheme
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +51,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun startProfileActivity() {
-//        ProfileActivity.startActivity(this)
+        ProfileActivity.startActivity(this)
 //        finish()
     }
 
