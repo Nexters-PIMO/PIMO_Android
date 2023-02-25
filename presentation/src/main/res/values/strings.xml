@@ -22,9 +22,9 @@
     <string name="profile_input_msg">공백없이 한글 8자 영어 16자 이하로 정해주세요</string>
     <string name="profile_input_hint">텍스트를 입력해주세요.</string>
     <string name="profile_input_duplicate_check">중복 확인</string>
-    <string name="profile_input_available">사용할 수 있는 닉네임이에요</string>
+    <string name="profile_input_available">사용할 수 있는 이름이에요</string>
     <string name="profile_input_form_error">한글과 영어, 숫자만 사용할 수 있어요</string>
-    <string name="profile_input_duplicate_error">이미 사용 중인 닉네임이에요</string>
+    <string name="profile_input_duplicate_error">이미 사용 중인 이름이에요</string>
     <string name="profile_input_length_error">글자 수를 초과했어요</string>
     <string name="profile_add_nickname_title">닉네임을 입력해주세요</string>
     <string name="profile_add_archive_title">나의 아카이브 이름을 입력해주세요</string>
