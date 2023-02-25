@@ -38,8 +38,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -70,6 +72,8 @@ fun FeedScreen(
     val state = viewModel.collectAsState().value
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+
+    val clipboardManager = LocalClipboardManager.current
 
     var viewMode: FeedViewMode by remember { mutableStateOf(FeedViewMode.List) }
     var selectedPost: Post? by remember { mutableStateOf(null) }
@@ -109,18 +113,24 @@ fun FeedScreen(
                                         onCloseTooltip = viewModel::onCloseTooltip,
                                         onPlayAudio = viewModel::onPlayAudio,
                                         onStopAudio = viewModel::onStopAudio
+                                        onCopyText = { clipboardManager.setText(AnnotatedString(it)) }
                                     )
                                 }
                                 FeedViewMode.Grid -> {
-                                    selectedPost?.let {
+                                    selectedPost?.let { post ->
                                         FimoPostView(
-                                            post = it,
+                                            post = post,
                                             isAudioPlaying = state.isAudioPlaying,
                                             showTooltip = state.showTooltip,
                                             onCloseTooltip = viewModel::onCloseTooltip,
                                             onPlayAudio = viewModel::onPlayAudio,
                                             onStopAudio = viewModel::onStopAudio,
-                                            onBack = { selectedPost = null }
+                                            onBack = { selectedPost = null },
+                                            onCopyText = {
+                                                clipboardManager.setText(
+                                                    AnnotatedString(it)
+                                                )
+                                            }
                                         )
                                     } ?: FimoPostGrid(
                                         posts = state.user.posts,

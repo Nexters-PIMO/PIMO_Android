@@ -17,8 +17,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,6 +38,8 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val state = viewModel.collectAsState().value
 
+    val clipboardManager = LocalClipboardManager.current
+
     Column(modifier = Modifier.fillMaxSize()) {
         FimoHomeAppBar(
             onActionClick = { /*TODO*/ },
@@ -51,6 +55,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                         onCloseTooltip = viewModel::onCloseTooltip,
                         onPlayAudio = viewModel::onPlayAudio,
                         onStopAudio = viewModel::onStopAudio
+                        onCopyText = { clipboardManager.setText(AnnotatedString(it)) }
                     )
                 } else {
                     Welcome()

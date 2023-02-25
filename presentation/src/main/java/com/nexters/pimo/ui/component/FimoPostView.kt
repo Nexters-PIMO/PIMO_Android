@@ -41,6 +41,7 @@ fun FimoPostView(
     onCloseTooltip: () -> Unit,
     onPlayAudio: (String) -> Unit,
     onStopAudio: () -> Unit,
+    onCopyText: (String) -> Unit,
     onBack: () -> Unit
 ) {
     val scrollableState = rememberScrollState()
@@ -66,7 +67,6 @@ fun FimoPostView(
                 .verticalScroll(scrollableState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -98,7 +98,7 @@ fun FimoPostView(
                 showTooltip = showTooltip,
                 onCloseTooltip = onCloseTooltip,
                 onMoreClick = { /*TODO*/ },
-                onCopyText = { /*TODO*/ },
+                onCopyText = onCopyText,
                 onPlayAudio = onPlayAudio,
                 onStopAudio = onStopAudio,
                 onClap = { /*TODO*/ },

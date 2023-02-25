@@ -77,7 +77,7 @@ fun FimoPost(
     showTooltip: Boolean,
     onCloseTooltip: () -> Unit,
     onMoreClick: () -> Unit,
-    onCopyText: () -> Unit,
+    onCopyText: (String) -> Unit,
     onPlayAudio: (String) -> Unit,
     onStopAudio: () -> Unit,
     onClap: () -> Unit,
@@ -200,7 +200,9 @@ fun FimoPost(
                 ) {
                     CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
                         FilledIconButton(
-                            onClick = onCopyText,
+                            onClick = {
+                                onCopyText(post.textImages[pagerState.currentPage].text)
+                            },
                             shape = CircleShape,
                             modifier = Modifier.size(40.dp),
                             colors = IconButtonDefaults.filledIconButtonColors(

@@ -56,6 +56,9 @@
     <string name="non_text_image_toast">글이 존재하지 않는 사진이에요!</string>
     <string name="non_text_image_toast_sub">글이 포함되어 있는 사진으로 업로드해주세요</string>
 
+    <string name="text_image_copy_toast">글사진 텍스트 복사 완료!</string>
+    <string name="text_image_copy_toast_sub">글사진 속 텍스트를 지인들에게 공유해보세요</string>
+
     <string name="archiving_count">%s개의 글사진 아카이빙 중</string>
     <string name="text_image">글사진</string>
     <string name="empty_text_image">글사진이 존재하지 않아요</string>
