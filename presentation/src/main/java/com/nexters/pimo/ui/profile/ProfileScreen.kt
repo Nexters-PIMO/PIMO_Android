@@ -98,6 +98,8 @@ fun ProfileAddText(viewModel: ProfileViewModel, profileState: ProfileState) {
             )
             Spacer(modifier = Modifier.height(32.dp))
             ProfileTextField(
+                viewModel = viewModel,
+                profileState = profileState,
                 textFieldState = textFieldState,
                 trailingIcon = { ProfileTrailingIcon(textFieldState = textFieldState,
                     onClick = if (profileState.pageIdx == 0) {
@@ -521,6 +523,8 @@ fun ProfileStartButton(goForward: () -> Unit) {
 
 @Composable
 private fun ProfileTextField(
+    viewModel: ProfileViewModel,
+    profileState: ProfileState,
     textFieldState: TextFieldState,
     modifier: Modifier = Modifier,
     trailingIcon: @Composable (() -> Unit)
@@ -528,7 +532,14 @@ private fun ProfileTextField(
     Column(modifier = modifier) {
         ProfileTextField(
             value = textFieldState.text,
-            onValueChange = { textFieldState.text = it },
+            onValueChange = {
+                textFieldState.text = it
+                if (profileState.pageIdx == 0) {
+                    viewModel.initNicknameState()
+                } else {
+                    viewModel.initArchiveNameState()
+                }
+            },
             modifier = Modifier
                 .onFocusChanged { textFieldState.onFocusChange(it.isFocused) },
             placeholder = stringResource(id = R.string.profile_input_hint),

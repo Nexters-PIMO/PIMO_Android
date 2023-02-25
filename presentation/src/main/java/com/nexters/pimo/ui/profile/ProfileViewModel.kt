@@ -71,6 +71,26 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun initNicknameState() = intent {
+        val nicknameStateNew = NicknameState(state.nicknameState.text)
+        nicknameStateNew.isDuplicateChecked = false
+        nicknameStateNew.isValidInput = false
+
+        reduce {
+            state.copy(nicknameState = nicknameStateNew)
+        }
+    }
+
+    fun initArchiveNameState() = intent {
+        val archiveNameStateNew = ArchiveNameState(state.archiveNameState.text)
+        archiveNameStateNew.isDuplicateChecked = false
+        archiveNameStateNew.isValidInput = false
+
+        reduce {
+            state.copy(archiveNameState = archiveNameStateNew)
+        }
+    }
+
     fun onPickImage(bitmap: Bitmap) = intent {
         reduce {
             state.copy(imageState = bitmap)
