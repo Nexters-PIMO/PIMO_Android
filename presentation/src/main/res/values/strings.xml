@@ -30,6 +30,7 @@
     <string name="edit_post">수정하기</string>
     <string name="post">게시하기</string>
     <string name="thumbnail">미리보기</string>
+    <string name="first_textimage">대표 글사진</string>
     <string name="thumbnail_help">미리보고 싶은 썸네일을 선택해주세요</string>
     <string name="edit_post_dialog">작성 중인 게시글이 삭제됩니다</string>
     <string name="edit_post_dialog_sub">정말 나가시겠습니까?</string>

@@ -297,14 +297,37 @@ fun ImageBar(
                         .padding(top = 12.dp)
                         .size(72.dp)
                 ) {
-                    Image(
-                        bitmap = images[index].bitmap.asImageBitmap(),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(72.dp)
-                            .aspectRatio(1f),
-                        contentScale = ContentScale.Crop
-                    )
+                    Box {
+                        Image(
+                            bitmap = images[index].bitmap.asImageBitmap(),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(72.dp)
+                                .aspectRatio(1f),
+                            contentScale = ContentScale.Crop
+                        )
+                        if (index == 0) {
+                            Surface(
+                                modifier = Modifier
+                                    .height((22.5).dp)
+                                    .fillMaxWidth()
+                                    .align(Alignment.BottomCenter),
+                                color = FimoTheme.colors.black.copy(alpha = 0.7f)
+                            ) {
+                                Box(
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = stringResource(id = R.string.first_textimage),
+                                        style = FimoTheme.typography.regular.copy(
+                                            fontSize = 12.sp,
+                                            color = FimoTheme.colors.white
+                                        )
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
                 FilledIconButton(
                     onClick = { removeImage(index) },
@@ -365,14 +388,6 @@ fun ImagePlaceholder(modifier: Modifier = Modifier) {
                     )
                 )
             }
-        }
-    }
-}
-
-private fun handleSideEffect(sideEffect: UploadSideEffect) {
-    when (sideEffect) {
-        UploadSideEffect.ShowNonTextImageToast -> {
-
         }
     }
 }
