@@ -61,7 +61,7 @@ fun OnboardFollowing(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 20.dp)
-                            .padding(top = 64.dp),
+                            .padding(top = 30.dp),
                         contentAlignment = Alignment.TopEnd
                     ) {
                         Text(
@@ -220,7 +220,7 @@ fun OnboardFirst(onClick: () -> Unit) {
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(horizontal = 20.dp)
-                .padding(top = 64.dp),
+                .padding(top = 30.dp),
         ) {
             Text(
                 modifier = Modifier.clickable { onClick() },
