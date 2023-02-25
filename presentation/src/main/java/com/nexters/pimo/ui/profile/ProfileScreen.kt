@@ -110,22 +110,22 @@ fun ProfileAddText(viewModel: ProfileViewModel, profileState: ProfileState) {
                                },
             )
             Spacer(modifier = Modifier.height(12.dp))
-            AnimatedVisibility(
-                visible = textFieldState.isDuplicateChecked,
-                enter = fadeIn(),
-                exit = fadeOut(),
+            Box(
+                modifier = Modifier.height(14.dp),
             ) {
-                Text(
-                    text = stringResource(textFieldState.inputCheckMsg),
-                    style = FimoTheme.typography.medium.copy(
-                        fontSize = 12.sp,
-                        color = if (textFieldState.isValidInput) {
-                            FimoTheme.colors.black
-                        } else {
-                            FimoTheme.colors.primary
-                        },
-                    ),
-                )
+                if (textFieldState.isDuplicateChecked) {
+                    Text(
+                        text = stringResource(textFieldState.inputCheckMsg),
+                        style = FimoTheme.typography.medium.copy(
+                            fontSize = 12.sp,
+                            color = if (textFieldState.isValidInput) {
+                                FimoTheme.colors.black
+                            } else {
+                                FimoTheme.colors.primary
+                            },
+                        ),
+                    )
+                }
             }
             Spacer(modifier = Modifier.height(66.dp))
             ProfileNextButton(textFieldState = textFieldState, goForward = viewModel::goForward)
