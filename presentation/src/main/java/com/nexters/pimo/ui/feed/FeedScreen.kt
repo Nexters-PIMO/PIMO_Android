@@ -104,16 +104,22 @@ fun FeedScreen(
                                 FeedViewMode.List -> {
                                     FimoPostList(
                                         posts = state.user.posts,
+                                        isAudioPlaying = state.isAudioPlaying,
                                         showTooltip = state.showTooltip,
-                                        onCloseTooltip = viewModel::onCloseTooltip
+                                        onCloseTooltip = viewModel::onCloseTooltip,
+                                        onPlayAudio = viewModel::onPlayAudio,
+                                        onStopAudio = viewModel::onStopAudio
                                     )
                                 }
                                 FeedViewMode.Grid -> {
                                     selectedPost?.let {
                                         FimoPostView(
                                             post = it,
+                                            isAudioPlaying = state.isAudioPlaying,
                                             showTooltip = state.showTooltip,
                                             onCloseTooltip = viewModel::onCloseTooltip,
+                                            onPlayAudio = viewModel::onPlayAudio,
+                                            onStopAudio = viewModel::onStopAudio,
                                             onBack = { selectedPost = null }
                                         )
                                     } ?: FimoPostGrid(

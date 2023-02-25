@@ -46,8 +46,11 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                 if (state.posts.isNotEmpty()) {
                     FimoPostList(
                         posts = state.posts,
+                        isAudioPlaying = state.isAudioPlaying,
                         showTooltip = state.showTooltip,
-                        onCloseTooltip = viewModel::onCloseTooltip
+                        onCloseTooltip = viewModel::onCloseTooltip,
+                        onPlayAudio = viewModel::onPlayAudio,
+                        onStopAudio = viewModel::onStopAudio
                     )
                 } else {
                     Welcome()

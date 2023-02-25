@@ -6,9 +6,10 @@ import com.nexters.pimo.ui.state.UiState
 data class HomeState(
     val posts: List<Post> = listOf(), // TODO: Int -> Post
     val showTooltip: Boolean = false,
+    val isAudioPlaying: Boolean = false,
     val uiState: UiState = UiState.Loading
 )
 
 sealed class HomeSideEffect {
-    data class Toast(val text: String) : HomeSideEffect()
+
 }

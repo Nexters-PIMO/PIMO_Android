@@ -2,7 +2,11 @@ package com.nexters.pimo.feature.tts
 
 interface TtsService {
 
-    fun speakText(text: String): Unit
+    fun speakText(text: String)
 
-    fun close(): Unit
+    fun setCallback(callback: () -> Unit)
+
+    fun stop()
+
+    fun close()
 }

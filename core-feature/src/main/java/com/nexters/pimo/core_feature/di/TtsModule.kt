@@ -28,7 +28,7 @@ internal object TtsModule {
                 }
             }
         }
-
+        
         return textToSpeech
     }
 }

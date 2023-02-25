@@ -1,10 +1,13 @@
 package com.nexters.pimo.ui.component
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.with
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -62,16 +65,20 @@ import com.nexters.pimo.ui.util.DateUtil.toRelatively
 import com.nexters.pimo.ui.util.NumberUtil.toSymbolFormat
 import kotlinx.coroutines.delay
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalPagerApi::class,
+    ExperimentalAnimationApi::class
+)
 @Composable
 fun FimoPost(
     modifier: Modifier = Modifier,
     post: Post,
+    isAudioPlaying: Boolean,
     showTooltip: Boolean,
     onCloseTooltip: () -> Unit,
     onMoreClick: () -> Unit,
     onCopyText: () -> Unit,
-    onPlayAudio: (onStopCallback: () -> Unit) -> Unit,
+    onPlayAudio: (String) -> Unit,
     onStopAudio: () -> Unit,
     onClap: () -> Unit,
     onShare: () -> Unit
@@ -82,7 +89,6 @@ fun FimoPost(
     var clapCount: Int by remember { mutableStateOf(post.clapCount) }
     var clapPopupCount: Int by remember { mutableStateOf(0) }
     var isClapped: Boolean by remember { mutableStateOf(post.isClapped) }
-    var isAudioPlaying: Boolean by remember { mutableStateOf(false) }
 
     val pagerState = rememberPagerState()
 
@@ -317,24 +323,29 @@ fun FimoPost(
                 }
                 TextButton(
                     onClick = {
-                        if (isAudioPlaying) {
-                            onStopAudio()
-                            isAudioPlaying = false
-                        } else {
-                            onPlayAudio { isAudioPlaying = false }
-                            isAudioPlaying = true
-                        }
+                        if (isAudioPlaying) onStopAudio()
+                        else onPlayAudio(post.textImages[pagerState.currentPage].text)
                     },
                     contentPadding = PaddingValues(horizontal = 5.dp, vertical = 3.dp),
                     interactionSource = NoRippleInteractionSource,
                 ) {
-                    Image(
-                        painter = painterResource(
-                            id = if (isAudioPlaying) R.drawable.ic_audio_on else R.drawable.ic_audio_off
-                        ),
-                        contentDescription = null,
-                        modifier = Modifier.width(80.dp)
-                    )
+                    AnimatedContent(
+                        targetState = isAudioPlaying,
+                        transitionSpec = { fadeIn() with fadeOut() }
+                    ) {
+                        if (it) {
+                            GifImage(
+                                imageRes = R.drawable.ic_audio_on,
+                                modifier = Modifier.width(80.dp)
+                            )
+                        } else {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_audio_off),
+                                contentDescription = null,
+                                modifier = Modifier.width(80.dp)
+                            )
+                        }
+                    }
                 }
             }
         }

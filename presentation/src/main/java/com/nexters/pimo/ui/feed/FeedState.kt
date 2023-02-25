@@ -8,6 +8,7 @@ import com.nexters.pimo.ui.state.UiState
 data class FeedState(
     val user: User = User.Unspecified,
     val showTooltip: Boolean = false,
+    val isAudioPlaying: Boolean = false,
     val uiState: UiState = UiState.Loading
 )
 
