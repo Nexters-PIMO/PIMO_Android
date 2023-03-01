@@ -114,8 +114,8 @@ fun FeedScreen(
                                         showTooltip = state.showTooltip,
                                         onCloseTooltip = viewModel::onCloseTooltip,
                                         onPlayAudio = viewModel::onPlayAudio,
-                                        onStopAudio = viewModel::onStopAudio
-                                        onCopyText = { clipboardManager.setText(AnnotatedString(it)) }
+                                        onStopAudio = viewModel::onStopAudio,
+                                        onCopyText = { clipboardManager.setText(AnnotatedString(it)) },
                                         onClickMore = onClickMore
                                     )
                                 }

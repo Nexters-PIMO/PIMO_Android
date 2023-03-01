@@ -19,7 +19,7 @@ fun FimoPostList(
     onClickMore: (Post) -> Unit,
     onCloseTooltip: () -> Unit,
     onPlayAudio: (String) -> Unit,
-    onStopAudio: () -> Unit
+    onStopAudio: () -> Unit,
     onCopyText: (String) -> Unit
 ) {
     LazyColumn(
