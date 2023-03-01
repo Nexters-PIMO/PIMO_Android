@@ -16,6 +16,7 @@ fun FimoPostList(
     posts: List<Post>,
     isAudioPlaying: Boolean,
     showTooltip: Boolean,
+    onClickMore: (Post) -> Unit,
     onCloseTooltip: () -> Unit,
     onPlayAudio: (String) -> Unit,
     onStopAudio: () -> Unit
@@ -32,7 +33,7 @@ fun FimoPostList(
                     isAudioPlaying = isAudioPlaying,
                     showTooltip = showTooltip,
                     onCloseTooltip = onCloseTooltip,
-                    onMoreClick = { /*TODO*/ },
+                    onClickMore = onClickMore,
                     onPlayAudio = onPlayAudio,
                     onStopAudio = onStopAudio,
                     onCopyText = onCopyText,

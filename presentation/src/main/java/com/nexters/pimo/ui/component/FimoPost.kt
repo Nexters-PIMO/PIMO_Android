@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -76,7 +77,7 @@ fun FimoPost(
     isAudioPlaying: Boolean,
     showTooltip: Boolean,
     onCloseTooltip: () -> Unit,
-    onMoreClick: () -> Unit,
+    onClickMore: (Post) -> Unit,
     onCopyText: (String) -> Unit,
     onPlayAudio: (String) -> Unit,
     onStopAudio: () -> Unit,
@@ -132,7 +133,7 @@ fun FimoPost(
                     Spacer(modifier = Modifier.width(16.dp))
                     CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
                         IconButton(
-                            onClick = onMoreClick,
+                            onClick = { onClickMore(post) },
                             modifier = Modifier.size(20.dp)
                         ) {
                             Icon(

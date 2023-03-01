@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.nexters.pimo.domain.model.Post
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.component.FimoHomeAppBar
 import com.nexters.pimo.ui.component.FimoPostList
@@ -35,7 +36,10 @@ import com.nexters.pimo.ui.util.DateUtil.isToday
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
+    onClickMore: (Post) -> Unit
+) {
     val state = viewModel.collectAsState().value
 
     val clipboardManager = LocalClipboardManager.current
@@ -56,6 +60,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                         onPlayAudio = viewModel::onPlayAudio,
                         onStopAudio = viewModel::onStopAudio
                         onCopyText = { clipboardManager.setText(AnnotatedString(it)) }
+                        onClickMore = onClickMore
                     )
                 } else {
                     Welcome()

@@ -83,4 +83,8 @@
     <string name="cancel">취소하기</string>
     <string name="exit">나가기</string>
     <string name="done">완료</string>
+
+    <string name="edit">수정하기</string>
+    <string name="delete">삭제하기</string>
+    <string name="report">신고하기</string>
 </resources>

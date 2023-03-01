@@ -97,7 +97,7 @@ fun FimoPostView(
                 isAudioPlaying = isAudioPlaying,
                 showTooltip = showTooltip,
                 onCloseTooltip = onCloseTooltip,
-                onMoreClick = { /*TODO*/ },
+                onClickMore = { /*TODO*/ },
                 onCopyText = onCopyText,
                 onPlayAudio = onPlayAudio,
                 onStopAudio = onStopAudio,
