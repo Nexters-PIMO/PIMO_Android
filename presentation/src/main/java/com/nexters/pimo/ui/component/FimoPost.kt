@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -314,7 +313,6 @@ fun FimoPost(
                             contentColor = FimoTheme.colors.black
                         ),
                         contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp),
-                        interactionSource = NoRippleInteractionSource,
                         modifier = Modifier.width(44.dp)
                     ) {
                         Image(
@@ -336,18 +334,10 @@ fun FimoPost(
                         targetState = isAudioPlaying,
                         transitionSpec = { fadeIn() with fadeOut() }
                     ) {
-                        if (it) {
-                            GifImage(
-                                imageRes = R.drawable.ic_audio_on,
-                                modifier = Modifier.width(80.dp)
-                            )
-                        } else {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_audio_off),
-                                contentDescription = null,
-                                modifier = Modifier.width(80.dp)
-                            )
-                        }
+                        GifImage(
+                            imageRes = if (it) R.drawable.ic_audio_on else R.drawable.ic_audio_off,
+                            modifier = Modifier.width(80.dp)
+                        )
                     }
                 }
             }
