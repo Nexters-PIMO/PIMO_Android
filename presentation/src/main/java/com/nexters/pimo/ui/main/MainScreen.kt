@@ -1,6 +1,7 @@
 package com.nexters.pimo.ui.main
 
 import android.annotation.SuppressLint
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -63,6 +64,10 @@ fun MainScreen(
         fontSize = 18.sp,
         color = FimoTheme.colors.black
     )
+
+    BackHandler(enabled = modalBottomSheetState.isVisible) {
+        coroutineScope.launch { modalBottomSheetState.hide() }
+    }
 
     ModalBottomSheetLayout(
         sheetState = modalBottomSheetState,
