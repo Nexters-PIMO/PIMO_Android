@@ -133,7 +133,8 @@ fun FeedScreen(
                                                 clipboardManager.setText(
                                                     AnnotatedString(it)
                                                 )
-                                            }
+                                            },
+                                            onClickMore = onClickMore
                                         )
                                     } ?: FimoPostGrid(
                                         posts = state.user.posts,

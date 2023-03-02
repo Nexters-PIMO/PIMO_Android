@@ -42,6 +42,7 @@ fun FimoPostView(
     onPlayAudio: (String) -> Unit,
     onStopAudio: () -> Unit,
     onCopyText: (String) -> Unit,
+    onClickMore: (Post) -> Unit,
     onBack: () -> Unit
 ) {
     val scrollableState = rememberScrollState()
@@ -97,7 +98,7 @@ fun FimoPostView(
                 isAudioPlaying = isAudioPlaying,
                 showTooltip = showTooltip,
                 onCloseTooltip = onCloseTooltip,
-                onClickMore = { /*TODO*/ },
+                onClickMore = onClickMore,
                 onCopyText = onCopyText,
                 onPlayAudio = onPlayAudio,
                 onStopAudio = onStopAudio,
