@@ -5,14 +5,15 @@ import android.graphics.Color
 import android.graphics.ImageDecoder
 import android.os.Build
 import android.provider.MediaStore
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -37,8 +38,8 @@ import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.canhub.cropper.CropImageView
 import com.nexters.pimo.ui.R
-import com.nexters.pimo.ui.component.NoRippleInteractionSource
-import com.nexters.pimo.ui.component.ProfileTextField
+import com.nexters.pimo.ui.component.*
+import com.nexters.pimo.ui.profile.state.Mode
 import com.nexters.pimo.ui.profile.state.ProfileState
 import com.nexters.pimo.ui.profile.state.TextFieldState
 import com.nexters.pimo.ui.profile.state.TextFieldState.Companion.MAX_LENGTH_EN
@@ -48,14 +49,232 @@ import org.orbitmvi.orbit.compose.collectAsState
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
-) {
+    onBack: () -> Unit,
+    ) {
     val profileState = viewModel.collectAsState().value
 
-    when (profileState.pageIdx) {
-        0,1 -> ProfileAddText(viewModel, profileState)
-        2 -> ProfileAddImage(viewModel, profileState)
-        3 -> ProfileAddComplete(viewModel)
+    if (profileState.mode == Mode.Add) {
+        when (profileState.pageIdx) {
+            0, 1 -> ProfileAddText(viewModel, profileState)
+            2 -> ProfileAddImage(viewModel, profileState)
+            3 -> ProfileAddComplete(viewModel)
+        }
+    } else {
+        ProfileEdit(viewModel, profileState, onBack)
     }
+}
+
+@Composable
+fun ProfileEdit(viewModel: ProfileViewModel, profileState: ProfileState, onBack: () -> Unit) {
+    var showToast by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+
+    val imageCropLauncher = rememberLauncherForActivityResult(CropImageContract()) { result ->
+        if (result.isSuccessful) {
+            result.uriContent?.let {
+                val bitmap =
+                    if (Build.VERSION.SDK_INT < 28) {
+                        MediaStore.Images.Media.getBitmap(context.contentResolver, it)
+                    } else {
+                        val source = ImageDecoder.createSource(context.contentResolver, it)
+                        ImageDecoder.decodeBitmap(source)
+                    }
+                viewModel.onPickImage(bitmap)
+            }
+        }
+    }
+
+    val imageCropperOptions = CropImageOptions(
+        cropShape = CropImageView.CropShape.RECTANGLE,
+        fixAspectRatio = true,
+        aspectRatioX = 1,
+        aspectRatioY = 1,
+        toolbarColor = Color.WHITE,
+        toolbarBackButtonColor = Color.BLACK,
+        toolbarTintColor = Color.BLACK,
+        allowFlipping = false,
+        allowRotation = false,
+        cropMenuCropButtonTitle = context.getString(R.string.done),
+        imageSourceIncludeCamera = false
+    )
+
+    val imagePickerLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri ->
+            val cropOptions = CropImageContractOptions(uri, imageCropperOptions)
+            imageCropLauncher.launch(cropOptions)
+        }
+
+    BackHandler {
+        showDialog = true
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(FimoTheme.colors.white)
+    ) {
+        FimoSimpleAppBar(
+            backIconRes = R.drawable.ic_back,
+            onBack = { showDialog = true },
+            titleText = stringResource(id = R.string.profile_edit)
+        )
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .padding(top = 55.dp),
+            ) {
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .width(132.dp)
+                        .height(127.dp)
+                        .align(Alignment.Center),
+                ) {
+                    ProfileImagePlaceholder(viewModel, modifier = Modifier
+                        .width(120.dp)
+                        .height(120.dp)
+                        .align(Alignment.Center), profileState = profileState)
+                    Box(modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .size(32.dp)
+                        .aspectRatio(1f)
+                        .background(FimoTheme.colors.primary, shape = CircleShape)
+                        .clickable(
+                            onClick = { imagePickerLauncher.launch("image/*") },
+                            interactionSource = NoRippleInteractionSource,
+                            indication = null,
+                        ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .size(16.dp),
+                            painter = painterResource(id = R.drawable.ic_edit),
+                            contentDescription = null,
+                            tint = FimoTheme.colors.white
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(46.dp))
+            Text(
+                text = stringResource(id = R.string.profile_nickname),
+                style = FimoTheme.typography.regular.copy(
+                    fontSize = 16.sp,
+                    color = FimoTheme.colors.black,
+                ),
+            )
+            Spacer(modifier = Modifier.height(11.5.dp))
+            ProfileTextField(
+                viewModel = viewModel,
+                profileState = profileState,
+                textFieldState = profileState.nicknameState,
+                trailingIcon = { ProfileTrailingIcon(textFieldState = profileState.nicknameState,
+                    onClick = { viewModel.checkNickname() })
+                },
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Box(
+                modifier = Modifier.height(14.dp),
+            ) {
+                if (profileState.nicknameState.isDuplicateChecked) {
+                    Text(
+                        text = stringResource(profileState.nicknameState.inputCheckMsg),
+                        style = FimoTheme.typography.medium.copy(
+                            fontSize = 12.sp,
+                            color = if (profileState.nicknameState.isValidInput) {
+                                FimoTheme.colors.black
+                            } else {
+                                FimoTheme.colors.primary
+                            },
+                        ),
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(22.dp))
+            Text(
+                text = stringResource(id = R.string.profile_archive_name),
+                style = FimoTheme.typography.regular.copy(
+                    fontSize = 16.sp,
+                    color = FimoTheme.colors.black,
+                ),
+            )
+            Spacer(modifier = Modifier.height(11.5.dp))
+            ProfileTextField(
+                viewModel = viewModel,
+                profileState = profileState,
+                textFieldState = profileState.archiveNameState,
+                trailingIcon = { ProfileTrailingIcon(textFieldState = profileState.archiveNameState,
+                    onClick = { viewModel.checkArchiveName() })
+                },
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Box(
+                modifier = Modifier.height(14.dp),
+            ) {
+                if (profileState.archiveNameState.isDuplicateChecked) {
+                    Text(
+                        text = stringResource(profileState.archiveNameState.inputCheckMsg),
+                        style = FimoTheme.typography.medium.copy(
+                            fontSize = 12.sp,
+                            color = if (profileState.archiveNameState.isValidInput) {
+                                FimoTheme.colors.black
+                            } else {
+                                FimoTheme.colors.primary
+                            },
+                        ),
+                    )
+                }
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(bottom = 60.dp)
+            ) {
+                Button(
+                    onClick = {
+                        showToast = true
+                    },
+                    modifier = Modifier
+                        .height(56.dp)
+                        .fillMaxWidth()
+                        .background(FimoTheme.colors.primaryDark)
+                        .align(Alignment.BottomCenter),
+                    shape = RoundedCornerShape(2.dp),
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.save),
+                        style = FimoTheme.typography.medium.copy(
+                            fontSize = 16.sp,
+                            color = FimoTheme.colors.white
+                        )
+                    )
+                }
+            }
+        }
+    }
+    FimoDialog(
+        visible = showDialog,
+        title = stringResource(id = R.string.profile_edit_exit_title),
+        subtitle = stringResource(id = R.string.profile_edit_exit_subtitle),
+        leftStringRes = R.string.cancel,
+        rightStringRes = R.string.exit,
+        onLeftClick = { showDialog = false },
+        onRightClick = { onBack() },
+        onDismiss = { showDialog = false }
+    )
+    FimoToast(
+        visible = showToast,
+        modifier = Modifier.padding(bottom = 24.dp),
+        titleRes = R.string.profile_edit_complete,
+        subtitleRes = null,
+        onDismiss = { showToast = false }
+    )
 }
 
 @Composable
@@ -471,7 +690,7 @@ fun ProfileCompleteButton(imageState: Bitmap?, goForward: () -> Unit) {
         modifier = Modifier
             .clip(RoundedCornerShape(2.dp))
             .clickable(
-                onClick =  if (imageState != null) {
+                onClick = if (imageState != null) {
                     goForward
                 } else {
                     ({})

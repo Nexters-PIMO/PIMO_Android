@@ -53,7 +53,7 @@ fun AddProfileTopBar(
                     contentDescription = null,
                     )
                 Text(
-                    text = stringResource(id = R.string.profile_top_title),
+                    text = stringResource(id = R.string.profile_add),
                     style = FimoTheme.typography.medium.copy(
                         fontSize = 18.sp,
                         color = FimoTheme.colors.black,

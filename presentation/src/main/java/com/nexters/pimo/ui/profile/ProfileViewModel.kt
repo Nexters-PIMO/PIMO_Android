@@ -1,12 +1,10 @@
 package com.nexters.pimo.ui.profile
 
 import android.graphics.Bitmap
+import androidx.lifecycle.SavedStateHandle
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.base.BaseViewModel
-import com.nexters.pimo.ui.profile.state.ArchiveNameState
-import com.nexters.pimo.ui.profile.state.NicknameState
-import com.nexters.pimo.ui.profile.state.ProfileSideEffect
-import com.nexters.pimo.ui.profile.state.ProfileState
+import com.nexters.pimo.ui.profile.state.*
 import com.nexters.pimo.ui.profile.state.TextFieldState.Companion.MAX_LENGTH_EN
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
@@ -18,10 +16,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     ) : ContainerHost<ProfileState, ProfileSideEffect>,
     BaseViewModel() {
 
-    override val container = container<ProfileState, ProfileSideEffect>(ProfileState(nicknameState = NicknameState(""), archiveNameState = ArchiveNameState(""), imageState = null))
+    private val mode: Mode = savedStateHandle.get<Mode>(KEY_MODE)!!
+
+    override val container = container<ProfileState, ProfileSideEffect>(ProfileState(nicknameState = NicknameState(""), archiveNameState = ArchiveNameState(""), imageState = null, mode = mode))
 
     fun goBack() = intent {
         reduce { state.copy(pageIdx = state.pageIdx - 1) }
@@ -110,4 +111,7 @@ class ProfileViewModel @Inject constructor(
         return text.toByteArray(Charset.forName("EUC-KR")).size <= MAX_LENGTH_EN
     }
 
+    companion object {
+        const val KEY_MODE = "KEY_MODE"
+    }
 }
