@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import com.nexters.pimo.ui.base.BaseActivity
 import com.nexters.pimo.ui.friend.FriendActivity
+import com.nexters.pimo.ui.settings.SettingsActivity
 import com.nexters.pimo.ui.theme.FimoTheme
 import com.nexters.pimo.ui.upload.UploadActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +20,8 @@ class MainActivity : BaseActivity() {
             FimoTheme {
                 MainScreen(
                     startUploadActivity = ::startUploadActivity,
-                    startFriendActivity = ::startFriendActivity
+                    startFriendActivity = ::startFriendActivity,
+                    startSettingsActivity = ::startSettingsActivity,
                 )
             }
         }
@@ -31,6 +33,10 @@ class MainActivity : BaseActivity() {
 
     private fun startFriendActivity() {
         FriendActivity.startActivity(this)
+    }
+
+    private fun startSettingsActivity() {
+        SettingsActivity.startActivity(this)
     }
 
     companion object {

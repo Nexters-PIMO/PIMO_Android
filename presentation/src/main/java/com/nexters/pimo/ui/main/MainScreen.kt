@@ -15,13 +15,15 @@ import com.nexters.pimo.ui.component.FimoBottomBar
 import com.nexters.pimo.ui.component.bottomPanelHeight
 import com.nexters.pimo.ui.feed.FeedScreen
 import com.nexters.pimo.ui.home.HomeScreen
+import com.nexters.pimo.ui.settings.SettingsActivity
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     startUploadActivity: () -> Unit,
-    startFriendActivity: () -> Unit
+    startFriendActivity: () -> Unit,
+    startSettingsActivity: () -> Unit,
 ) {
     val navController = rememberNavController()
     val navigator = rememberNavigator(navController = navController)
@@ -43,7 +45,9 @@ fun MainScreen(
             startDestination = Destination.Home.route,
             modifier = Modifier.padding(bottom = bottomPanelHeight)
         ) {
-            composable(Destination.Home.route) { HomeScreen() }
+            composable(Destination.Home.route) {
+                HomeScreen(startSettingsActivity = startSettingsActivity)
+            }
             composable(Destination.Feed.route) {
                 FeedScreen(startFriendActivity = startFriendActivity)
             }

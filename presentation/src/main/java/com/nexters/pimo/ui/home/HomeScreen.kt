@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -27,18 +28,22 @@ import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.component.FimoHomeAppBar
 import com.nexters.pimo.ui.component.FimoPostList
 import com.nexters.pimo.ui.component.bottomPanelHeight
+import com.nexters.pimo.ui.settings.SettingsActivity
 import com.nexters.pimo.ui.state.UiState
 import com.nexters.pimo.ui.theme.FimoTheme
 import com.nexters.pimo.ui.util.DateUtil.isToday
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
+    startSettingsActivity: () -> Unit
+) {
     val state = viewModel.collectAsState().value
 
     Column(modifier = Modifier.fillMaxSize()) {
         FimoHomeAppBar(
-            onActionClick = { /*TODO*/ },
+            onActionClick = startSettingsActivity ,
             newPostCount = state.posts.filter { it.postedTime.isToday() }.size
         )
         when (state.uiState) {
