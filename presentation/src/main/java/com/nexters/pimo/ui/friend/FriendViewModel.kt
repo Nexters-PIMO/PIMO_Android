@@ -1,7 +1,7 @@
 package com.nexters.pimo.ui.friend
 
-import com.nexters.pimo.domain.model.User
 import com.nexters.pimo.ui.base.BaseViewModel
+import com.nexters.pimo.ui.model.Dummy
 import com.nexters.pimo.ui.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -17,10 +17,36 @@ class FriendViewModel @Inject constructor() : ContainerHost<FriendState, FriendS
 
     override val container = container<FriendState, FriendSideEffect>(FriendState())
 
-    val tempUser = User(
-        id = 0,
-        profileImageUrl = "https://avatars.githubusercontent.com/u/72238126?v=4",
-        nickname = "yjyoon"
+    val eachOther = listOf(
+        Dummy.user2,
+        Dummy.user3,
+        Dummy.user4,
+        Dummy.user5,
+        Dummy.user6,
+        Dummy.user7,
+        Dummy.user8,
+        Dummy.user9,
+        Dummy.user10,
+        Dummy.user11,
+        Dummy.user12,
+        Dummy.user13,
+    )
+
+    val onlyMe = listOf(
+        Dummy.user14,
+        Dummy.user15,
+        Dummy.user16,
+        Dummy.user17,
+        Dummy.user18,
+    )
+
+    val onlyOther = listOf(
+        Dummy.user19,
+        Dummy.user20,
+        Dummy.user21,
+        Dummy.user22,
+        Dummy.user23,
+        Dummy.user24,
     )
 
     init {
@@ -31,11 +57,11 @@ class FriendViewModel @Inject constructor() : ContainerHost<FriendState, FriendS
             reduce {
                 state.copy(
                     uiState = UiState.Done,
-                    user = tempUser,
-                    eachOtherCount = 32,
-                    onlyMeCount = 48,
-                    onlyOtherCount = 109,
-                    eachOtherFriends = List(32) { tempUser },
+                    user = Dummy.user1,
+                    eachOtherCount = eachOther.size,
+                    onlyMeCount = onlyMe.size,
+                    onlyOtherCount = onlyOther.size,
+                    eachOtherFriends = eachOther,
                     selectedType = FriendState.FriendType.EachOther,
                     orderType = FriendState.OrderType.Recently
                 )
@@ -63,22 +89,22 @@ class FriendViewModel @Inject constructor() : ContainerHost<FriendState, FriendS
             FriendState.FriendType.EachOther -> reduce {
                 state.copy(
                     uiState = UiState.Done,
-                    eachOtherCount = 32,
-                    eachOtherFriends = List(32) { tempUser }
+                    eachOtherCount = eachOther.size,
+                    eachOtherFriends = eachOther
                 )
             }
             FriendState.FriendType.OnlyMe -> reduce {
                 state.copy(
                     uiState = UiState.Done,
-                    onlyMeCount = 48,
-                    onlyMeFriends = List(48) { tempUser }
+                    onlyMeCount = onlyMe.size,
+                    onlyMeFriends = onlyMe
                 )
             }
             FriendState.FriendType.OnlyOther -> reduce {
                 state.copy(
                     uiState = UiState.Done,
-                    onlyOtherCount = 109,
-                    onlyOtherFriends = List(109) { tempUser }
+                    onlyOtherCount = onlyOther.size,
+                    onlyOtherFriends = onlyOther
                 )
             }
         }

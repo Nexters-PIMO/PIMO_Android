@@ -43,6 +43,7 @@ fun FimoPostView(
     onStopAudio: () -> Unit,
     onCopyText: (String) -> Unit,
     onClickMore: (Post) -> Unit,
+    onSharePost: (Post) -> Unit,
     onBack: () -> Unit
 ) {
     val scrollableState = rememberScrollState()
@@ -103,7 +104,7 @@ fun FimoPostView(
                 onPlayAudio = onPlayAudio,
                 onStopAudio = onStopAudio,
                 onClap = { /*TODO*/ },
-                onShare = { }
+                onShare = onSharePost
             )
             Spacer(modifier = Modifier.height(bottomPanelHeight / 2))
         }

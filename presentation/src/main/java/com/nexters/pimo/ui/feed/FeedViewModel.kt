@@ -7,6 +7,7 @@ import com.nexters.pimo.domain.usecase.CloseTooltipUseCase
 import com.nexters.pimo.domain.usecase.GetTooltipVisibilityUseCase
 import com.nexters.pimo.feature.tts.TtsService
 import com.nexters.pimo.ui.base.BaseViewModel
+import com.nexters.pimo.ui.model.Dummy
 import com.nexters.pimo.ui.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
@@ -55,12 +56,7 @@ class FeedViewModel @Inject constructor(
             reduce {
                 state.copy(
                     uiState = UiState.Done,
-                    user = User(
-                        id = 0,
-                        profileImageUrl = "https://avatars.githubusercontent.com/u/72238126?v=4",
-                        nickname = "yjyoon",
-                        posts = List(5) { tempPost }
-                    ),
+                    user = Dummy.dummyUser,
                     showTooltip = showTooltip
                 )
             }

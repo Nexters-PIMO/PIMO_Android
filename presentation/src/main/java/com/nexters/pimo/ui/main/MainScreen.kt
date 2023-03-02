@@ -26,6 +26,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.nexters.pimo.domain.model.Post
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.component.FimoBottomBar
 import com.nexters.pimo.ui.component.FimoBottomSheetContent
@@ -46,7 +47,8 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun MainScreen(
     viewModel: MainViewModel,
     startUploadActivity: () -> Unit,
-    startFriendActivity: () -> Unit
+    startFriendActivity: () -> Unit,
+    sharePost: (Post) -> Unit
 ) {
     val state = viewModel.collectAsState().value
 
@@ -127,7 +129,8 @@ fun MainScreen(
                         onClickMore = {
                             viewModel.onSelectPost(it)
                             coroutineScope.launch { modalBottomSheetState.show() }
-                        }
+                        },
+                        onSharePost = sharePost
                     )
                 }
                 composable(Destination.Feed.route) {
@@ -136,7 +139,8 @@ fun MainScreen(
                             viewModel.onSelectPost(it)
                             coroutineScope.launch { modalBottomSheetState.show() }
                         },
-                        startFriendActivity = startFriendActivity
+                        startFriendActivity = startFriendActivity,
+                        onSharePost = sharePost
                     )
                 }
             }

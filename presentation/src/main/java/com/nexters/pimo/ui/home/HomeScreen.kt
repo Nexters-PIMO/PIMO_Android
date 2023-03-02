@@ -38,7 +38,8 @@ import org.orbitmvi.orbit.compose.collectAsState
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    onClickMore: (Post) -> Unit
+    onClickMore: (Post) -> Unit,
+    onSharePost: (Post) -> Unit
 ) {
     val state = viewModel.collectAsState().value
 
@@ -60,7 +61,8 @@ fun HomeScreen(
                         onPlayAudio = viewModel::onPlayAudio,
                         onStopAudio = viewModel::onStopAudio,
                         onCopyText = { clipboardManager.setText(AnnotatedString(it)) },
-                        onClickMore = onClickMore
+                        onClickMore = onClickMore,
+                        onSharePost = onSharePost
                     )
                 } else {
                     Welcome()

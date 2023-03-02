@@ -68,4 +68,12 @@ class UploadViewModel @Inject constructor(
             )
         }
     }
+
+    fun setLoading() = intent {
+        reduce { state.copy(uiState = UiState.Loading) }
+    }
+
+    fun setDone() = intent {
+        reduce { state.copy(uiState = UiState.Done) }
+    }
 }

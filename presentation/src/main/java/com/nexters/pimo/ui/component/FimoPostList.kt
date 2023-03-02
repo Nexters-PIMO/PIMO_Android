@@ -20,7 +20,8 @@ fun FimoPostList(
     onCloseTooltip: () -> Unit,
     onPlayAudio: (String) -> Unit,
     onStopAudio: () -> Unit,
-    onCopyText: (String) -> Unit
+    onCopyText: (String) -> Unit,
+    onSharePost: (Post) -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
@@ -38,7 +39,7 @@ fun FimoPostList(
                     onStopAudio = onStopAudio,
                     onCopyText = onCopyText,
                     onClap = { /*TODO*/ },
-                    onShare = { /*TODO*/ }
+                    onShare = onSharePost
                 )
             }
             FimoDivider(modifier = Modifier.padding(top = 9.dp, bottom = 21.dp))

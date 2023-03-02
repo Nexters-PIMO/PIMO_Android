@@ -35,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,6 +63,8 @@ import com.nexters.pimo.ui.component.NoRippleInteractionSource
 import com.nexters.pimo.ui.model.TextBitmap
 import com.nexters.pimo.ui.state.UiState
 import com.nexters.pimo.ui.theme.FimoTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -71,6 +74,7 @@ fun UploadScreen(
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
 
     val state = viewModel.collectAsState().value
 
@@ -166,7 +170,14 @@ fun UploadScreen(
             }
             Spacer(modifier = Modifier.weight(1f))
             Button(
-                onClick = onBack,
+                onClick = {
+                    coroutineScope.launch {
+                        viewModel.setLoading()
+                        delay(2000L)
+                        viewModel.setDone()
+                        onBack()
+                    }
+                },
                 modifier = Modifier
                     .height(56.dp)
                     .fillMaxWidth(),

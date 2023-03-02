@@ -69,7 +69,8 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun FeedScreen(
     viewModel: FeedViewModel = hiltViewModel(),
     startFriendActivity: () -> Unit,
-    onClickMore: (Post) -> Unit
+    onClickMore: (Post) -> Unit,
+    onSharePost: (Post) -> Unit
 ) {
     val state = viewModel.collectAsState().value
     val scrollBehavior =
@@ -116,7 +117,8 @@ fun FeedScreen(
                                         onPlayAudio = viewModel::onPlayAudio,
                                         onStopAudio = viewModel::onStopAudio,
                                         onCopyText = { clipboardManager.setText(AnnotatedString(it)) },
-                                        onClickMore = onClickMore
+                                        onClickMore = onClickMore,
+                                        onSharePost = onSharePost
                                     )
                                 }
                                 FeedViewMode.Grid -> {
@@ -134,7 +136,8 @@ fun FeedScreen(
                                                     AnnotatedString(it)
                                                 )
                                             },
-                                            onClickMore = onClickMore
+                                            onClickMore = onClickMore,
+                                            onSharePost = onSharePost
                                         )
                                     } ?: FimoPostGrid(
                                         posts = state.user.posts,

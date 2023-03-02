@@ -81,7 +81,7 @@ fun FimoPost(
     onPlayAudio: (String) -> Unit,
     onStopAudio: () -> Unit,
     onClap: () -> Unit,
-    onShare: () -> Unit
+    onShare: (Post) -> Unit
 ) {
 
     val density = LocalDensity.current
@@ -306,7 +306,7 @@ fun FimoPost(
                     }
                     Spacer(modifier = Modifier.width(4.dp))
                     Button(
-                        onClick = onShare,
+                        onClick = { onShare(post) },
                         shape = RoundedCornerShape(20.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = FimoTheme.colors.greyF7,
