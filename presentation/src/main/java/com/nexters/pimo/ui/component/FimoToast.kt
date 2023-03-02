@@ -30,7 +30,7 @@ fun FimoToast(
     modifier: Modifier = Modifier,
     visible: Boolean,
     @StringRes titleRes: Int,
-    @StringRes subtitleRes: Int,
+    @StringRes subtitleRes: Int?,
     duration: FimoToastDuration = FimoToastDuration.Normal,
     onDismiss: () -> Unit,
 ) {
@@ -64,14 +64,16 @@ fun FimoToast(
                             color = FimoTheme.colors.white
                         )
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = stringResource(id = subtitleRes),
-                        style = FimoTheme.typography.light.copy(
-                            fontSize = 14.sp,
-                            color = FimoTheme.colors.white
+                    if (subtitleRes != null) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = stringResource(id = subtitleRes),
+                            style = FimoTheme.typography.light.copy(
+                                fontSize = 14.sp,
+                                color = FimoTheme.colors.white
+                            )
                         )
-                    )
+                    }
                 }
             }
         }
