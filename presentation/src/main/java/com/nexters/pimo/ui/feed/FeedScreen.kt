@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -38,8 +39,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -61,15 +64,18 @@ import com.nexters.pimo.ui.theme.FimoTheme
 import com.nexters.pimo.ui.util.NumberUtil.toSymbolFormat
 import org.orbitmvi.orbit.compose.collectAsState
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun FeedScreen(
     viewModel: FeedViewModel = hiltViewModel(),
-    startFriendActivity: () -> Unit
+    startFriendActivity: () -> Unit,
+    onClickMore: (Post) -> Unit
 ) {
     val state = viewModel.collectAsState().value
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+
+    val clipboardManager = LocalClipboardManager.current
 
     var viewMode: FeedViewMode by remember { mutableStateOf(FeedViewMode.List) }
     var selectedPost: Post? by remember { mutableStateOf(null) }
@@ -108,19 +114,26 @@ fun FeedScreen(
                                         showTooltip = state.showTooltip,
                                         onCloseTooltip = viewModel::onCloseTooltip,
                                         onPlayAudio = viewModel::onPlayAudio,
-                                        onStopAudio = viewModel::onStopAudio
+                                        onStopAudio = viewModel::onStopAudio,
+                                        onCopyText = { clipboardManager.setText(AnnotatedString(it)) },
+                                        onClickMore = onClickMore
                                     )
                                 }
                                 FeedViewMode.Grid -> {
-                                    selectedPost?.let {
+                                    selectedPost?.let { post ->
                                         FimoPostView(
-                                            post = it,
+                                            post = post,
                                             isAudioPlaying = state.isAudioPlaying,
                                             showTooltip = state.showTooltip,
                                             onCloseTooltip = viewModel::onCloseTooltip,
                                             onPlayAudio = viewModel::onPlayAudio,
                                             onStopAudio = viewModel::onStopAudio,
-                                            onBack = { selectedPost = null }
+                                            onBack = { selectedPost = null },
+                                            onCopyText = {
+                                                clipboardManager.setText(
+                                                    AnnotatedString(it)
+                                                )
+                                            }
                                         )
                                     } ?: FimoPostGrid(
                                         posts = state.user.posts,
