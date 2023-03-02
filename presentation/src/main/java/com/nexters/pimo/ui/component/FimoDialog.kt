@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -100,8 +101,10 @@ fun FimoDialog(
                                 text = subtitle,
                                 style = FimoTheme.typography.regular.copy(
                                     fontSize = subtitleSize,
-                                    color = FimoTheme.colors.black
-                                )
+                                    color = FimoTheme.colors.black,
+                                    lineHeight = 20.sp
+                                ),
+                                textAlign = TextAlign.Center
                             )
                         }
                         FimoDivider()
