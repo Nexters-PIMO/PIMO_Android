@@ -54,6 +54,14 @@
             android:name=".ui.friend.FriendActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.settings.PrivacyPolicyActivity"
+            android:screenOrientation="portrait" />
+
         <!-- Kakao login redirection -->
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
