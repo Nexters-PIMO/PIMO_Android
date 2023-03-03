@@ -422,7 +422,11 @@ fun ProfileImagePlaceholder(viewModel: ProfileViewModel, modifier: Modifier = Mo
         modifier = modifier
             .then(Modifier.aspectRatio(1f))
             .clickable(
-                onClick = { imagePickerLauncher.launch("image/*") },
+                onClick = {
+                    if (profileState.mode == Mode.Add) {
+                        imagePickerLauncher.launch("image/*")
+                    }
+                },
                 interactionSource = NoRippleInteractionSource,
                 indication = null,
             ),
@@ -442,12 +446,7 @@ fun ProfileImagePlaceholder(viewModel: ProfileViewModel, modifier: Modifier = Mo
                     modifier = Modifier
                         .fillMaxWidth()
                         .aspectRatio(1f)
-                        .clip(RoundedCornerShape(4.dp))
-                        .clickable(
-                            onClick = { imagePickerLauncher.launch("image/*") },
-                            interactionSource = NoRippleInteractionSource,
-                            indication = null,
-                        ),
+                        .clip(RoundedCornerShape(4.dp)),
                     contentScale = ContentScale.Crop,
                 )
                 Canvas(
