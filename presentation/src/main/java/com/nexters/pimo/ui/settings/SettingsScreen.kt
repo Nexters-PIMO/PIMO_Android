@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -32,10 +33,9 @@ fun SettingsScreen(
     onBack: () -> Unit,
     startOnboardActivity: () -> Unit,
     startProfileActivity: () -> Unit,
-    startPrivacyPolicyActivity: () -> Unit,
 ) {
     val context = LocalContext.current
-
+    val uriHandler = LocalUriHandler.current
     val state = viewModel.collectAsState().value
 
     var dialogState by remember { mutableStateOf(DialogState(false, R.string.setting_logout, R.string.setting_logout_dialog_subtitle, R.string.cancel, R.string.setting_logout)) }
@@ -151,7 +151,7 @@ fun SettingsScreen(
                     .clickable(
                         interactionSource = MutableInteractionSource(),
                         indication = null,
-                        onClick = startPrivacyPolicyActivity
+                        onClick = { uriHandler.openUri(SettingsViewModel.PRIVACY_POLICY_URL) }
                     ),
                 text = stringResource(id = R.string.setting_privacy_policy),
                 style = FimoTheme.typography.regular.copy(

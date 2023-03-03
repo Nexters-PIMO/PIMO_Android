@@ -22,7 +22,6 @@ class SettingsActivity : BaseActivity() {
                     onBack = { finish() },
                     startOnboardActivity = ::startOnboardActivity,
                     startProfileActivity = ::startProfileActivity,
-                    startPrivacyPolicyActivity = :: startPrivacyPolicyActivity,
                 )
             }
         }
@@ -36,10 +35,6 @@ class SettingsActivity : BaseActivity() {
     private fun startOnboardActivity() {
         val intent = OnboardActivity.getIntent(this, isLogin = false)
         startActivity(intent)
-    }
-
-    private fun startPrivacyPolicyActivity() {
-        PrivacyPolicyActivity.startActivity(this)
     }
 
     companion object {

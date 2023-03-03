@@ -30,4 +30,9 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    companion object {
+        const val PRIVACY_POLICY_URL =
+            "https://moonpapereyo.notion.site/fimo-980d8d8a12714927af90a057027c2142"
+    }
+
 }
