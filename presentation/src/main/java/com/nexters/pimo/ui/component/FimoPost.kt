@@ -76,8 +76,8 @@ fun FimoPost(
     isAudioPlaying: Boolean,
     showTooltip: Boolean,
     onCloseTooltip: () -> Unit,
-    onMoreClick: () -> Unit,
-    onCopyText: () -> Unit,
+    onClickMore: (Post) -> Unit,
+    onCopyText: (String) -> Unit,
     onPlayAudio: (String) -> Unit,
     onStopAudio: () -> Unit,
     onClap: () -> Unit,
@@ -132,7 +132,7 @@ fun FimoPost(
                     Spacer(modifier = Modifier.width(16.dp))
                     CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
                         IconButton(
-                            onClick = onMoreClick,
+                            onClick = { onClickMore(post) },
                             modifier = Modifier.size(20.dp)
                         ) {
                             Icon(
@@ -200,7 +200,9 @@ fun FimoPost(
                 ) {
                     CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
                         FilledIconButton(
-                            onClick = onCopyText,
+                            onClick = {
+                                onCopyText(post.textImages[pagerState.currentPage].text)
+                            },
                             shape = CircleShape,
                             modifier = Modifier.size(40.dp),
                             colors = IconButtonDefaults.filledIconButtonColors(
@@ -311,7 +313,6 @@ fun FimoPost(
                             contentColor = FimoTheme.colors.black
                         ),
                         contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp),
-                        interactionSource = NoRippleInteractionSource,
                         modifier = Modifier.width(44.dp)
                     ) {
                         Image(
@@ -333,18 +334,10 @@ fun FimoPost(
                         targetState = isAudioPlaying,
                         transitionSpec = { fadeIn() with fadeOut() }
                     ) {
-                        if (it) {
-                            GifImage(
-                                imageRes = R.drawable.ic_audio_on,
-                                modifier = Modifier.width(80.dp)
-                            )
-                        } else {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_audio_off),
-                                contentDescription = null,
-                                modifier = Modifier.width(80.dp)
-                            )
-                        }
+                        GifImage(
+                            imageRes = if (it) R.drawable.ic_audio_on else R.drawable.ic_audio_off,
+                            modifier = Modifier.width(80.dp)
+                        )
                     }
                 }
             }

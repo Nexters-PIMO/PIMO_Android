@@ -16,9 +16,11 @@ fun FimoPostList(
     posts: List<Post>,
     isAudioPlaying: Boolean,
     showTooltip: Boolean,
+    onClickMore: (Post) -> Unit,
     onCloseTooltip: () -> Unit,
     onPlayAudio: (String) -> Unit,
-    onStopAudio: () -> Unit
+    onStopAudio: () -> Unit,
+    onCopyText: (String) -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
@@ -31,10 +33,10 @@ fun FimoPostList(
                     isAudioPlaying = isAudioPlaying,
                     showTooltip = showTooltip,
                     onCloseTooltip = onCloseTooltip,
-                    onMoreClick = { /*TODO*/ },
-                    onCopyText = { /*TODO*/ },
+                    onClickMore = onClickMore,
                     onPlayAudio = onPlayAudio,
                     onStopAudio = onStopAudio,
+                    onCopyText = onCopyText,
                     onClap = { /*TODO*/ },
                     onShare = { /*TODO*/ }
                 )
