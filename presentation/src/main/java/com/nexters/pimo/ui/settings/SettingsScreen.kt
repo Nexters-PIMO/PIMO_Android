@@ -47,6 +47,7 @@ fun SettingsScreen(
     ) {
         FimoSimpleAppBar(
             backIconRes = R.drawable.ic_back,
+            backIconSize = 16.dp,
             onBack = onBack,
             titleText = stringResource(id = R.string.settings)
         )
