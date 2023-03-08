@@ -138,7 +138,8 @@ fun MainScreen(
                             viewModel.onSelectPost(it)
                             coroutineScope.launch { modalBottomSheetState.show() }
                         },
-                        startFriendActivity = startFriendActivity
+                        startFriendActivity = startFriendActivity,
+                        startSettingsActivity = startSettingsActivity
                     )
                 }
             }

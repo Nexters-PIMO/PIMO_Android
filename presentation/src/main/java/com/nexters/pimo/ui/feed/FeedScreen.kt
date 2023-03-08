@@ -69,6 +69,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun FeedScreen(
     viewModel: FeedViewModel = hiltViewModel(),
     startFriendActivity: () -> Unit,
+    startSettingsActivity: () -> Unit,
     onClickMore: (Post) -> Unit
 ) {
     val state = viewModel.collectAsState().value
@@ -83,7 +84,7 @@ fun FeedScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         FimoFeedTopAppBar(
             user = state.user,
-            onActionClick = {}
+            onActionClick = startSettingsActivity
         )
         Scaffold(
             topBar = {
