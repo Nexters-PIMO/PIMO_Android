@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import com.nexters.pimo.ui.base.BaseActivity
 import com.nexters.pimo.ui.main.MainActivity
+import com.nexters.pimo.ui.profile.state.Mode
 import com.nexters.pimo.ui.profile.state.ProfileSideEffect
 import com.nexters.pimo.ui.profile.state.ProfileState
 import com.nexters.pimo.ui.theme.FimoTheme
@@ -25,7 +26,9 @@ class ProfileActivity : BaseActivity() {
 
         setContent {
             FimoTheme {
-                ProfileScreen()
+                ProfileScreen(
+                    onBack = { finish() },
+                )
             }
         }
     }
@@ -47,10 +50,9 @@ class ProfileActivity : BaseActivity() {
     }
 
     companion object {
-        fun startActivity(context: Context) {
-            val intent = Intent(context, ProfileActivity::class.java)
-            context.startActivity(intent)
-        }
+        fun getIntent(context: Context, mode: Mode) =
+            Intent(context, ProfileActivity::class.java)
+                .putExtra(ProfileViewModel.KEY_MODE, mode)
     }
 
 }

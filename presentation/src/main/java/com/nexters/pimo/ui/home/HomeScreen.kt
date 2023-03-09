@@ -38,6 +38,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
+    startSettingsActivity: () -> Unit,
     onClickMore: (Post) -> Unit
 ) {
     val state = viewModel.collectAsState().value
@@ -46,7 +47,7 @@ fun HomeScreen(
 
     Column(modifier = Modifier.fillMaxSize()) {
         FimoHomeAppBar(
-            onActionClick = { /*TODO*/ },
+            onActionClick = startSettingsActivity ,
             newPostCount = state.posts.filter { it.postedTime.isToday() }.size
         )
         when (state.uiState) {

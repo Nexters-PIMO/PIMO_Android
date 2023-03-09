@@ -46,7 +46,8 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun MainScreen(
     viewModel: MainViewModel,
     startUploadActivity: () -> Unit,
-    startFriendActivity: () -> Unit
+    startFriendActivity: () -> Unit,
+    startSettingsActivity: () -> Unit,
 ) {
     val state = viewModel.collectAsState().value
 
@@ -127,7 +128,8 @@ fun MainScreen(
                         onClickMore = {
                             viewModel.onSelectPost(it)
                             coroutineScope.launch { modalBottomSheetState.show() }
-                        }
+                        },
+                        startSettingsActivity = startSettingsActivity
                     )
                 }
                 composable(Destination.Feed.route) {
@@ -136,7 +138,8 @@ fun MainScreen(
                             viewModel.onSelectPost(it)
                             coroutineScope.launch { modalBottomSheetState.show() }
                         },
-                        startFriendActivity = startFriendActivity
+                        startFriendActivity = startFriendActivity,
+                        startSettingsActivity = startSettingsActivity
                     )
                 }
             }

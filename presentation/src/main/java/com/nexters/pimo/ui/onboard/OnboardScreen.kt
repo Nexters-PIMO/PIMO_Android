@@ -10,37 +10,71 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.nexters.pimo.ui.R
+import com.nexters.pimo.ui.component.FimoSimpleAppBar
 import com.nexters.pimo.ui.component.NoRippleInteractionSource
+import com.nexters.pimo.ui.component.shadowColor
 import com.nexters.pimo.ui.theme.FimoTheme
+import org.orbitmvi.orbit.compose.collectAsState
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnboardScreen(
+    viewModel: OnboardViewModel = hiltViewModel(),
     onSkip: () -> Unit,
+    onBack: () -> Unit,
 ) {
-    HorizontalPager(
-        count = 4,
+
+    val state = viewModel.collectAsState().value
+
+    Column(
         modifier = Modifier
-            .fillMaxWidth(),
-    ) { page ->
-        when (page) {
-            0 -> OnboardFirst(onSkip)
-            1 -> OnboardFollowing(OnboardStep(page, R.string.onboard_title_2_1,R.string.onboard_title_2_2,  R.string.onboard_content_2), onSkip)
-            2 -> OnboardFollowing(OnboardStep(page, R.string.onboard_title_3_1,R.string.onboard_title_3_2,  R.string.onboard_content_3), onSkip)
-            3 -> OnboardFollowing(OnboardStep(page, R.string.onboard_title_4_1,R.string.onboard_title_4_2,  R.string.onboard_content_4), onSkip)
+            .fillMaxSize()
+            .background(FimoTheme.colors.white)
+    ) {
+        if (!state.isLogin) {
+            FimoSimpleAppBar(
+                backIconRes = R.drawable.ic_back,
+                onBack = onBack,
+                titleText = stringResource(id = R.string.setting_guide)
+            )
+            Box(
+                modifier = Modifier.height(1.dp).fillMaxWidth()
+                    .shadow(
+                        ambientColor = shadowColor,
+                        spotColor = shadowColor,
+                        elevation = 12.dp
+                    )
+            ) {
+            }
+        }
+        HorizontalPager(
+            count = 4,
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) { page ->
+            when (page) {
+                0 -> OnboardFirst(state, onSkip)
+                1 -> OnboardFollowing(state, OnboardStep(page, R.string.onboard_title_2_1,R.string.onboard_title_2_2,  R.string.onboard_content_2), onSkip)
+                2 -> OnboardFollowing(state, OnboardStep(page, R.string.onboard_title_3_1,R.string.onboard_title_3_2,  R.string.onboard_content_3), onSkip)
+                3 -> OnboardFollowing(state, OnboardStep(page, R.string.onboard_title_4_1,R.string.onboard_title_4_2,  R.string.onboard_content_4), onSkip)
+            }
         }
     }
+
 }
 
 @Composable
 fun OnboardFollowing(
+    state: OnboardState,
     onboardStep: OnboardStep,
     onSkip: () -> Unit
 ) {
@@ -56,7 +90,7 @@ fun OnboardFollowing(
                     .height(422.dp)
                     .background(FimoTheme.colors.greyEF),
             ) {
-                if (onboardStep.step != 3) {
+                if (onboardStep.step != 3 && state.isLogin) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -106,9 +140,11 @@ fun OnboardFollowing(
                     lineHeight = 23.sp
                 )
             }
-            if (onboardStep.step == 3) {
+            if (onboardStep.step == 3 && state.isLogin) {
                 Box(
-                    modifier = Modifier.fillMaxHeight().padding(horizontal = 20.dp)
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(horizontal = 20.dp)
                 ) {
                     Surface(
                         shape = RoundedCornerShape(4.dp),
@@ -215,26 +251,31 @@ fun OnboardFollowing(
 
 
 @Composable
-fun OnboardFirst(onClick: () -> Unit) {
+fun OnboardFirst(
+    state: OnboardState,
+    onClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(FimoTheme.colors.white)
     ) {
-        Column(
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(horizontal = 20.dp)
-                .padding(top = 30.dp),
-        ) {
-            Text(
-                modifier = Modifier.clickable { onClick() },
-                text = stringResource(id = R.string.onboard_skip),
-                style = FimoTheme.typography.medium.copy(
-                    fontSize = 18.sp,
-                    color = FimoTheme.colors.primary
+        if (state.isLogin) {
+            Column(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 30.dp),
+            ) {
+                Text(
+                    modifier = Modifier.clickable { onClick() },
+                    text = stringResource(id = R.string.onboard_skip),
+                    style = FimoTheme.typography.medium.copy(
+                        fontSize = 18.sp,
+                        color = FimoTheme.colors.primary
+                    )
                 )
-            )
+            }
         }
         Column(
             modifier = Modifier

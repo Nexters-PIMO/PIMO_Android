@@ -1,9 +1,12 @@
 package com.nexters.pimo.ui.onboard
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import com.nexters.pimo.ui.base.BaseActivity
 import com.nexters.pimo.ui.login.LoginActivity
+import com.nexters.pimo.ui.onboard.OnboardViewModel.Companion.KEY_MODE
 import com.nexters.pimo.ui.theme.FimoTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,7 +19,8 @@ class OnboardActivity : BaseActivity() {
         setContent {
             FimoTheme {
                 OnboardScreen (
-                    onSkip = { startLoginActivity() }
+                    onSkip = { startLoginActivity() },
+                    onBack = { finish() }
                 )
             }
         }
@@ -25,6 +29,12 @@ class OnboardActivity : BaseActivity() {
     private fun startLoginActivity() {
         LoginActivity.startActivity(this)
         finish()
+    }
+
+    companion object {
+        fun getIntent(context: Context, isLogin: Boolean) =
+            Intent(context, OnboardActivity::class.java)
+                .putExtra(KEY_MODE, isLogin)
     }
 
 }

@@ -13,6 +13,7 @@ import com.nexters.pimo.feature.kakao.KakaoLogin
 import com.nexters.pimo.ui.base.BaseActivity
 import com.nexters.pimo.ui.main.MainActivity
 import com.nexters.pimo.ui.profile.ProfileActivity
+import com.nexters.pimo.ui.profile.state.Mode
 import com.nexters.pimo.ui.theme.FimoTheme
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,8 +52,8 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun startProfileActivity() {
-        ProfileActivity.startActivity(this)
-//        finish()
+        val intent = ProfileActivity.getIntent(this, mode = Mode.Add)
+        startActivity(intent)
     }
 
     private fun startMainActivity(user: User) {
