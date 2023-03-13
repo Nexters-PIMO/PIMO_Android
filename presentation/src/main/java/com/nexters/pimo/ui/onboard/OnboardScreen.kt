@@ -10,7 +10,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -84,29 +86,36 @@ fun OnboardFollowing(
             .background(FimoTheme.colors.white),
     ) {
         Column {
-            Column(
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(422.dp)
-                    .background(FimoTheme.colors.greyEF),
+                    .height(400.dp)
+                    .background(FimoTheme.colors.white),
             ) {
+                Image(
+                    modifier = Modifier.width(300.dp).align(Alignment.BottomCenter),
+                    painter =
+                    when (onboardStep.step) {
+                        1 -> painterResource(id = R.drawable.img_onboard_2)
+                        2 -> painterResource(id = R.drawable.img_onboard_3)
+                        3 -> painterResource(id = R.drawable.img_onboard_4)
+                        else -> painterResource(id = R.drawable.img_onboard_2)
+                    },
+                    contentDescription = null,
+                )
                 if (onboardStep.step != 3 && state.isLogin) {
-                    Box(
+                    Text(
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .clickable { onSkip() }
+                            .align(Alignment.TopEnd)
                             .padding(horizontal = 20.dp)
                             .padding(top = 30.dp),
-                        contentAlignment = Alignment.TopEnd
-                    ) {
-                        Text(
-                            modifier = Modifier.clickable { onSkip() },
-                            text = stringResource(id = R.string.onboard_skip),
-                            style = FimoTheme.typography.medium.copy(
-                                fontSize = 18.sp,
-                                color = FimoTheme.colors.primary
-                            )
+                        text = stringResource(id = R.string.onboard_skip),
+                        style = FimoTheme.typography.medium.copy(
+                            fontSize = 18.sp,
+                            color = FimoTheme.colors.primary
                         )
-                    }
+                    )
                 }
             }
             Column(
@@ -258,7 +267,7 @@ fun OnboardFirst(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(FimoTheme.colors.white)
+            .paint(painterResource(id = R.drawable.img_onboard_1), contentScale = ContentScale.FillBounds)
     ) {
         if (state.isLogin) {
             Column(
@@ -298,7 +307,7 @@ fun OnboardFirst(
                     text = stringResource(id = R.string.onboard_title_1),
                     style = FimoTheme.typography.bold.copy(
                         fontSize = 25.sp,
-                        color = FimoTheme.colors.black
+                        color = FimoTheme.colors.white
                     ),
                     lineHeight = 34.sp
                 )
@@ -310,7 +319,7 @@ fun OnboardFirst(
                         modifier = Modifier
                             .width(72.dp)
                             .height(20.dp),
-                        painter = painterResource(id = R.drawable.img_logo_text_black),
+                        painter = painterResource(id = R.drawable.img_logo_text_white),
                         contentDescription = null,
                     )
                 }
@@ -320,7 +329,7 @@ fun OnboardFirst(
                 text = stringResource(id = R.string.onboard_content_1),
                 style = FimoTheme.typography.light.copy(
                     fontSize = 15.sp,
-                    color = FimoTheme.colors.black
+                    color = FimoTheme.colors.white
                 ),
                 lineHeight = 23.sp
             )
@@ -361,4 +370,3 @@ fun OnboardFirst(
         }
     }
 }
-

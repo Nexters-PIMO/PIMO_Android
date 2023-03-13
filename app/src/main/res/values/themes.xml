@@ -3,6 +3,11 @@
 
     <style name="Theme.PIMO" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="Theme.PIMO.Splash" parent="Theme.PIMO">
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="Theme.ImageCropper" parent="Theme.AppCompat">

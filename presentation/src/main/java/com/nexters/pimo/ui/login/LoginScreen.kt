@@ -29,7 +29,7 @@ fun LoginScreen(onLogin: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .paint(painterResource(id = R.drawable.bg_login), contentScale = ContentScale.FillBounds)
+            .paint(painterResource(id = R.drawable.img_onboard_1), contentScale = ContentScale.FillBounds)
     ) {
         Column(
             modifier = Modifier.align(Alignment.TopCenter),
@@ -93,7 +93,7 @@ fun KakaoLoginButton(onClick: () -> Unit) {
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 15.dp, vertical = 16.dp)
+            modifier = Modifier.padding(horizontal = 15.dp)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_kakao),
