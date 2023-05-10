@@ -1,6 +1,9 @@
 package com.nexters.pimo.ui.main
 
-sealed class Destination(
+sealed class
+
+
+Destination(
     val route: String
 ) {
     object Home : Destination(ROUTE_HOME)

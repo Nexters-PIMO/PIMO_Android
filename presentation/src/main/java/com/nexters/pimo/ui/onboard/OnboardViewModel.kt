@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class OnboardViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    ) : ContainerHost<OnboardState, OnboardSideEffect>,
+) : ContainerHost<OnboardState, OnboardSideEffect>,
     BaseViewModel() {
 
     override val container = container<OnboardState, OnboardSideEffect>(OnboardState())
@@ -30,6 +30,4 @@ class OnboardViewModel @Inject constructor(
     companion object {
         const val KEY_MODE = "KEY_MODE"
     }
-
 }
-

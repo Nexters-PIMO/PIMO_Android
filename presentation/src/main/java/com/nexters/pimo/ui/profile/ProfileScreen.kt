@@ -8,15 +8,34 @@ import android.provider.MediaStore
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,7 +57,11 @@ import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.canhub.cropper.CropImageView
 import com.nexters.pimo.ui.R
-import com.nexters.pimo.ui.component.*
+import com.nexters.pimo.ui.component.FimoDialog
+import com.nexters.pimo.ui.component.FimoSimpleAppBar
+import com.nexters.pimo.ui.component.FimoToast
+import com.nexters.pimo.ui.component.NoRippleInteractionSource
+import com.nexters.pimo.ui.component.ProfileTextField
 import com.nexters.pimo.ui.profile.state.Mode
 import com.nexters.pimo.ui.profile.state.ProfileState
 import com.nexters.pimo.ui.profile.state.TextFieldState
@@ -50,10 +73,10 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
     onBack: () -> Unit,
-    ) {
+) {
     val profileState = viewModel.collectAsState().value
 
-    if (profileState.mode == Mode.Add) {
+    if (profileState.mode == Mode.New) {
         when (profileState.pageIdx) {
             0, 1 -> ProfileAddText(viewModel, profileState)
             2 -> ProfileAddImage(viewModel, profileState)
@@ -124,7 +147,7 @@ fun ProfileEdit(viewModel: ProfileViewModel, profileState: ProfileState, onBack:
             modifier = Modifier
                 .padding(horizontal = 20.dp)
                 .padding(top = 55.dp),
-            ) {
+        ) {
             Box(
                 modifier = Modifier.fillMaxWidth(),
             ) {
@@ -134,20 +157,23 @@ fun ProfileEdit(viewModel: ProfileViewModel, profileState: ProfileState, onBack:
                         .height(127.dp)
                         .align(Alignment.Center),
                 ) {
-                    ProfileImagePlaceholder(viewModel, modifier = Modifier
-                        .width(120.dp)
-                        .height(120.dp)
-                        .align(Alignment.Center), profileState = profileState)
-                    Box(modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .size(32.dp)
-                        .aspectRatio(1f)
-                        .background(FimoTheme.colors.primary, shape = CircleShape)
-                        .clickable(
-                            onClick = { imagePickerLauncher.launch("image/*") },
-                            interactionSource = NoRippleInteractionSource,
-                            indication = null,
-                        ),
+                    ProfileImagePlaceholder(
+                        viewModel, modifier = Modifier
+                            .width(120.dp)
+                            .height(120.dp)
+                            .align(Alignment.Center), profileState = profileState
+                    )
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .size(32.dp)
+                            .aspectRatio(1f)
+                            .background(FimoTheme.colors.primary, shape = CircleShape)
+                            .clickable(
+                                onClick = { imagePickerLauncher.launch("image/*") },
+                                interactionSource = NoRippleInteractionSource,
+                                indication = null,
+                            ),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
@@ -174,8 +200,9 @@ fun ProfileEdit(viewModel: ProfileViewModel, profileState: ProfileState, onBack:
                 viewModel = viewModel,
                 profileState = profileState,
                 textFieldState = profileState.nicknameState,
-                trailingIcon = { ProfileTrailingIcon(textFieldState = profileState.nicknameState,
-                    onClick = { viewModel.checkNickname() })
+                trailingIcon = {
+                    ProfileTrailingIcon(textFieldState = profileState.nicknameState,
+                        onClick = { viewModel.checkNickname() })
                 },
             )
             Spacer(modifier = Modifier.height(10.dp))
@@ -209,8 +236,9 @@ fun ProfileEdit(viewModel: ProfileViewModel, profileState: ProfileState, onBack:
                 viewModel = viewModel,
                 profileState = profileState,
                 textFieldState = profileState.archiveNameState,
-                trailingIcon = { ProfileTrailingIcon(textFieldState = profileState.archiveNameState,
-                    onClick = { viewModel.checkArchiveName() })
+                trailingIcon = {
+                    ProfileTrailingIcon(textFieldState = profileState.archiveNameState,
+                        onClick = { viewModel.checkArchiveName() })
                 },
             )
             Spacer(modifier = Modifier.height(10.dp))
@@ -320,13 +348,14 @@ fun ProfileAddText(viewModel: ProfileViewModel, profileState: ProfileState) {
                 viewModel = viewModel,
                 profileState = profileState,
                 textFieldState = textFieldState,
-                trailingIcon = { ProfileTrailingIcon(textFieldState = textFieldState,
-                    onClick = if (profileState.pageIdx == 0) {
-                                    { viewModel.checkNickname() }
-                                } else {
-                                    { viewModel.checkArchiveName() }
-                                })
-                               },
+                trailingIcon = {
+                    ProfileTrailingIcon(textFieldState = textFieldState,
+                        onClick = if (profileState.pageIdx == 0) {
+                            { viewModel.checkNickname() }
+                        } else {
+                            { viewModel.checkArchiveName() }
+                        })
+                },
             )
             Spacer(modifier = Modifier.height(12.dp))
             Box(
@@ -372,15 +401,26 @@ fun ProfileAddImage(viewModel: ProfileViewModel, profileState: ProfileState) {
                 ),
             )
             Spacer(modifier = Modifier.height(44.dp))
-            ProfileImagePlaceholder(viewModel, modifier = Modifier.fillMaxWidth(), profileState = profileState)
+            ProfileImagePlaceholder(
+                viewModel,
+                modifier = Modifier.fillMaxWidth(),
+                profileState = profileState
+            )
             Spacer(modifier = Modifier.height(82.dp))
-            ProfileCompleteButton(imageState = profileState.imageState, goForward = viewModel::goForward)
+            ProfileCompleteButton(
+                imageState = profileState.imageState,
+                goForward = viewModel::goForward
+            )
         }
     }
 }
 
 @Composable
-fun ProfileImagePlaceholder(viewModel: ProfileViewModel, modifier: Modifier = Modifier, profileState: ProfileState) {
+fun ProfileImagePlaceholder(
+    viewModel: ProfileViewModel,
+    modifier: Modifier = Modifier,
+    profileState: ProfileState
+) {
     val context = LocalContext.current
 
     val imageCropLauncher = rememberLauncherForActivityResult(CropImageContract()) { result ->
@@ -423,7 +463,7 @@ fun ProfileImagePlaceholder(viewModel: ProfileViewModel, modifier: Modifier = Mo
             .then(Modifier.aspectRatio(1f))
             .clickable(
                 onClick = {
-                    if (profileState.mode == Mode.Add) {
+                    if (profileState.mode == Mode.New) {
                         imagePickerLauncher.launch("image/*")
                     }
                 },

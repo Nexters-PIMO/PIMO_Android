@@ -66,7 +66,8 @@ import com.nexters.pimo.ui.util.NumberUtil.toSymbolFormat
 import kotlinx.coroutines.delay
 
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalPagerApi::class,
+    ExperimentalMaterial3Api::class,
+    ExperimentalPagerApi::class,
     ExperimentalAnimationApi::class
 )
 @Composable

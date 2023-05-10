@@ -15,7 +15,8 @@ class SplashViewModel @Inject constructor(
 ) : ContainerHost<SplashState, SplashSideEffect>,
     BaseViewModel() {
 
-    override val container = container<SplashState, SplashSideEffect>(SplashState(state = SplashUiState.Loading))
+    override val container =
+        container<SplashState, SplashSideEffect>(SplashState(state = SplashUiState.Loading))
 
     init {
         intent {
@@ -23,7 +24,7 @@ class SplashViewModel @Inject constructor(
             reduce {
                 //TODO: 로그인 여부 확인
                 state.copy(
-                    state = SplashUiState.AlreadyLoggedIn //test
+                    state = SplashUiState.NeedToOnboard
                 )
             }
         }

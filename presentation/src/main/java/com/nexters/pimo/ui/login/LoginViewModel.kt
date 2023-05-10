@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
-    ) : ContainerHost<LoginState, LoginSideEffect>,
+) : ContainerHost<LoginState, LoginSideEffect>,
     BaseViewModel() {
 
     override val container = container<LoginState, LoginSideEffect>(LoginState())

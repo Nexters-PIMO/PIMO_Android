@@ -3,7 +3,6 @@ package com.nexters.pimo.ui.login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -11,11 +10,9 @@ import com.nexters.pimo.domain.model.LoginResult
 import com.nexters.pimo.domain.model.User
 import com.nexters.pimo.feature.kakao.KakaoLogin
 import com.nexters.pimo.ui.base.BaseActivity
-import com.nexters.pimo.ui.main.MainActivity
 import com.nexters.pimo.ui.profile.ProfileActivity
 import com.nexters.pimo.ui.profile.state.Mode
 import com.nexters.pimo.ui.theme.FimoTheme
-
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.viewmodel.observe
@@ -32,15 +29,19 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        loginViewModel.observe(lifecycleOwner = this, state = ::handleState, sideEffect = ::handleSideEffect)
-
         setContent {
             FimoTheme {
-                LoginScreen (
+                LoginScreen(
                     onLogin = { requestKakaoLogin() }
                 )
             }
         }
+
+        loginViewModel.observe(
+            lifecycleOwner = this,
+            state = ::handleState,
+            sideEffect = ::handleSideEffect
+        )
     }
 
     private fun handleState(state: LoginState) {
@@ -52,7 +53,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun startProfileActivity() {
-        val intent = ProfileActivity.getIntent(this, mode = Mode.Add)
+        val intent = ProfileActivity.getIntent(this, mode = Mode.New)
         startActivity(intent)
     }
 
