@@ -2,6 +2,7 @@ package com.nexters.pimo.ui.login
 
 import com.nexters.pimo.domain.model.ProviderToken
 import com.nexters.pimo.domain.usecase.LoginUseCase
+import com.nexters.pimo.feature.kakao.KakaoToken
 import com.nexters.pimo.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
@@ -18,11 +19,13 @@ class LoginViewModel @Inject constructor(
 
     override val container = container<LoginState, LoginSideEffect>(LoginState())
 
-    fun login(accessToken: String, refreshToken: String) = intent {
-        val providerToken = ProviderToken.kakao(accessToken, refreshToken)
-        val result = loginUseCase(providerToken)
-            .onFailure { handleException(it) }
-            .getOrThrow()
+    fun login(token: KakaoToken) = intent {
+        val providerToken = ProviderToken.kakao(
+            idToken = token.idToken,
+            accessToken = token.kakaoAccessToken,
+            refreshToken = token.kakaoRefreshToken
+        )
+        val result = loginUseCase(providerToken).getOrThrow()
         reduce {
             state.copy(result = result)
         }

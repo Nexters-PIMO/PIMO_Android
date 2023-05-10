@@ -1,17 +1,23 @@
 package com.nexters.pimo.domain.model
 
 data class ProviderToken(
+    val provider: String,
+    val idToken: String,
     val accessToken: String,
-    val refreshToken: String,
-    val name: String,
+    val refreshToken: String
 ) {
     companion object {
-        private const val NAME_KAKAO = "KAKAO"
+        private const val PROVIDER_KAKAO = "KAKAO"
 
-        fun kakao(accessToken: String, refreshToken: String) = ProviderToken(
+        fun kakao(
+            idToken: String,
+            accessToken: String,
+            refreshToken: String
+        ) = ProviderToken(
+            provider = PROVIDER_KAKAO,
+            idToken = idToken,
             accessToken = accessToken,
-            refreshToken = refreshToken,
-            name = NAME_KAKAO
+            refreshToken = refreshToken
         )
     }
 }

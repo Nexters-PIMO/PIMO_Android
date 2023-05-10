@@ -20,7 +20,13 @@ internal class KakaoLoginImpl @Inject constructor() : KakaoLogin {
                 when {
                     throwable != null -> continuation.resumeWithException(throwable)
                     token != null && continuation.isActive -> {
-                        continuation.resume(KakaoToken(token.accessToken, token.refreshToken))
+                        continuation.resume(
+                            KakaoToken(
+                                token.idToken!!,
+                                token.accessToken,
+                                token.refreshToken
+                            )
+                        )
                     }
                 }
             }
@@ -35,7 +41,7 @@ internal class KakaoLoginImpl @Inject constructor() : KakaoLogin {
     }
 
     override suspend fun logout(): Result<Unit> = runCatching {
-        suspendCoroutine<Unit> { continuation ->
+        suspendCoroutine { continuation ->
             UserApiClient.instance.logout { continuation.resume(Unit) }
         }
     }

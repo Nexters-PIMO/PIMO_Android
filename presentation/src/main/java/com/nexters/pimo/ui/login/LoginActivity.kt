@@ -70,14 +70,8 @@ class LoginActivity : BaseActivity() {
 
     private fun requestKakaoLogin() = lifecycleScope.launch {
         kakaoLogin.login(this@LoginActivity)
-            .onSuccess {
-//                Log.d("accessToken: ", it.kakaoAccessToken)
-//                Log.d("refreshToken: ", it.kakaoRefreshToken)
-                loginViewModel.login(it.kakaoAccessToken, it.kakaoRefreshToken)
-            }
-            .onFailure {
-                handleException(it)
-            }
+            .onSuccess { loginViewModel.login(it) }
+            .onFailure { handleException(it) }
     }
 
     companion object {
