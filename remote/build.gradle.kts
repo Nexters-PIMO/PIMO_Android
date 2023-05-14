@@ -8,7 +8,7 @@ dependencies {
     implementation(project(Modules.DATA))
 
     implementation(libs.coroutines.core)
-    implementation(libs.bundles.ktor)
+    implementation(libs.bundles.retrofit)
 
     implementation(libs.hilt.core)
     kapt(libs.hilt.compiler)
