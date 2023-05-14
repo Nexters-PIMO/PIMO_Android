@@ -39,15 +39,14 @@ class LoginActivity : BaseActivity() {
 
         loginViewModel.observe(
             lifecycleOwner = this,
-            state = ::handleState,
-            sideEffect = ::handleSideEffect
+            state = ::handleState
         )
     }
 
     private fun handleState(state: LoginState) {
         when (state.result) {
-            is LoginResult.SignedIn -> startMainActivity(user = state.result.user)
-            LoginResult.NotSignedUpYet -> startProfileActivity()
+            is LoginResult.SignedIn -> startMainActivity(user = User.Unspecified)
+            LoginResult.NeedToSignUp -> startProfileActivity()
             else -> Unit
         }
     }
@@ -60,12 +59,6 @@ class LoginActivity : BaseActivity() {
     private fun startMainActivity(user: User) {
 //        MainActivity.startActivity(this)
 //        finish()
-    }
-
-    private fun handleSideEffect(sideEffect: LoginSideEffect) {
-        when (sideEffect) {
-            is LoginSideEffect.Toast -> LoginSideEffect.Toast(sideEffect.text)
-        }
     }
 
     private fun requestKakaoLogin() = lifecycleScope.launch {

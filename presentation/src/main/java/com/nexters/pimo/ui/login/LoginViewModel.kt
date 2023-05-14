@@ -20,15 +20,10 @@ class LoginViewModel @Inject constructor(
     override val container = container<LoginState, LoginSideEffect>(LoginState())
 
     fun login(token: KakaoToken) = intent {
-        val providerToken = ProviderToken.kakao(
-            idToken = token.idToken,
-            accessToken = token.kakaoAccessToken,
-            refreshToken = token.kakaoRefreshToken
-        )
+        val providerToken = ProviderToken.kakao(token.idToken)
         val result = loginUseCase(providerToken).getOrThrow()
         reduce {
             state.copy(result = result)
         }
     }
-
 }
