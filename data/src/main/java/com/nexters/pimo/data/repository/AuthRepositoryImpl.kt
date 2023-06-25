@@ -26,7 +26,7 @@ internal class AuthRepositoryImpl @Inject constructor(
         authDataSource.login(token.toData()).getOrNull()?.let {
             tokenDataSource.saveToken(it)
             LoginResult.SignedIn(it.toDomain())
-        } ?: LoginResult.NeedToSignUp
+        } ?: LoginResult.NeedToSignUp(provider = token.provider, identifier = token.idToken)
     }
 
     override suspend fun logout(): Result<Unit> = authDataSource.logout()

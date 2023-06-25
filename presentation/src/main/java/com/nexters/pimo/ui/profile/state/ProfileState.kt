@@ -5,6 +5,8 @@ import com.nexters.pimo.domain.model.User
 
 data class ProfileState(
     val pageIdx: Int = 0,
+    val identifier: String,
+    val provider: String,
     val nicknameState: NicknameState,
     val archiveNameState: ArchiveNameState,
     val imageState: Bitmap?,

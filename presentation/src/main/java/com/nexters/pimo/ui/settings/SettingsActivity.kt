@@ -18,7 +18,7 @@ class SettingsActivity : BaseActivity() {
 
         setContent {
             FimoTheme {
-                SettingsScreen (
+                SettingsScreen(
                     onBack = { finish() },
                     startOnboardActivity = ::startOnboardActivity,
                     startProfileActivity = ::startProfileActivity,
@@ -28,7 +28,7 @@ class SettingsActivity : BaseActivity() {
     }
 
     private fun startProfileActivity() {
-        val intent = ProfileActivity.getIntent(this, mode = Mode.Edit)
+        val intent = ProfileActivity.getIntent(this, mode = Mode.Edit, "", "")
         startActivity(intent)
     }
 

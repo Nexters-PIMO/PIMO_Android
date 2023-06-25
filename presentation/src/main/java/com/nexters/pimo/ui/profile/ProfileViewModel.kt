@@ -28,6 +28,8 @@ class ProfileViewModel @Inject constructor(
 ) : ContainerHost<ProfileState, ProfileSideEffect>,
     BaseViewModel() {
 
+    private val provider = savedStateHandle.get<String>(EXTRA_KEY_PROVIDER)!!
+    private val identifier = savedStateHandle.get<String>(EXTRA_KEY_IDENTIFIER)!!
     private val mode: Mode = savedStateHandle.get<Mode>(KEY_MODE)!!
 
     override val container = container<ProfileState, ProfileSideEffect>(
@@ -35,7 +37,9 @@ class ProfileViewModel @Inject constructor(
             nicknameState = NicknameState(""),
             archiveNameState = ArchiveNameState(""),
             imageState = null,
-            mode = mode
+            mode = mode,
+            provider = provider,
+            identifier = identifier
         )
     )
 
@@ -136,5 +140,7 @@ class ProfileViewModel @Inject constructor(
 
     companion object {
         const val KEY_MODE = "KEY_MODE"
+        const val EXTRA_KEY_PROVIDER = "EXTRA_KEY_PROVIDER"
+        const val EXTRA_KEY_IDENTIFIER = "EXTRA_KEY_IDENTIFIER"
     }
 }

@@ -46,13 +46,21 @@ class LoginActivity : BaseActivity() {
     private fun handleState(state: LoginState) {
         when (state.result) {
             is LoginResult.SignedIn -> startMainActivity(user = User.Unspecified)
-            LoginResult.NeedToSignUp -> startProfileActivity()
+            is LoginResult.NeedToSignUp -> startProfileActivity(
+                provider = state.result.provider,
+                identifier = state.result.identifier
+            )
             else -> Unit
         }
     }
 
-    private fun startProfileActivity() {
-        val intent = ProfileActivity.getIntent(this, mode = Mode.New)
+    private fun startProfileActivity(provider: String, identifier: String) {
+        val intent = ProfileActivity.getIntent(
+            context = this,
+            mode = Mode.New,
+            provider = provider,
+            identifier = identifier
+        )
         startActivity(intent)
     }
 
