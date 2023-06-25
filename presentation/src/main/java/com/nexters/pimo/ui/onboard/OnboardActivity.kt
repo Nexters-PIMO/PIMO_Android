@@ -2,6 +2,7 @@ package com.nexters.pimo.ui.onboard
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import com.nexters.pimo.ui.base.BaseActivity
@@ -34,6 +35,7 @@ class OnboardActivity : BaseActivity() {
     companion object {
         fun getIntent(context: Context, isLogin: Boolean) =
             Intent(context, OnboardActivity::class.java)
+                .addFlags(FLAG_ACTIVITY_CLEAR_TOP)
                 .putExtra(KEY_MODE, isLogin)
     }
 }

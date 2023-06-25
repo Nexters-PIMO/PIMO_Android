@@ -1,8 +1,14 @@
 package com.nexters.pimo.ui.profile
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.nexters.pimo.domain.model.ProviderToken
+import com.nexters.pimo.domain.model.SignUpUser
+import com.nexters.pimo.domain.repository.AuthRepository
+import com.nexters.pimo.domain.repository.ImageRepository
 import com.nexters.pimo.domain.repository.UserRepository
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.base.BaseViewModel
@@ -12,6 +18,7 @@ import com.nexters.pimo.ui.profile.state.NicknameState
 import com.nexters.pimo.ui.profile.state.ProfileSideEffect
 import com.nexters.pimo.ui.profile.state.ProfileState
 import com.nexters.pimo.ui.profile.state.TextFieldState.Companion.MAX_LENGTH_EN
+import com.nexters.pimo.ui.util.BitmapUtil.toFile
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
@@ -19,12 +26,15 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import java.nio.charset.Charset
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val userRepository: UserRepository
+    private val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
+    private val imageRepository: ImageRepository
 ) : ContainerHost<ProfileState, ProfileSideEffect>,
     BaseViewModel() {
 
@@ -136,6 +146,29 @@ class ProfileViewModel @Inject constructor(
 
     private fun isValidTextLength(text: String): Boolean {
         return text.toByteArray(Charset.forName("EUC-KR")).size <= MAX_LENGTH_EN
+    }
+
+    fun signUp(context: Context) = intent {
+        viewModelScope.launch {
+            val profileImageUrl = imageRepository.uploadImage(
+                state.imageState!!.toFile(
+                    context = context,
+                    name = LocalDateTime.now().toString()
+                )
+            ).getOrThrow()
+            val user = SignUpUser(
+                token = ProviderToken.kakao(state.identifier),
+                nickname = state.nicknameState.text,
+                archiveName = state.archiveNameState.text,
+                profileImageUrl = profileImageUrl
+            )
+            authRepository.signUp(user).onSuccess {
+                reduce {
+                    state.copy(pageIdx = state.pageIdx + 1)
+                }
+            }
+                .onFailure { Log.d("error", it.stackTraceToString()) }
+        }
     }
 
     companion object {

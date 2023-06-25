@@ -5,6 +5,7 @@ import android.util.Log
 import com.nexters.pimo.BuildConfig
 import com.nexters.pimo.remote.api.AuthenticationListener
 import com.nexters.pimo.remote.api.BaseUrl
+import com.nexters.pimo.remote.api.ClientId
 import com.nexters.pimo.remote.api.Interceptors
 import dagger.Module
 import dagger.Provides
@@ -51,4 +52,7 @@ internal object AppModule {
             //SplashActivity.startActivity(context)
         }
     }
+
+    @Provides
+    fun provideClientId() = ClientId(BuildConfig.IMGUR_CLIENT_ID)
 }

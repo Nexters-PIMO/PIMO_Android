@@ -56,6 +56,7 @@ class ProfileActivity : BaseActivity() {
     companion object {
         fun getIntent(context: Context, mode: Mode, provider: String, identifier: String) =
             Intent(context, ProfileActivity::class.java)
+                //.addFlags(FLAG_ACTIVITY_CLEAR_TOP)
                 .putExtra(ProfileViewModel.KEY_MODE, mode)
                 .putExtra(ProfileViewModel.EXTRA_KEY_PROVIDER, provider)
                 .putExtra(ProfileViewModel.EXTRA_KEY_IDENTIFIER, identifier)

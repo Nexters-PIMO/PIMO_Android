@@ -383,6 +383,8 @@ fun ProfileAddText(viewModel: ProfileViewModel, profileState: ProfileState) {
 
 @Composable
 fun ProfileAddImage(viewModel: ProfileViewModel, profileState: ProfileState) {
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -409,7 +411,7 @@ fun ProfileAddImage(viewModel: ProfileViewModel, profileState: ProfileState) {
             Spacer(modifier = Modifier.height(82.dp))
             ProfileCompleteButton(
                 imageState = profileState.imageState,
-                goForward = viewModel::goForward
+                onClick = { viewModel.signUp(context) }
             )
         }
     }
@@ -718,7 +720,7 @@ fun ProfileNextButton(textFieldState: TextFieldState, goForward: () -> Unit) {
 }
 
 @Composable
-fun ProfileCompleteButton(imageState: Bitmap?, goForward: () -> Unit) {
+fun ProfileCompleteButton(imageState: Bitmap?, onClick: () -> Unit) {
     Surface(
         shape = RoundedCornerShape(2.dp),
         color = if (imageState == null) {
@@ -730,7 +732,7 @@ fun ProfileCompleteButton(imageState: Bitmap?, goForward: () -> Unit) {
             .clip(RoundedCornerShape(2.dp))
             .clickable(
                 onClick = if (imageState != null) {
-                    goForward
+                    onClick
                 } else {
                     ({})
                 },

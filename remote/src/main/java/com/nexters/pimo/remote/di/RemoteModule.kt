@@ -7,6 +7,9 @@ import com.nexters.pimo.remote.api.ApiService
 import com.nexters.pimo.remote.api.AuthenticationListener
 import com.nexters.pimo.remote.api.Authenticator
 import com.nexters.pimo.remote.api.BaseUrl
+import com.nexters.pimo.remote.api.ClientId
+import com.nexters.pimo.remote.api.ImgurInterceptor
+import com.nexters.pimo.remote.api.ImgurService
 import com.nexters.pimo.remote.api.Interceptors
 import com.nexters.pimo.remote.api.RefreshApiService
 import dagger.Module
@@ -71,4 +74,20 @@ internal object RemoteModule {
         }
         .apply(apply)
         .build()
+
+    @Provides
+    @Singleton
+    fun provideImgurService(
+        clientId: ClientId
+    ): ImgurService = Retrofit.Builder()
+        .baseUrl("https://api.imgur.com/3/")
+        .client(
+            OkHttpClient.Builder().run {
+                addInterceptor(ImgurInterceptor(clientId))
+                build()
+            }
+        )
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(ImgurService::class.java)
 }

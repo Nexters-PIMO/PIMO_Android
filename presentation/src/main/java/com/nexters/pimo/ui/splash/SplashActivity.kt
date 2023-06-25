@@ -16,7 +16,11 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.observe(lifecycleOwner = this, state = ::handleState, sideEffect = ::handleSideEffect)
+        viewModel.observe(
+            lifecycleOwner = this,
+            state = ::handleState,
+            sideEffect = ::handleSideEffect
+        )
 
         setContent {
             FimoTheme {
@@ -44,6 +48,7 @@ class SplashActivity : BaseActivity() {
     private fun startOnboardActivity() {
         val intent = OnboardActivity.getIntent(this, isLogin = true)
         startActivity(intent)
+        finish()
     }
 
 }
