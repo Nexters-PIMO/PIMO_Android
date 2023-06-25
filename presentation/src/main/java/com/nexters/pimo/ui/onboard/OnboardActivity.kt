@@ -18,7 +18,7 @@ class OnboardActivity : BaseActivity() {
 
         setContent {
             FimoTheme {
-                OnboardScreen (
+                OnboardScreen(
                     onSkip = { startLoginActivity() },
                     onBack = { finish() }
                 )
@@ -36,5 +36,4 @@ class OnboardActivity : BaseActivity() {
             Intent(context, OnboardActivity::class.java)
                 .putExtra(KEY_MODE, isLogin)
     }
-
 }

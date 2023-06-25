@@ -5,14 +5,14 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.nexters.pimo.data.model.BearerTokenData
-import com.nexters.pimo.data.source.UserDataSource
+import com.nexters.pimo.data.source.TokenDataSource
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-internal class UserDataSourceImpl @Inject constructor(
+internal class TokenDataSourceImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
-) : UserDataSource {
+) : TokenDataSource {
 
     override suspend fun saveToken(token: BearerTokenData): Result<Unit> = runCatching {
         dataStore.edit { it[stringPreferencesKey(KEY_ACCESS_TOKEN)] = token.accessToken }

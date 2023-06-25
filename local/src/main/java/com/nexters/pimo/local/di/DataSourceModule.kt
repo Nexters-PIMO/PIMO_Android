@@ -1,9 +1,9 @@
 package com.nexters.pimo.local.di
 
 import com.nexters.pimo.data.source.PreferencesDataSource
-import com.nexters.pimo.data.source.UserDataSource
+import com.nexters.pimo.data.source.TokenDataSource
 import com.nexters.pimo.local.source.PreferencesDataSourceImpl
-import com.nexters.pimo.local.source.UserDataSourceImpl
+import com.nexters.pimo.local.source.TokenDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,5 +20,5 @@ internal interface DataSourceModule {
 
     @Binds
     @Singleton
-    fun bindUserDataSource(source: UserDataSourceImpl): UserDataSource
+    fun bindTokenDataSource(source: TokenDataSourceImpl): TokenDataSource
 }

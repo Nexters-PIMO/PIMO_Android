@@ -1,7 +1,9 @@
 package com.nexters.pimo.remote.di
 
 import com.nexters.pimo.data.source.AuthDataSource
+import com.nexters.pimo.data.source.UserDataSource
 import com.nexters.pimo.remote.source.AuthDataSourceImpl
+import com.nexters.pimo.remote.source.UserDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,4 +17,8 @@ internal interface DataSourceModule {
     @Binds
     @Singleton
     fun bindAuthDataSource(sourceImpl: AuthDataSourceImpl): AuthDataSource
+
+    @Binds
+    @Singleton
+    fun bindUserDataSource(sourceImpl: UserDataSourceImpl): UserDataSource
 }

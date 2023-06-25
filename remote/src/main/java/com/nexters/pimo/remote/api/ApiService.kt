@@ -20,8 +20,8 @@ interface ApiService {
     suspend fun logout()
 
     @GET("user/validate/nickname")
-    suspend fun validateNickname(@Query("nickname") nickname: String): String
+    suspend fun validateNickname(@Query("nickname") nickname: String): Boolean
 
     @GET("user/validate/archive")
-    suspend fun validateArchive(@Query("archive") archive: String): String
+    suspend fun validateArchive(@Query("archive") archive: String): Boolean
 }

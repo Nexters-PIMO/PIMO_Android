@@ -1,6 +1,6 @@
-package com.nexters.pimo.data.source
+package com.nexters.pimo.domain.repository
 
-interface UserDataSource {
+interface UserRepository {
 
     suspend fun validateNickname(nickname: String): Result<Boolean>
 

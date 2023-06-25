@@ -2,11 +2,18 @@ package com.nexters.pimo.ui.profile
 
 import android.graphics.Bitmap
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
+import com.nexters.pimo.domain.repository.UserRepository
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.base.BaseViewModel
-import com.nexters.pimo.ui.profile.state.*
+import com.nexters.pimo.ui.profile.state.ArchiveNameState
+import com.nexters.pimo.ui.profile.state.Mode
+import com.nexters.pimo.ui.profile.state.NicknameState
+import com.nexters.pimo.ui.profile.state.ProfileSideEffect
+import com.nexters.pimo.ui.profile.state.ProfileState
 import com.nexters.pimo.ui.profile.state.TextFieldState.Companion.MAX_LENGTH_EN
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -17,12 +24,20 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    ) : ContainerHost<ProfileState, ProfileSideEffect>,
+    private val userRepository: UserRepository
+) : ContainerHost<ProfileState, ProfileSideEffect>,
     BaseViewModel() {
 
     private val mode: Mode = savedStateHandle.get<Mode>(KEY_MODE)!!
 
-    override val container = container<ProfileState, ProfileSideEffect>(ProfileState(nicknameState = NicknameState(""), archiveNameState = ArchiveNameState(""), imageState = null, mode = mode))
+    override val container = container<ProfileState, ProfileSideEffect>(
+        ProfileState(
+            nicknameState = NicknameState(""),
+            archiveNameState = ArchiveNameState(""),
+            imageState = null,
+            mode = mode
+        )
+    )
 
     fun goBack() = intent {
         reduce { state.copy(pageIdx = state.pageIdx - 1) }
@@ -45,7 +60,11 @@ class ProfileViewModel @Inject constructor(
             nicknameStateNew.isValidInput = false
             nicknameStateNew.inputCheckMsg = R.string.profile_input_length_error
         }
-        //TODO: 중복 체크
+
+        viewModelScope.launch {
+            val isValidate = userRepository.validateNickname(nickname).getOrThrow()
+            nicknameStateNew.isDuplicateChecked = isValidate.not()
+        }
 
         reduce {
             state.copy(nicknameState = nicknameStateNew)
@@ -65,7 +84,11 @@ class ProfileViewModel @Inject constructor(
             archiveNameStateNew.isValidInput = false
             archiveNameStateNew.inputCheckMsg = R.string.profile_input_length_error
         }
-        //TODO: 중복 체크
+
+        viewModelScope.launch {
+            val isValidate = userRepository.validateArchive(archiveName).getOrThrow()
+            archiveNameStateNew.isDuplicateChecked = isValidate.not()
+        }
 
         reduce {
             state.copy(archiveNameState = archiveNameStateNew)
@@ -99,7 +122,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun isValidTextFormat(text: String): Boolean {
-        for (element in text){
+        for (element in text) {
             if (!Character.isLetterOrDigit(element)) {
                 return false
             }
