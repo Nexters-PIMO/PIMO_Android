@@ -5,6 +5,7 @@ import com.nexters.pimo.data.model.ProviderTokenData
 import com.nexters.pimo.data.model.SignUpData
 import com.nexters.pimo.data.source.AuthDataSource
 import com.nexters.pimo.remote.api.ApiService
+import com.nexters.pimo.remote.model.toData
 import com.nexters.pimo.remote.model.toRemote
 import javax.inject.Inject
 
