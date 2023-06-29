@@ -50,6 +50,7 @@ class LoginActivity : BaseActivity() {
                 provider = state.result.provider,
                 identifier = state.result.identifier
             )
+
             else -> Unit
         }
     }
@@ -62,6 +63,7 @@ class LoginActivity : BaseActivity() {
             identifier = identifier
         )
         startActivity(intent)
+        finish()
     }
 
     private fun startMainActivity(user: User) {
