@@ -2,14 +2,15 @@ package com.nexters.pimo.ui.profile
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.nexters.pimo.domain.model.LoginResult
 import com.nexters.pimo.domain.model.ProviderToken
 import com.nexters.pimo.domain.model.SignUpUser
 import com.nexters.pimo.domain.repository.AuthRepository
 import com.nexters.pimo.domain.repository.ImageRepository
 import com.nexters.pimo.domain.repository.UserRepository
+import com.nexters.pimo.domain.usecase.LoginUseCase
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.base.BaseViewModel
 import com.nexters.pimo.ui.profile.state.ArchiveNameState
@@ -34,7 +35,8 @@ class ProfileViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
-    private val imageRepository: ImageRepository
+    private val imageRepository: ImageRepository,
+    private val loginUseCase: LoginUseCase
 ) : ContainerHost<ProfileState, ProfileSideEffect>,
     BaseViewModel() {
 
@@ -49,7 +51,8 @@ class ProfileViewModel @Inject constructor(
             imageState = null,
             mode = mode,
             provider = provider,
-            identifier = identifier
+            identifier = identifier,
+            loginResult = LoginResult.Unspecified
         )
     )
 
@@ -64,7 +67,7 @@ class ProfileViewModel @Inject constructor(
     fun checkNickname() = intent {
         val nickname = state.nicknameState.text
         val nicknameStateNew = NicknameState(nickname)
-        nicknameStateNew.isDuplicateChecked = true
+
         nicknameStateNew.isValidInput = true;
 
         if (!isValidTextFormat(nickname)) {
@@ -75,13 +78,23 @@ class ProfileViewModel @Inject constructor(
             nicknameStateNew.inputCheckMsg = R.string.profile_input_length_error
         }
 
-        viewModelScope.launch {
-            val isValidate = userRepository.validateNickname(nickname).getOrThrow()
-            nicknameStateNew.isDuplicateChecked = isValidate.not()
+        if (nicknameStateNew.isValidInput.not()) {
+            reduce {
+                state.copy(nicknameState = nicknameStateNew)
+            }
+            return@intent
         }
 
-        reduce {
-            state.copy(nicknameState = nicknameStateNew)
+        viewModelScope.launch {
+            userRepository.validateNickname(nickname)
+                .onSuccess {
+                    if (it.not()) nicknameStateNew.inputCheckMsg = R.string.profile_input_duplicate
+                    nicknameStateNew.isValidInput = it
+                    reduce {
+                        state.copy(nicknameState = nicknameStateNew)
+                    }
+                }
+                .onFailure { it.printStackTrace() }
         }
     }
 
@@ -99,13 +112,26 @@ class ProfileViewModel @Inject constructor(
             archiveNameStateNew.inputCheckMsg = R.string.profile_input_length_error
         }
 
-        viewModelScope.launch {
-            val isValidate = userRepository.validateArchive(archiveName).getOrThrow()
-            archiveNameStateNew.isDuplicateChecked = isValidate.not()
+        if (archiveNameStateNew.isValidInput.not()) {
+            reduce {
+                state.copy(archiveNameState = archiveNameStateNew)
+            }
+            return@intent
         }
 
-        reduce {
-            state.copy(archiveNameState = archiveNameStateNew)
+        viewModelScope.launch {
+            userRepository.validateArchive(archiveName)
+                .onSuccess {
+                    if (it.not()) archiveNameStateNew.inputCheckMsg =
+                        R.string.profile_input_duplicate
+                    archiveNameStateNew.isValidInput = it
+                    reduce {
+                        state.copy(archiveNameState = archiveNameStateNew)
+                    }
+                }
+                .onFailure {
+                    it.printStackTrace()
+                }
         }
     }
 
@@ -163,11 +189,12 @@ class ProfileViewModel @Inject constructor(
                 profileImageUrl = profileImageUrl
             )
             authRepository.signUp(user).onSuccess {
-                reduce {
-                    state.copy(pageIdx = state.pageIdx + 1)
+                loginUseCase.invoke(ProviderToken.kakao(state.identifier)).onSuccess {
+                    reduce {
+                        state.copy(loginResult = it)
+                    }
                 }
             }
-                .onFailure { Log.d("error", it.stackTraceToString()) }
         }
     }
 

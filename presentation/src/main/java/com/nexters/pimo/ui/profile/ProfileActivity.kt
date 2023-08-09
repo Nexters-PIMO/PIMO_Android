@@ -2,9 +2,11 @@ package com.nexters.pimo.ui.profile
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import com.nexters.pimo.domain.model.LoginResult
 import com.nexters.pimo.ui.base.BaseActivity
 import com.nexters.pimo.ui.main.MainActivity
 import com.nexters.pimo.ui.profile.state.Mode
@@ -38,10 +40,12 @@ class ProfileActivity : BaseActivity() {
     }
 
     private fun handleState(state: ProfileState) {
-        if (state.pageIdx < 0) {
-            finish()
-        } else if (state.pageIdx > 3) {
-            startMainActivity()
+        when (state.loginResult) {
+            is LoginResult.SignedIn -> {
+                startMainActivity()
+            }
+
+            else -> {}
         }
     }
 
@@ -56,7 +60,7 @@ class ProfileActivity : BaseActivity() {
     companion object {
         fun getIntent(context: Context, mode: Mode, provider: String, identifier: String) =
             Intent(context, ProfileActivity::class.java)
-                //.addFlags(FLAG_ACTIVITY_CLEAR_TOP)
+                .addFlags(FLAG_ACTIVITY_CLEAR_TOP)
                 .putExtra(ProfileViewModel.KEY_MODE, mode)
                 .putExtra(ProfileViewModel.EXTRA_KEY_PROVIDER, provider)
                 .putExtra(ProfileViewModel.EXTRA_KEY_IDENTIFIER, identifier)

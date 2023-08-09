@@ -8,6 +8,7 @@ import com.nexters.pimo.ui.R
 
 abstract class TextFieldState(
     initialText: String,
+    var isDuplicateChecked: Boolean,
     private val validator: (String) -> Boolean = { true },
 ) {
     var text by mutableStateOf(initialText)
@@ -24,8 +25,6 @@ abstract class TextFieldState(
 
     @StringRes
     var inputCheckMsg: Int = R.string.profile_input_available
-
-    var isDuplicateChecked: Boolean = false
 
     fun onFocusChange(focused: Boolean) {
         isFocused = focused

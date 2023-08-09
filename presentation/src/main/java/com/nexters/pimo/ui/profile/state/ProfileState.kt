@@ -1,7 +1,7 @@
 package com.nexters.pimo.ui.profile.state
 
 import android.graphics.Bitmap
-import com.nexters.pimo.domain.model.User
+import com.nexters.pimo.domain.model.LoginResult
 
 data class ProfileState(
     val pageIdx: Int = 0,
@@ -11,7 +11,7 @@ data class ProfileState(
     val archiveNameState: ArchiveNameState,
     val imageState: Bitmap?,
     val mode: Mode,
-    val user: User = User.Unspecified,
+    val loginResult: LoginResult
 )
 
 sealed class ProfileSideEffect {

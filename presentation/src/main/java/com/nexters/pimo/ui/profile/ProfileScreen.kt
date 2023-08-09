@@ -307,12 +307,12 @@ fun ProfileEdit(viewModel: ProfileViewModel, profileState: ProfileState, onBack:
 
 @Composable
 fun ProfileAddText(viewModel: ProfileViewModel, profileState: ProfileState) {
-    val textFieldState: TextFieldState
-    if (profileState.pageIdx == 0) {
-        textFieldState = profileState.nicknameState
-    } else {
-        textFieldState = profileState.archiveNameState
-    }
+    val textFieldState =
+        if (profileState.pageIdx == 0) {
+            profileState.nicknameState
+        } else {
+            profileState.archiveNameState
+        }
 
     Column(
         modifier = Modifier
@@ -734,7 +734,7 @@ fun ProfileCompleteButton(imageState: Bitmap?, onClick: () -> Unit) {
                 onClick = if (imageState != null) {
                     onClick
                 } else {
-                    ({})
+                    onClick
                 },
                 interactionSource = NoRippleInteractionSource,
                 indication = null,

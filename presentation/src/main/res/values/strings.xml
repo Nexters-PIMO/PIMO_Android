@@ -24,6 +24,7 @@
     <string name="profile_input_hint">텍스트를 입력해주세요.</string>
     <string name="profile_input_duplicate_check">중복 확인</string>
     <string name="profile_input_available">사용할 수 있는 이름이에요</string>
+    <string name="profile_input_duplicate">이미 존재하는 이름이에요</string>
     <string name="profile_input_form_error">한글과 영어, 숫자만 사용할 수 있어요</string>
     <string name="profile_input_duplicate_error">이미 사용 중인 이름이에요</string>
     <string name="profile_input_length_error">글자 수를 초과했어요</string>

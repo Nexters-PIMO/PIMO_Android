@@ -7,7 +7,6 @@ class NicknameState(initialText: String = "") : TextFieldState(
     initialText = initialText,
     validator = {
         it.isNotBlank() && it.length <= MAX_LENGTH_EN
-    }
-) {
-
-}
+    },
+    isDuplicateChecked = false
+)
