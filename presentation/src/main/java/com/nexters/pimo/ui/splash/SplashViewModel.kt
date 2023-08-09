@@ -1,5 +1,7 @@
 package com.nexters.pimo.ui.splash
 
+import com.nexters.pimo.domain.model.LoginResult
+import com.nexters.pimo.domain.usecase.LoginUseCase
 import com.nexters.pimo.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -12,6 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase
 ) : ContainerHost<SplashState, SplashSideEffect>,
     BaseViewModel() {
 
@@ -21,11 +24,15 @@ class SplashViewModel @Inject constructor(
     init {
         intent {
             delay(SPLASH_TIME)
-            reduce {
-                //TODO: 로그인 여부 확인
-                state.copy(
-                    state = SplashUiState.NeedToOnboard
-                )
+            loginUseCase.invoke().onSuccess { loginResult ->
+                reduce {
+                    state.copy(
+                        state = when (loginResult) {
+                            is LoginResult.SignedIn -> SplashUiState.AlreadyLoggedIn
+                            else -> SplashUiState.NeedToOnboard
+                        }
+                    )
+                }
             }
         }
     }

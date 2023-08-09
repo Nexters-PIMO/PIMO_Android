@@ -7,8 +7,10 @@ import com.nexters.pimo.ui.base.BaseActivity
 import com.nexters.pimo.ui.main.MainActivity
 import com.nexters.pimo.ui.onboard.OnboardActivity
 import com.nexters.pimo.ui.theme.FimoTheme
+import dagger.hilt.android.AndroidEntryPoint
 import org.orbitmvi.orbit.viewmodel.observe
 
+@AndroidEntryPoint
 class SplashActivity : BaseActivity() {
 
     private val viewModel: SplashViewModel by viewModels()
