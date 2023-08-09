@@ -2,9 +2,11 @@ package com.nexters.pimo.remote.di
 
 import com.nexters.pimo.data.source.AuthDataSource
 import com.nexters.pimo.data.source.ImageDataSource
+import com.nexters.pimo.data.source.PostDataSource
 import com.nexters.pimo.data.source.UserDataSource
 import com.nexters.pimo.remote.source.AuthDataSourceImpl
 import com.nexters.pimo.remote.source.ImageDataSourceImpl
+import com.nexters.pimo.remote.source.PostDataSourceImpl
 import com.nexters.pimo.remote.source.UserDataSourceImpl
 import dagger.Binds
 import dagger.Module
@@ -27,4 +29,8 @@ internal interface DataSourceModule {
     @Binds
     @Singleton
     fun bindImageDataSource(sourceImpl: ImageDataSourceImpl): ImageDataSource
+
+    @Binds
+    @Singleton
+    fun bindPostDataSource(sourceImpl: PostDataSourceImpl): PostDataSource
 }

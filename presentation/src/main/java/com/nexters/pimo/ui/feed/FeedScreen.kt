@@ -98,18 +98,18 @@ fun FeedScreen(
             Column(modifier = Modifier.padding(innerPadding)) {
                 if (selectedPost == null) {
                     FeedBar(
-                        postCount = state.user.posts.size,
+                        postCount = state.feeds.size,
                         currentViewMode = viewMode,
                         onChangeViewMode = { viewMode = it }
                     )
                 }
                 when (state.uiState) {
                     UiState.Done -> {
-                        if (state.user.posts.isNotEmpty()) {
+                        if (state.feeds.isNotEmpty()) {
                             when (viewMode) {
                                 FeedViewMode.List -> {
                                     FimoPostList(
-                                        posts = state.user.posts,
+                                        posts = state.feeds,
                                         isAudioPlaying = state.isAudioPlaying,
                                         showTooltip = state.showTooltip,
                                         onCloseTooltip = viewModel::onCloseTooltip,
@@ -137,7 +137,7 @@ fun FeedScreen(
                                             onClickMore = onClickMore
                                         )
                                     } ?: FimoPostGrid(
-                                        posts = state.user.posts,
+                                        posts = state.feeds,
                                         onPostClick = { selectedPost = it }
                                     )
                                 }

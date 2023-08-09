@@ -18,7 +18,7 @@ class FriendViewModel @Inject constructor() : ContainerHost<FriendState, FriendS
     override val container = container<FriendState, FriendSideEffect>(FriendState())
 
     val tempUser = User(
-        id = 0,
+        id = "",
         profileImageUrl = "https://avatars.githubusercontent.com/u/72238126?v=4",
         nickname = "yjyoon"
     )
@@ -67,6 +67,7 @@ class FriendViewModel @Inject constructor() : ContainerHost<FriendState, FriendS
                     eachOtherFriends = List(32) { tempUser }
                 )
             }
+
             FriendState.FriendType.OnlyMe -> reduce {
                 state.copy(
                     uiState = UiState.Done,
@@ -74,6 +75,7 @@ class FriendViewModel @Inject constructor() : ContainerHost<FriendState, FriendS
                     onlyMeFriends = List(48) { tempUser }
                 )
             }
+
             FriendState.FriendType.OnlyOther -> reduce {
                 state.copy(
                     uiState = UiState.Done,

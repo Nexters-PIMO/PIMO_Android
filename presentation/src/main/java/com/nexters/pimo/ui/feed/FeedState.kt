@@ -1,12 +1,14 @@
 package com.nexters.pimo.ui.feed
 
 import androidx.annotation.DrawableRes
+import com.nexters.pimo.domain.model.Post
 import com.nexters.pimo.domain.model.User
 import com.nexters.pimo.ui.R
 import com.nexters.pimo.ui.state.UiState
 
 data class FeedState(
     val user: User = User.Unspecified,
+    val feeds: List<Post> = emptyList(),
     val showTooltip: Boolean = false,
     val isAudioPlaying: Boolean = false,
     val uiState: UiState = UiState.Loading

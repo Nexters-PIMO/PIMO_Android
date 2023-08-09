@@ -15,7 +15,7 @@ class SettingsViewModel @Inject constructor(
     override val container = container<SettingsState, SettingsSideEffect>(SettingsState())
 
     val tempUser = User(
-        id = 0,
+        id = "",
         profileImageUrl = "https://avatars.githubusercontent.com/u/72238126?v=4",
         nickname = "yjyoon"
     )

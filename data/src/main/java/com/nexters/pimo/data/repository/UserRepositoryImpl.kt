@@ -1,6 +1,8 @@
 package com.nexters.pimo.data.repository
 
+import com.nexters.pimo.data.model.toDomain
 import com.nexters.pimo.data.source.UserDataSource
+import com.nexters.pimo.domain.model.User
 import com.nexters.pimo.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -13,4 +15,7 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override suspend fun validateArchive(archive: String): Result<Boolean> =
         userDataSource.validateArchive(archive)
+
+    override suspend fun getMe(): Result<User> =
+        userDataSource.getMe().map { it.toDomain() }
 }
